@@ -5,7 +5,11 @@
             <h6 class="mb-0 text-dark">ระดับอาหารในถาด</h6>
         </div>
 
-        <canvas id="FoodTray-sales"></canvas>
-        
+        <!-- Canvas สำหรับแสดงกราฟ -->
+        <canvas id="Food-and-Supplementary-chart"></canvas>
+
     </div>
 </div>
+
+<!-- เชื่อมต่อ chart.js -->
+<script src="path_to_chart.js"></script> <!-- ตรวจสอบว่าไฟล์อยู่ในตำแหน่งถูกต้อง -->

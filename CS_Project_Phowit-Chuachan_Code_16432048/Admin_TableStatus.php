@@ -3,10 +3,11 @@
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">ข้อมูลสถานะ</h6>
         </div>
+        
         <div class="table-responsive">
             <?php
                 require_once("connect_db.php");
-                $sql = "select * from status ";
+                $sql = "select * from status ORDER BY  DT_record DESC LIMIT 1";
                 $result = mysqli_query($conn,$sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">

@@ -2,12 +2,21 @@
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-4">ข้อมูลการเก็บไข่</h6>
+
+            <!--เพิ่ม-->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
+
+            <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
+            <?php 
+                require_once("Admin_FormCollect.php")
+            ?>
+            <!-- จบ ฟอร์มเพิ่มข้อมูลไก่ -->
         </div>
         <div class="table-responsive">
             <?php
-                require_once("connect_db.php");
-                $sql = "select * from Harvest ";
-                $result = mysqli_query($conn,$sql);
+            require_once("connect_db.php");
+            $sql = "select * from Harvest ";
+            $result = mysqli_query($conn, $sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
@@ -22,17 +31,17 @@
                 </thead>
                 <tbody>
                     <?php
-                        while($row = $result->fetch_assoc()){
+                    while ($row = $result->fetch_assoc()) {
                         $Harvest_ID = $row['Harvest_ID'];
                         $Date_Harvest = $row['Date_Harvest'];
                         $EggAmount = $row['EggAmount'];
                         $Name = $row['Name'];
                     ?>
                         <tr>
-                            <td><?php echo $row['Harvest_ID'];?></td>
-                            <td><?php echo $row['Date_Harvest'];?></td>
-                            <td><?php echo $row['EggAmount'];?></td>
-                            <td><?php echo $row['Name'];?></td>
+                            <td><?php echo $row['Harvest_ID']; ?></td>
+                            <td><?php echo $row['Date_Harvest']; ?></td>
+                            <td><?php echo $row['EggAmount']; ?></td>
+                            <td><?php echo $row['Name']; ?></td>
                             <td> <a class="btn btn-sm btn-primary col-12" href="">แก้ไข</a> </td>
 
                             <td>
@@ -64,7 +73,7 @@
                             <!--END Warning For Delete-->
 
                         </tr>
-                    <?php }?>
+                    <?php } ?>
                 </tbody>
             </table>
         </div>

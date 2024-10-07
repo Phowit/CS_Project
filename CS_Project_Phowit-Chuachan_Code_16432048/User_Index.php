@@ -62,10 +62,40 @@
 
             <!-- progress -->
             <?php
-                require_once("Public_Progress.php");
+                require_once("Public_bar.php");
             ?>
             <!-- progress -->
 
+            <!--table Start ข้อมูลไก่-->
+            <?php
+		        require_once("User_TableChickenData.php");
+		    ?>
+            <!--teble End ข้อมูลไก่-->
+
+            <!-- Widgets Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <!--ข้อมูลการเก็บไข่ start -->
+                    <?php
+                        require_once("User_TableHarvest.php");
+                    ?>
+                    <!--ข้อมูลการเก็บไข่ End-->
+
+                    <!-- calendar Start-->
+                        <div class="col-sm-12 col-md-6 col-xl-4">
+                            <div class="h-100 bg-light rounded p-4">
+                                <div class="d-flex align-items-center justify-content-between mb-4">
+                                    <h6 class="mb-0">ปฏิทิน</h6>
+                                </div>
+                                <div id="calender"></div>
+                            </div>
+                        </div>
+                    <!-- Widgets End -->
+                </div>
+            </div>
+            <!-- Widget End -->
+        </div>
 
 
         <!-- Back to Top -->

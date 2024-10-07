@@ -5,7 +5,17 @@
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0 text-dark">สายพันธุ์ไก่</h6>
+
+            <!--เพิ่ม-->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
+
+            <!--Chart Start อุณหภูมิ-->
+            <?php
+                require_once("Admin_FormGeneChicken.php");
+            ?>
+            <!--Chart End อุณหภูมิ-->
         </div>
+
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
@@ -49,20 +59,20 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Form for Editing Record -->
-                                            <form id="addRequestForm" action="Update_Gene.php" method="post">
+                                            <form id="editRecordForm" action="Update_Gene.php" method="post">
                                                 <!-- Add your form fields here for additional request details -->
 
                                                 <input type="hidden" name="Gene_ID" class="form-control" id="Gene_ID" value="<?php echo $row['Gene_ID']; ?>" readonly>
-                                                
-                                                            <div class="form-floating mb-3">
-                                                                <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" value="<?php echo $row['Gene_Name']?>" placeholder required>
-                                                                <label class="form-label">ชื่อสายพันธุ์ไก่</label>
-                                                            </div>
 
-                                                            <div class="form-floating mb-3">
-                                                                <textarea class="form-control" id="Description" name="Description" style="height: 150px;"  placeholder><?php echo $row['Description'];?></textarea>
-                                                                <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
-                                                            </div>
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" value="<?php echo $row['Gene_Name'] ?>" placeholder required>
+                                                    <label class="form-label">ชื่อสายพันธุ์ไก่</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <textarea class="form-control" id="Description" name="Description" style="height: 150px;" placeholder><?php echo $row['Description']; ?></textarea>
+                                                    <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
+                                                </div>
 
                                                 <div class="row">
                                                     <div class="col-12" style="margin-top: 20px;">

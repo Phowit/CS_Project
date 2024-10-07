@@ -2,14 +2,23 @@
     <div class="bg-light text-center rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">ข้อมูลผู้ดูแลระบบ</h6>
+
+            <!--เพิ่ม-->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
+
+            <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
+            <?php 
+                require_once("Admin_FormAdminData.php")
+            ?>
+            <!-- จบ ฟอร์มเพิ่มข้อมูลไก่ -->
         </div>
 
         <div class="table-responsive">
             <?php
-                require_once("connect_db.php");
-                $sql = "select * from admin ";
-                $result = mysqli_query($conn,$sql);
-            ?>  
+            require_once("connect_db.php");
+            $sql = "select * from admin ";
+            $result = mysqli_query($conn, $sql);
+            ?>
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
@@ -26,21 +35,21 @@
                 </thead>
                 <tbody>
                     <?php
-                         while($row = $result->fetch_assoc()){
-                            $Admin_ID = $row['Admin_ID'];
-                            $Name = $row['Name'];
-                            $Tel = $row['Tel'];
-                            $Address = $row['Address'];
-                            $Email = $row['Email'];
-                            $Program_ID = $row['Program_ID'];
+                    while ($row = $result->fetch_assoc()) {
+                        $Admin_ID = $row['Admin_ID'];
+                        $Name = $row['Name'];
+                        $Tel = $row['Tel'];
+                        $Address = $row['Address'];
+                        $Email = $row['Email'];
+                        $Program_ID = $row['Program_ID'];
                     ?>
                         <tr>
-                            <td><?php echo $row['Admin_ID'];?></td>
-                            <td><?php echo $row['Name'];?></td>
-                            <td><?php echo $row['Tel'];?></td>
-                            <td><?php echo $row['Address'];?></td>
-                            <td><?php echo $row['Email'];?></td>
-                            <td><?php echo $row['Program_ID'];?></td>
+                            <td><?php echo $row['Admin_ID']; ?></td>
+                            <td><?php echo $row['Name']; ?></td>
+                            <td><?php echo $row['Tel']; ?></td>
+                            <td><?php echo $row['Address']; ?></td>
+                            <td><?php echo $row['Email']; ?></td>
+                            <td><?php echo $row['Program_ID']; ?></td>
                             <td> <a class="btn btn-sm btn-primary col-12">แก้ไข</a> </td>
 
                             <td>
@@ -72,7 +81,7 @@
                             <!--END Warning For Delete-->
 
                         </tr>
-                    <?php }?> <!-- close php-->
+                    <?php } ?> <!-- close php-->
                 </tbody>
             </table>
         </div>

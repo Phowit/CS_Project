@@ -15,12 +15,23 @@
         </div>
 
         <div class="navbar-nav w-100">
-            <a href="Admin_Index.php" class="nav-item nav-link text-light"><i class="fa fa-laptop me-2 icon"></i>หน้าหลักผู้ดูแลระบบ</a>
-            <a href="Admin_Status.php" class="nav-item nav-link text-light"><i class="fa fa-tachometer-alt me-2 icon"></i>จัดการข้อมูลสถานะ</a>
-            <a href="Admin_ManageGeneChicken.php" class="nav-item nav-link active"><i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
-            <a href="Admin_ManageChicken.php" class="nav-item nav-link text-light"><i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>
-            <a href="Admin_ManageCollect.php" class="nav-item nav-link text-light"><i class="fa fa-chart-bar me-2 icon"></i>จัดการข้อมูลไข่</a>
-            <a href="Admin_ManageData.php" class="nav-item nav-link text-light"><i class="fa fa-keyboard me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
+            <a href="Admin_Index.php" class="nav-item nav-link text-light">
+                <i class="fa fa-laptop me-2 icon"></i>หน้าหลักผู้ดูแลระบบ</a>
+
+            <a href="Admin_Status.php" class="nav-item nav-link text-light">
+                <i class="fa fa-tachometer-alt me-2 icon"></i>จัดการข้อมูลสถานะ</a>
+
+            <a href="Admin_ManageGeneChicken.php" class="nav-item nav-link active">
+                <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
+
+            <a href="Admin_ManageChicken.php" class="nav-item nav-link text-light">
+                <i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>
+
+            <a href="Admin_ManageCollect.php" class="nav-item nav-link text-light">
+                <i class="fa fa-chart-bar me-2 icon"></i>จัดการข้อมูลไข่</a>
+
+            <a href="Admin_ManageData.php" class="nav-item nav-link text-light">
+                <i class="fa fa-keyboard me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
         </div>
     </nav>
 </div>

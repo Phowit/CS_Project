@@ -1,5 +1,5 @@
 <div class="col-sm-12 col-md-6 col-xl-8">
-    <div class="h-100 bg-primary rounded p-4">
+    <div class="h-100 bg-light rounded p-4">
 
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="mb-0">ข้อมูลการเก็บไข่</h6>
@@ -14,12 +14,11 @@
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-white">
+                    <tr class="text-dark">
                         <th scope="col">รหัส</th>
                         <th scope="col">วันที่เก็บ</th>
                         <th scope="col">จำนวน</th>
                         <th scope="col">ผู้ดูแลที่บันทึก</th>
-                        <th scope="col">เครื่องมือ</th>
                     </tr>
                 </thead>
 

@@ -1,11 +1,22 @@
 <div class="container-fluid pt-4 px-4">
     <div class="bg-light text-center rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-0">ข้อมูลไก่</h6>
 
+            <!--เพิ่ม-->
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
+
+            <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
+            <?php 
+                require_once("Admin_FormChicken.php")
+            ?>
+            <!-- จบ ฟอร์มเพิ่มข้อมูลไก่ -->
+        </div>
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from chicken_data  ";
-            $result = mysqli_query($conn, $sql);
+            $sql = "select * from chicken_data";
+            $result1 = mysqli_query(mysql: $conn, query: $sql);
             ?>
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -22,7 +33,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result1->fetch_assoc()) {
                         $Set_ID = $row['Set_ID'];
                         $Date_in = $row['Date_in'];
                         $Gene = $row['Gene'];
@@ -41,7 +52,7 @@
                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editRecordModal<?= $row['Set_ID']; ?>">แก้ไข</button>
                             </td>
 
-                                <!--Start Edit-->
+                            <!--Start Edit-->
                             <div class="modal fade" id="editRecordModal<?= $row['Set_ID']; ?>" tabindex="-1" aria-labelledby="editRecordModalLabel<?= $row['Set_ID']; ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
@@ -52,34 +63,35 @@
                                         <div class="modal-body">
                                             <!-- Form for Editing Record -->
                                             <form id="addRequestForm" action="Update_ChickenData.php" method="post">
+
                                                 <!-- Add your form fields here for additional request details -->
 
                                                 <input type="hidden" name="Set_ID" class="form-control" id="Set_ID" value="<?php echo $row['Set_ID']; ?>" readonly>
-                                                
-                                                    <div class="form-floating mb-3">
-                                                        <input type="Date" class="form-control" name="Date_in" id="Date_in" placeholder required>
-                                                        <label for="Date_in" class="form-label">วัน เวลา ที่นำเข้ามาเลี้ยง</label>
-                                                    </div>
 
-                                                    <div class="form-floating mb-3">
-                                                        <?php
-                                                        require_once("connect_db.php");
+                                                <div class="form-floating mb-3">
+                                                    <input type="Date" class="form-control" name="Date_in" id="Date_in" placeholder required>
+                                                    <label for="Date_in" class="form-label">วัน เวลา ที่นำเข้ามาเลี้ยง</label>
+                                                </div>
 
-                                                        $sql = "select * from admin order by Name";
-                                                        $result = mysqli_query($conn, $sql);
-                                                        ?>
-                                                        <div class="form-floating mb-3">
-                                                            <select class="form-select" name="Name" id="Name" aria-label="Floating label select example" required>
-                                                                <?php
-                                                                while ($row = $result->fetch_assoc()) {
-                                                                ?>
-                                                                    <option value="<?= $row['Name']; ?>">
-                                                                        <?= $row['Name']; ?></option>
-                                                                <?php   } ?>
-                                                            </select>
-                                                            <label for="Name" class="form-label" placeholder>ชื่อผู้ใช้</label>
-                                                        </div>
+                                                <div class="form-floating mb-3">
+                                                    <?php
+                                                    require_once("connect_db.php");
+
+                                                    $sql = "select * from admin order by Name";
+                                                    $result2 = mysqli_query($conn, $sql);
+                                                    ?>
+                                                    <div class="form-floating mb-3">
+                                                        <select class="form-select" name="Name" id="Name" aria-label="Floating label select example" required>
+                                                            <?php
+                                                            while ($row = $result2->fetch_assoc()) {
+                                                            ?>
+                                                                <option value="<?= $row['Name']; ?>">
+                                                                    <?= $row['Name']; ?></option>
+                                                            <?php   } ?>
+                                                        </select>
+                                                        <label for="Name" class="form-label" placeholder>ชื่อผู้ใช้</label>
                                                     </div>
+                                                </div>
 
                                                 <div class="row">
                                                     <div class="col-12" style="margin-top: 20px;">
@@ -93,34 +105,34 @@
                                 </div>
                             </div>
                             <!--End Edit-->
-                                                                
+
                             <td>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="SetID(<?= $row['Set_ID']; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
                             </td>
 
-                                <!--Start Waring For Delete-->
-                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
+                            <!--Start Waring For Delete-->
+                            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered">
+                                    <div class="modal-content">
 
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                            </div>
-
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                                <button type="button" class="btn btn-danger" onclick="deleteChickenData()">ยืนยัน</button>
-                                            </div>
-
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
+
+                                        <div class="modal-body">
+                                            <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                            <button type="button" class="btn btn-danger" onclick="deleteChickenData()">ยืนยัน</button>
+                                        </div>
+
                                     </div>
                                 </div>
-                                <!--END Warning For Delete-->
+                            </div>
+                            <!--END Warning For Delete-->
                         </tr>
                     <?php } ?> <!-- close php-->
                 </tbody>

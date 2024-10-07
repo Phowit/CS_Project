@@ -9,6 +9,9 @@
 <head>
     <meta charset="utf-8">
     <title>ระบบจัดการฟาร์มไก่ไข่อัจฉริยะด้วยเทคโนโลยีอินเทอร์เน็ตของสรรพสิ่ง</title>
+
+    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
+    
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -62,12 +65,6 @@
                 require_once("Admin_NavBar.php");
             ?>
             <!-- Navbar End -->
-
-            <!-- Form Start -->
-            <?php
-                require_once("Admin_FormAdminData.php");
-            ?>
-            <!-- Form End -->
 
             <!-- Navbar Start -->
             <?php
