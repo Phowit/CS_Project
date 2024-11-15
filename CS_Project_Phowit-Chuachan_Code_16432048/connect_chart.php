@@ -13,6 +13,4 @@ if ($result->num_rows > 0) {                    //ตรวจสอบผลล
 }
 
 echo json_encode($data);                //แสดงผลเป็นไฟล์ประเภท json_encode เพื่อไปจัดรูปเป็นกราฟด้วย JS
-
-$conn->close();                                //ปิดการเชื่อมต่อ
 ?>

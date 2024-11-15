@@ -19,7 +19,7 @@ require_once("connect_db.php");
             <div class="bg-light rounded h-100 p-3">
                 <img src="My_img/water1.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
                 <h6 class="mb-1 text-dark">สถานะ : วาล์วน้ำดื่ม</h6>
-                <small>% ของถาดที่ 1</small>
+                <small>(ระบบน้ำดื่ม)</small>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 </div>
@@ -30,7 +30,7 @@ require_once("connect_db.php");
             <div class="bg-light rounded h-100 p-3">
                 <img src="My_img/sprinkler.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
                 <h6 class="mb-1 text-dark">สถานะ : วาล์วน้ำลดอุณหภูมิ</h6>
-                <small>% ของกระบอกเก็บ</small>
+                <small>(ควบคุมสปิงึ์เกอร์)</small>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 </div>
@@ -41,7 +41,7 @@ require_once("connect_db.php");
             <div class="bg-light rounded h-100 p-3">
                 <img src="My_img/tank.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
                 <h6 class="mb-1 text-dark">สถานะ : วาล์วเก็บอาหารเสริม</h6>
-                <small> องศาเซลเซียส</small>
+                <small>(อาหารเสริม)</small>
                 <div class="form-check form-switch">
                     <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
                 </div>

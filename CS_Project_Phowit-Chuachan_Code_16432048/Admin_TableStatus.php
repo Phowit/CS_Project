@@ -32,9 +32,6 @@
                                 $BallValve_Tem = $row["BallValve_Tem"] == 0 ? "ปิด" : "เปิด";
                                 $BallValve_water = $row["BallValve_water"] == 0 ? "ปิด" : "เปิด";
                                 $BallValve_SFood = $row["BallValve_SFood"] == 0 ? "ปิด" : "เปิด";
-                                $DateControl_ID = $row['DateControl_ID'];
-                                
-                            
                     ?>
                     <tr>
                         <td><?php echo $row['status_ID'];?></td>
@@ -42,7 +39,6 @@
                         <td><?php echo $BallValve_Tem;?></td>
                         <td><?php echo $BallValve_water;?></td>
                         <td><?php echo $BallValve_SFood;?></td>
-                        <td><?php echo $row['DateControl_ID'];?></td>
                     </tr>
                     <?php }} else {
                                 echo "ไม่พบข้อมูล";}?> <!-- close php-->

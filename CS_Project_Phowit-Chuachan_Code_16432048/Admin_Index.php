@@ -1,18 +1,6 @@
 <?php
 require_once("connect_db.php");
 session_start();
-
-/*
-    if (!isset($_SESSION['Admin_ID'])) {
-        $_SESSION['msg'] = "You must log in first";
-        header('location: signin.php');
-    }
-
-    if (!isset($_GET['logout'])) {
-        session_destroy();
-        unset($_SESSION['Admin_ID']);
-        header('location: signin.php');
-    }*/
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -76,27 +64,14 @@ session_start();
                 require_once("Admin_NavBar.php");
             ?>
             <!-- Navbar End -->
-
-            <!-- progress -->
-            <?php
-                require_once("Public_bar.php");
-            ?>
-            <!-- progress -->
-
-
+             
             <!-- Chart Start อาหารหลัก & อาหารในถาด-->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <!--Chart Start อาหารหลัก-->
-                    <?php
-                        require_once("Admin_ChartFood.php");
-                    ?>
                     <!--Chart End อาหารหลัก-->
 
                     <!--Chart Start อาหารหลัก-->
-                    <?php
-                        require_once("Admin_ChartFoodTray.php");
-                    ?>
                     <!--Chart End อาหารหลัก-->
                 </div>
             </div>
@@ -106,15 +81,9 @@ session_start();
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <!--Chart Start อาหารเสริม-->
-                    <?php
-                        require_once("Admin_ChartSupplementaryFood.php");
-                    ?>
                     <!--Chart End อาหารเสริม-->
 
                     <!--Chart Start อุณหภูมิ-->
-                    <?php
-                        require_once("Admin_ChartTemperature.php");
-                    ?>
                     <!--Chart End อุณหภูมิ-->
                 </div>
             </div>
