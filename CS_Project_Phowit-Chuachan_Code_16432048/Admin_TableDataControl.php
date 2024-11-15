@@ -41,19 +41,19 @@
                                     <?php
                                     require_once("connect_db.php");
 
-                                    $sql = "select * from admin order by Name";
+                                    $sql = "select * from admin order by Admin_Name";
                                     $result = mysqli_query($conn, $sql);
                                     ?>
                                     <div class="form-floating mb-3">
-                                        <select class="form-select" name="Name" id="Name" aria-label="Floating label select example" required>
+                                        <select class="form-select" name="Admin_Name" id="Admin_Name" aria-label="Floating label select example" required>
                                             <?php
                                             while ($row = $result->fetch_assoc()) {
                                             ?>
-                                                <option value="<?= $row['Name']; ?>">
-                                                    <?= $row['Name']; ?></option>
+                                                <option value="<?= $row['Admin_Name']; ?>">
+                                                    <?= $row['Admin_Name']; ?></option>
                                             <?php   } ?>
                                         </select>
-                                        <label for="Name" class="form-label" placeholder>ผู้ดูแลที่บันทึก</label>
+                                        <label for="Admin_Name" class="form-label" placeholder>ผู้ดูแลที่บันทึก</label>
                                     </div>
                                 </div>
 
@@ -69,7 +69,19 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from datacontrol ";
+            $sql = "select 
+                        datacontrol.`DateControl_ID`,
+                        datacontrol.`Temperature_range`,
+                        datacontrol.`TimeFoodS`,
+                        datacontrol.`TimeWater`,
+                        datacontrol.`FoodTray_rang`,
+                        datacontrol.`TimeFood_1`,
+                        datacontrol.`TimeFood_2`,
+                        datacontrol.`TimeFood_3`,
+                        datacontrol.`Admin_ID`,
+                        admin.Admin_Name
+                    FROM datacontrol 
+                    INNER JOIN admin ON datacontrol.Admin_ID = admin.Admin_ID;";
             $result = mysqli_query($conn, $sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -96,7 +108,7 @@
                         $TimeFood_1 = $row['TimeFood_1'];
                         $TimeFood_2 = $row['TimeFood_2'];
                         $TimeWater = $row['TimeWater'];
-                        $Admin_ID = $row['Admin_ID'];
+                        $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
                             <td><?php echo $row['DateControl_ID']; ?></td>
@@ -106,7 +118,7 @@
                             <td><?php echo $row['TimeWater']; ?></td>
                             <td><?php echo $row['TimeFoodS']; ?></td>
                             <td><?php echo $row['FoodTray_rang']; ?>%</td>
-                            <td><?php echo $row['Admin_ID']; ?></td>
+                            <td><?php echo $row['Admin_Name']; ?></td>
                         </tr>
                     <?php } ?> <!-- close php-->
                 </tbody>
