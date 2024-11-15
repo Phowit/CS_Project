@@ -15,7 +15,16 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from chickendata";
+            $sql = "select 
+                    chickendata.`Set_ID`,
+                    chickendata.`Date_in`,
+                    chickendata.`Gene`,
+                    chickendata.`Amount`,
+                    chickendata.`Admin_ID`,
+                    admin.Admin_Name
+                    FROM chickendata 
+                    INNER JOIN admin ON chickendata.Admin_ID = admin.Admin_ID;
+                    ";
             $result1 = mysqli_query(mysql: $conn, query: $sql);
             ?>
 
@@ -77,19 +86,19 @@
                                                     <?php
                                                     require_once("connect_db.php");
 
-                                                    $sql = "select * from admin order by Name";
+                                                    $sql = "select * from admin order by Admin_Name";
                                                     $result2 = mysqli_query($conn, $sql);
                                                     ?>
                                                     <div class="form-floating mb-3">
-                                                        <select class="form-select" name="Name" id="Name" aria-label="Floating label select example" required>
+                                                        <select class="form-select" name="Admin_Name" id="Admin_Name" aria-label="Floating label select example" required>
                                                             <?php
                                                             while ($row = $result2->fetch_assoc()) {
                                                             ?>
-                                                                <option value="<?= $row['Name']; ?>">
-                                                                    <?= $row['Name']; ?></option>
+                                                                <option value="<?= $row['Admin_Name']; ?>">
+                                                                    <?= $row['Admin_Name']; ?></option>
                                                             <?php   } ?>
                                                         </select>
-                                                        <label for="Name" class="form-label" placeholder>ชื่อผู้ใช้</label>
+                                                        <label for="Admin_Name" class="form-label" placeholder>ชื่อผู้ใช้</label>
                                                     </div>
                                                 </div>
 
