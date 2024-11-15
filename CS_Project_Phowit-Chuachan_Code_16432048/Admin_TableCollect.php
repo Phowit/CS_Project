@@ -15,7 +15,14 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from Harvest ";
+            $sql = "select 
+                        harvest.`Harvest_ID`,
+                        harvest.`Date_Harvest`,
+                        harvest.`EggAmount`,
+                        admin.`Admin_ID`,
+                        admin.Admin_Name
+                    FROM harvest 
+                    INNER JOIN admin ON harvest.Admin_ID = admin.Admin_ID;";
             $result = mysqli_query($conn, $sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -35,13 +42,13 @@
                         $Harvest_ID = $row['Harvest_ID'];
                         $Date_Harvest = $row['Date_Harvest'];
                         $EggAmount = $row['EggAmount'];
-                        $Name = $row['Name'];
+                        $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
                             <td><?php echo $row['Harvest_ID']; ?></td>
                             <td><?php echo $row['Date_Harvest']; ?></td>
                             <td><?php echo $row['EggAmount']; ?></td>
-                            <td><?php echo $row['Name']; ?></td>
+                            <td><?php echo $row['Admin_Name']; ?></td>
                             <td> <a class="btn btn-sm btn-primary col-12" href="">แก้ไข</a> </td>
 
                             <td>
