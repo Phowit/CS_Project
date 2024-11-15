@@ -15,7 +15,7 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from chicken_data";
+            $sql = "select * from chickendata";
             $result1 = mysqli_query(mysql: $conn, query: $sql);
             ?>
 
@@ -38,14 +38,14 @@
                         $Date_in = $row['Date_in'];
                         $Gene = $row['Gene'];
                         $Amount = $row['Amount'];
-                        $Name = $row['Name'];
+                        $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
                             <td><?php echo $row['Set_ID']; ?></td>
                             <td><?php echo $row['Date_in']; ?></td>
                             <td><?php echo $row['Gene']; ?></td>
                             <td><?php echo $row['Amount']; ?></td>
-                            <td><?php echo $row['Name']; ?></td>
+                            <td><?php echo $row['Admin_Name']; ?></td>
 
                             <!--แก้ไข-->
                             <td>

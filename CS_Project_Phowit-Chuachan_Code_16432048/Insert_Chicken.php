@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $Name = $_POST['Name'];
 
     // เตรียมคำสั่ง SQL
-    $sqli = "insert into chicken_data(Date_in,Gene,Amount,Name)";
+    $sqli = "insert into chickendata(Date_in,Gene,Amount,Name)";
     $sqli .= "values('$Date_in','$Gene','$Amount','$Name')";
 
     mysqli_query($conn,$sqli); 

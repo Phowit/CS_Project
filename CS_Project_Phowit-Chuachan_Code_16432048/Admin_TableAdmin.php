@@ -37,7 +37,7 @@
                     <?php
                     while ($row = $result->fetch_assoc()) {
                         $Admin_ID = $row['Admin_ID'];
-                        $Name = $row['Name'];
+                        $Admin_Name = $row['Admin_Name'];
                         $Tel = $row['Tel'];
                         $Address = $row['Address'];
                         $Email = $row['Email'];
@@ -45,7 +45,7 @@
                     ?>
                         <tr>
                             <td><?php echo $row['Admin_ID']; ?></td>
-                            <td><?php echo $row['Name']; ?></td>
+                            <td><?php echo $row['Admin_Name']; ?></td>
                             <td><?php echo $row['Tel']; ?></td>
                             <td><?php echo $row['Address']; ?></td>
                             <td><?php echo $row['Email']; ?></td>
