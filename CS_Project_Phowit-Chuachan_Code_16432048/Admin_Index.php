@@ -53,7 +53,7 @@ session_start();
 
         <!-- Sidebar Start -->
         <?php
-            require_once("Admin_SideBar1.php");
+        require_once("Admin_SideBar1.php");
         ?>
         <!-- Sidebar End -->
 
@@ -61,17 +61,36 @@ session_start();
         <div class="content">
             <!-- Navbar Start -->
             <?php
-                require_once("Admin_NavBar.php");
+            require_once("Admin_NavBar.php");
             ?>
             <!-- Navbar End -->
-             
+
             <!-- Chart Start อาหารหลัก & อาหารในถาด-->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
+
                     <!--Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิ</h6>
+                            </div>
+                            <canvas id="Temperature_Chart"></canvas>
+                        </div>
+                    </div>
                     <!--Chart End อาหารหลัก-->
 
                     <!--Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารหลัก</h6>
+                            </div>
+                            <canvas id="Food_Chart"></canvas>
+
+                        </div>
+                    </div>
                     <!--Chart End อาหารหลัก-->
                 </div>
             </div>
@@ -81,9 +100,29 @@ session_start();
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
                     <!--Chart Start อาหารเสริม-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารในถาด</h6>
+                            </div>
+                            <canvas id="FoodTray_Chart"></canvas>
+
+                        </div>
+                    </div>
                     <!--Chart End อาหารเสริม-->
 
                     <!--Chart Start อุณหภูมิ-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารเสริม</h6>
+                            </div>
+                            <canvas id="FoodS_Chart"></canvas>
+
+                        </div>
+                    </div>
                     <!--Chart End อุณหภูมิ-->
                 </div>
             </div>
@@ -123,7 +162,7 @@ session_start();
 
             <!--Chart Start อุณหภูมิ-->
             <?php
-                require_once("Admin_Dashboard.php");
+            require_once("Admin_Dashboard.php");
             ?>
             <!--Chart End อุณหภูมิ-->
         </div>
