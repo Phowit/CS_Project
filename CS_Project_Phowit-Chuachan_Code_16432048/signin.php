@@ -1,6 +1,12 @@
 <?php
     require_once("connect_db.php");
     session_start();
+
+    // หากผู้ใช้ล็อกอินแล้ว ให้ย้ายไปหน้า dashboard
+    if (isset($_SESSION['Admin_Name'])) {
+        header("Location: Admin_Index.php");
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -51,25 +57,29 @@
             <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
                 <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
                     <div class="bg-primary rounded p-4 p-sm-5 my-4 mx-3">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
-                            <a href="index.html" class="">
-                                <h3 class="text-dark"></i>เข้าสู่ระบบผู้ดูแล</h3>
-                            </a>
-                        </div>
 
-                        <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="floatingInput" placeholder="name@example.com">
-                            <label for="floatingInput">Admin ID</label>
-                        </div>
+                        <form action="process_login.php" method="POST">
+                            <div class="d-flex align-items-center justify-content-between mb-3">
+                                <a href="index.html" class="">
+                                    <h3 class="text-dark"></i>เข้าสู่ระบบผู้ดูแล</h3>
+                                </a>
+                            </div>
 
-                        <div class="form-floating mb-4">
-                            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                            <label for="floatingPassword">Password</label>
-                        </div>
+                            <div class="form-floating mb-3">
+                                <input type="number" class="form-control" id="floatingInput" name="Admin_ID_Input" required>
+                                <label for="floatingInput">Admin ID</label>
+                            </div>
 
-                        <button type="submit" class="btn btn-primary py-3 w-100 mb-4">ยืนยัน</button>
-                        <a href="User_Index.php" class="btn btn-warning py-3 w-100 mb-4">ยกเลิก</a>
-                        <p class="text-center mb-0">ยังไม่มีบัญชี<a href="signin.php">สร้างบัญชีผู้ดูแล</a></p>
+                            <div class="form-floating mb-4">
+                                <input type="password" class="form-control" id="floatingPassword" name="Admin_Password_Input" required>
+                                <label for="floatingPassword">Password</label>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary py-3 w-100 mb-4">ยืนยัน</button>
+                            <a href="User_Index.php" class="btn btn-warning py-3 w-100 mb-4">ยกเลิก</a>
+                            <p class="text-center mb-0">ยังไม่มีบัญชี<a href="signin.php">สร้างบัญชีผู้ดูแล</a></p>
+
+                        </form>
                     </div>
                 </div>
             </div>
