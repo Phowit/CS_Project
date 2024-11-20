@@ -1,4 +1,4 @@
-<div class="col-sm-12 col-md-6 col-xl-8">
+<div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
 
         <div class="d-flex align-items-center justify-content-between mb-4">
@@ -8,7 +8,9 @@
         <div class="table-responsive">
             <?php
                 require_once("connect_db.php");
-                $sql = "select * from Harvest ";
+                $sql = "select `Harvest_ID`,`Date_Harvest`,`EggAmount`,harvest.Admin_ID, `Admin_Name`
+                        from Harvest 
+                        INNER JOIN admin ON harvest.Admin_ID = admin.Admin_ID;" ;
                 $result = mysqli_query($conn,$sql);
             ?>  
 
@@ -28,13 +30,13 @@
                         $Harvest_ID = $row['Harvest_ID'];
                         $Date_Harvest = $row['Date_Harvest'];
                         $EggAmount = $row['EggAmount'];
-                        $Name = $row['Name'];
+                        $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
                             <td><?php echo $row['Harvest_ID'];?></td>
                             <td><?php echo $row['Date_Harvest'];?></td>
                             <td><?php echo $row['EggAmount'];?></td>
-                            <td><?php echo $row['Name'];?></td>
+                            <td><?php echo $row['Admin_Name'];?></td>
                         </tr>
                     <?php }?>
                 </tbody>

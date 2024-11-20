@@ -27,7 +27,7 @@
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" style="font-size: 14px;">
                         <th scope="col" class="col-1">รหัส</th>
                         <th scope="col" class="col-3">วันที่เก็บ</th>
                         <th scope="col" class="col-2">จำนวน (ฟอง)</th>
@@ -36,7 +36,7 @@
                         <th scope="col" class="col-1">ลบ</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody style="font-size: 13px;">
                     <?php
                     while ($row = $result->fetch_assoc()) {
                         $Harvest_ID = $row['Harvest_ID'];

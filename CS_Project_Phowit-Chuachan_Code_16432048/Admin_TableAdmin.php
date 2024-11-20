@@ -22,7 +22,7 @@
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" style="font-size: 14px;">
                         <th scope="col" class="col-1">รหัสผู้ดูแล</th>
                         <th scope="col" class="col-2">ชื่อผู้ดูแลระบบ</th>
                         <th scope="col" class="col-2">เบอร์โทรติดต่อ</th>
@@ -43,7 +43,7 @@
                         $Email = $row['Email'];
                         $Program_ID = $row['Program_ID'];
                     ?>
-                        <tr>
+                        <tr style="font-size: 13px;">
                             <td><?php echo $row['Admin_ID']; ?></td>
                             <td><?php echo $row['Admin_Name']; ?></td>
                             <td><?php echo $row['Tel']; ?></td>

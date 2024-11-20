@@ -1,6 +1,5 @@
 <?php
     require_once("connect_db.php");
-    session_start();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -60,16 +59,10 @@
             ?>
             <!-- Navbar End -->
 
-            <!-- progress -->
-            <?php
-                require_once("Public_bar.php");
-            ?>
-            <!-- progress -->
-
             <!--table Start ข้อมูลไก่-->
             <?php
-		        require_once("User_TableChickenData.php");
-		    ?>
+                require_once("User_TableChickenData.php");  
+            ?>
             <!--teble End ข้อมูลไก่-->
 
             <!-- Widgets Start -->
@@ -82,16 +75,6 @@
                     ?>
                     <!--ข้อมูลการเก็บไข่ End-->
 
-                    <!-- calendar Start-->
-                        <div class="col-sm-12 col-md-6 col-xl-4">
-                            <div class="h-100 bg-light rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between mb-4">
-                                    <h6 class="mb-0">ปฏิทิน</h6>
-                                </div>
-                                <div id="calender"></div>
-                            </div>
-                        </div>
-                    <!-- Widgets End -->
                 </div>
             </div>
             <!-- Widget End -->

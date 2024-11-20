@@ -87,14 +87,14 @@
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-dark">
-                        <th scope="col" class="col-1"><small>รหัสชุดควบคุม</small></th>
-                        <th scope="col" class="col-1"><small>อุณหภูมิไม่เกิน</small></th>
-                        <th scope="col" class="col-2"><small>เวลาให้อาหาร<br>(รอบที่1)</small></th>
-                        <th scope="col" class="col-2"><small>เวลาให้อาหาร<br>(รอบที่2)</small></th>
-                        <th scope="col" class="col-2"><small>เวลาให้น้ำ</small></th>
-                        <th scope="col" class="col-2"><small>เวลาให้อาหารเสริม</small></th>
-                        <th scope="col" class="col-2"><small>ระดับอาหาร<br>ในถาด(%)</small></th>
-                        <th scope="col" class="col-1"><small>ผู้ดูแลที่บันทึก</small></th>
+                        <th scope="col" class="col-1" style="font-size: 14px;">รหัสชุดควบคุม</th>
+                        <th scope="col" class="col-1" style="font-size: 14px;">อุณหภูมิไม่เกิน</th>
+                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้อาหาร<br>(รอบที่1)</th>
+                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้อาหาร<br>(รอบที่2)</th>
+                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้น้ำ</th>
+                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้อาหารเสริม</th>
+                        <th scope="col" class="col-2" style="font-size: 14px;">ระดับอาหารในถาด<br>ที่ต้องแจ้งเตือน(%)</th>
+                        <th scope="col" class="col-2" style="font-size: 14px;">ผู้ดูแลที่บันทึก</th>
                     </tr>
                 </thead>
 
@@ -111,14 +111,14 @@
                         $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
-                            <td><?php echo $row['DateControl_ID']; ?></td>
-                            <td><?php echo $row['Temperature_range']; ?></td>
-                            <td><?php echo $row['TimeFood_1']; ?></td>
-                            <td><?php echo $row['TimeFood_2']; ?></td>
-                            <td><?php echo $row['TimeWater']; ?></td>
-                            <td><?php echo $row['TimeFoodS']; ?></td>
-                            <td><?php echo $row['FoodTray_rang']; ?>%</td>
-                            <td><?php echo $row['Admin_Name']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['DateControl_ID']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['Temperature_range']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['TimeFood_1']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['TimeFood_2']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['TimeWater']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['TimeFoodS']; ?></td>
+                            <td style="font-size: 13px;"><?php echo $row['FoodTray_rang']; ?>%</td>
+                            <td style="font-size: 13px;"><?php echo $row['Admin_Name']; ?></td>
                         </tr>
                     <?php } ?> <!-- close php-->
                 </tbody>

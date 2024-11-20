@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+    // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
+    if (!isset($_SESSION['Admin_ID'])) {
+        header("Location: signin.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า signin.php
+        exit();
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -53,7 +63,7 @@
                         </div>
 
                         <a href="Admin_Index.php" class="btn btn-lg btn-primary w-45 m-2">ยกเลิก</a>
-                        <a href="User_Index.php" class="btn btn-lg btn-warning  w-45 m-2">ยืนยัน</a>
+                        <a href="logout.php" class="btn btn-lg btn-warning  w-45 m-2">ยืนยัน</a>
 
                     </div>
                 </div>

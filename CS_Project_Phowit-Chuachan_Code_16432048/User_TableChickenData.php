@@ -8,7 +8,9 @@
         <div class="table-responsive">
             <?php
                 require_once("connect_db.php");
-                $sql = "select * from chicken_data  ";
+                $sql = "select `Set_ID`,`Date_in`,`Gene`,`Amount`,chickendata.`Admin_ID`,`Admin_Name`
+                        from chickendata
+                        INNER JOIN admin ON chickendata.Admin_ID = admin.Admin_ID;" ;
                 $result = mysqli_query($conn,$sql);
             ?>  
              <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -29,14 +31,14 @@
                         $Date_in = $row['Date_in'];
                         $Gene = $row['Gene'];
                         $Amount = $row['Amount'];
-                        $Name = $row['Name'];
+                        $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
                             <td><?php echo $row['Set_ID']; ?></td>
                             <td><?php echo $row['Date_in']; ?></td>
                             <td><?php echo $row['Gene']; ?></td>
                             <td><?php echo $row['Amount']; ?></td>
-                            <td><?php echo $row['Name']; ?></td>
+                            <td><?php echo $row['Admin_Name']; ?></td>
 
                         </tr>
                     <?php } ?> <!-- close php-->
