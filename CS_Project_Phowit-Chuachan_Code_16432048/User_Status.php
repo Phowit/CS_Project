@@ -12,6 +12,8 @@ session_start();
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
+
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -77,7 +79,7 @@ session_start();
                 </div>
             </div>
             <!-- Widget End -->
-             
+
             <!-- Back to Top -->
             <a href="#" class="btn btn-lg btn-success btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
         </div>

@@ -19,6 +19,8 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
+
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
@@ -77,7 +79,7 @@
 
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">ยืนยัน</button>
                             <a href="User_Index.php" class="btn btn-warning py-3 w-100 mb-4">ยกเลิก</a>
-                            <p class="text-center mb-0">ยังไม่มีบัญชี<a href="signin.php">สร้างบัญชีผู้ดูแล</a></p>
+                            <a class="text-center mb-0" href="User_index.php">ยังไม่มีบัญชี</a>
 
                         </form>
                     </div>

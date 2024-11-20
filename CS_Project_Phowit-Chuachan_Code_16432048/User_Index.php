@@ -11,6 +11,8 @@
     <meta content="" name="keywords">
     <meta content="" name="description">
 
+    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
+
     <!-- Favicon -->
     <link href="img/favicon.ico" rel="icon">
 
