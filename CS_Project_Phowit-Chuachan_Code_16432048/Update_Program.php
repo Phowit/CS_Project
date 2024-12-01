@@ -4,15 +4,14 @@
     require_once("connect_db.php");
 
     // รับข้อมูลจากฟอร์ม
-    $Gene_ID = $_POST['Gene_ID'];
-    $Gene_Name = $_POST['Gene_Name'];
-    $Description = $_POST['Description'];
+    $Program_ID = $_POST['Program_ID'];
+    $Program_Name = $_POST['Program_Name'];
 
         // เขียนคำสั่ง SQL สำหรับลบข้อมูลสมาชิก
-        $sqli = "UPDATE gene SET Gene_Name = '$Gene_Name',Description = '$Description' WHERE Gene_ID = '$Gene_ID'";
+        $sqli = "UPDATE program SET Program_Name = '$Program_Name' WHERE Program_ID = '$Program_ID'";
 
         // ทำการลบข้อมูล
         mysqli_query($conn,$sqli); 
 ?>
 
-<meta http-equiv="refresh" content = "0; url = Admin_ManageGeneChicken.php ">
+<meta http-equiv="refresh" content = "0; url = Admin_FacultyProgram.php ">

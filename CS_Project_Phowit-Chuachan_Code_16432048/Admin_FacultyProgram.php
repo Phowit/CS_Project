@@ -92,30 +92,63 @@ if (!isset($_SESSION['Admin_ID'])) {
                             </div>
 
                             <div class="col-sm-2 col-xl-1">
-                                <button type="button" 
-                                        class="btn btn-primary" 
-                                        data-bs-toggle="modal" 
+                                <button type="button"
+                                        class="btn btn-primary"
+                                        data-bs-toggle="modal"
                                         data-bs-target="#editFacultyModal<?= $Faculty_ID; ?>">
                                         แก้ไข
                                 </button>
                             </div>
 
+                            <!--Start Edit Faculty-->
+                            <div class="modal fade" id="editFacultyModal<?= $Faculty_ID; ?>" tabindex="-1" aria-labelledby="editRecordModalLabel<?= $Faculty_ID; ?>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="editFacultyModalLabel<?= $Faculty_ID; ?>">แก้ไขข้อมูล</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Form for Editing Record -->
+                                            <form id="editFacultyForm" action="Update_Faculty.php" method="post">
+                                                <!-- Add your form fields here for additional request details -->
+
+                                                <input type="hidden" name="Faculty_ID" class="form-control" id="Faculty_ID" value="<?php echo $Faculty_ID; ?>" readonly>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="text" class="form-control" id="Faculty_Name" name="Faculty_Name" value="<?php echo $Faculty_Name; ?>" placeholder required>
+                                                    <label class="form-label">ชื่อคณะ</label>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12" style="margin-top: 20px;">
+                                                        <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Edit Faculty-->
+
                             <div class="col-sm-2 col-xl-1">
-                                <button type="button" 
-                                    class="btn btn-danger" 
-                                    data-bs-toggle="modal" 
-                                    onclick="GeneID(<?= $Faculty_ID; ?>)" 
-                                    data-bs-target="#confirmDeleteModal">
-                                    ลบ
+                                <button type="button"
+                                        class="btn btn-danger"
+                                        data-bs-toggle="modal"
+                                        onclick="GeneID(<?= $Faculty_ID; ?>)"
+                                        data-bs-target="#confirmDeleteModal">
+                                        ลบ
                                 </button>
                             </div>
                         </div>
 
                         <div class="d-flex align-items-center justify-content-between mb-4">
-                        <?php
-                        $sql1 = "SELECT * FROM program WHERE Faculty_ID = $Faculty_ID";
-                        $result1 = mysqli_query($conn, $sql1);
-                        ?>
+                            <?php
+                            $sql1 = "SELECT * FROM program WHERE Faculty_ID = $Faculty_ID";
+                            $result1 = mysqli_query($conn, $sql1);
+                            ?>
 
                             <table class="table text-start align-middle table-bordered table-hover mb-0">
                                 <thead>
@@ -136,22 +169,55 @@ if (!isset($_SESSION['Admin_ID'])) {
 
                                             <!--แก้ไข-->
                                             <td>
-                                                <button type="button" 
-                                                        class="btn btn-primary" 
-                                                        data-bs-toggle="modal" 
-                                                        data-bs-target="#editRecordModal<?= $Faculty_ID; ?>">
+                                                <button type="button"
+                                                        class="btn btn-primary"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#editProgramModal<?= $Program_ID; ?>">
                                                         แก้ไข
                                                 </button>
                                             </td>
+
+                                            <!--Start Edit Program-->
+                                            <div class="modal fade" id="editProgramModal<?= $Program_ID; ?>" tabindex="-1" aria-labelledby="editRecordModalLabel<?= $Program_ID; ?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="editProgramModalLabel<?= $Program_ID; ?>">แก้ไขข้อมูล</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <!-- Form for Editing Record -->
+                                                            <form id="editProgramForm" action="Update_Program.php" method="post">
+                                                                <!-- Add your form fields here for additional request details -->
+
+                                                                <input type="hidden" name="Program_ID" class="form-control" id="Program_ID" value="<?php echo $Program_ID; ?>" readonly>
+
+                                                                <div class="form-floating mb-3">
+                                                                    <input type="text" class="form-control" id="Program_Name" name="Program_Name" value="<?php echo $Program_Name; ?>" placeholder required>
+                                                                    <label class="form-label">ชื่อสาขา</label>
+                                                                </div>
+
+                                                                <div class="row">
+                                                                    <div class="col-12" style="margin-top: 20px;">
+                                                                        <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!--End Edit Program-->
 
                                             <!--Start Edit-->
                                             <!--End Edit-->
 
                                             <td>
-                                                <button type="button" 
-                                                        class="btn btn-danger" 
-                                                        data-bs-toggle="modal" 
-                                                        onclick="GeneID(<?= $Faculty_ID; ?>)" 
+                                                <button type="button"
+                                                        class="btn btn-danger"
+                                                        data-bs-toggle="modal"
+                                                        onclick="GeneID(<?= $Faculty_ID; ?>)"
                                                         data-bs-target="#confirmDeleteModal">
                                                         ลบ
                                                 </button>
@@ -161,14 +227,14 @@ if (!isset($_SESSION['Admin_ID'])) {
                                             <!--END Warning For Delete-->
 
                                         </tr>
-                                <?php } ?>
+                                    <?php } ?>
                                 </tbody>
                             </table>
                         </div>
                     </div>
                 </div>
-                <?php } ?>
-                <!-- table End -->
+            <?php } ?>
+            <!-- table End -->
 
         </div>
         <!-- Content End -->
@@ -188,6 +254,49 @@ if (!isset($_SESSION['Admin_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <script>
+        // Get the modal
+        var modal = document.getElementById("myModal");
+
+        // Get the button that opens the modal
+        var btn = document.getElementById("myBtn");
+
+        // Get the <span> element that closes the modal
+        var span = document.getElementsByClassName("btn-close")[0];
+
+        // When the user clicks on the button, open the modal
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
+
+        // When the user clicks on <span> (x), close the modal
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
+
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+
+    <script>
+        var GeneID;
+
+        // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
+        function GeneID(Gene_ID) {
+            GeneID = Gene_ID;
+        }
+
+        function deleteGene() {
+
+            // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
+            window.location.href = "Delete_Gene.php?id=" + GeneID;
+
+        }
+    </script>
 </body>
 
 </html>
