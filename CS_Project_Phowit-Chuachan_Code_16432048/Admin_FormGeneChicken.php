@@ -1,28 +1,3 @@
-<!--<div class="modal fade" id="addModal" tabindex="-1" aria-labelledby="addModal" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
-
-                        <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-
-                                <form action="Insert_GeneChicken.php" method="post">
-                                    <div class="form-floating mb-3">
-                                        <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" placeholder required>
-                                        <label class="form-label">ชื่อสายพันธุ์ไก่</label>
-                                    </div>
-
-                                    <div class="form-floating mb-3">
-                                        <textarea class="form-control" id="Description" name="Description" style="height: 150px;" placeholder></textarea>
-                                        <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
-                                    </div>
-
-                                    <button type="submit" class="btn btn-primary me-4">บันทึก</button>
-                                    <button type="reset" class="btn btn-primary me-4" value="Reset">ล้างข้อมูล</button>
-                                </form>
-                            </div>
-            </div>
-        </div>
-    </div>-->
-
     <!--Start add-->
     <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
