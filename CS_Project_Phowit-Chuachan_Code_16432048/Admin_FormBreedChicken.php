@@ -12,7 +12,7 @@
                                 <!-- Add your form fields here for additional request details -->
 
                                 <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" placeholder required>
+                                    <input type="text" class="form-control" id="Breed_Name" name="Breed_Name" placeholder required>
                                     <label class="form-label">ชื่อสายพันธุ์ไก่</label>
                                 </div>
 

@@ -4,12 +4,16 @@
     require_once("connect_db.php");
 
     // รับข้อมูลจากฟอร์ม
-    $Gene_ID = $_POST['Gene_ID'];
-    $Gene_Name = $_POST['Gene_Name'];
-    $Description = $_POST['Description'];
+    $Breed_ID = $_POST['Breed_ID'];
+    $Breed_Name = $_POST['Breed_Name'];
+    $Breed_Description = $_POST['Breed_Description'];
+    //$Breed_Img = $_POST['Breed_Img']; Breed_Img = '$Breed_Img'
 
         // เขียนคำสั่ง SQL สำหรับลบข้อมูลสมาชิก
-        $sqli = "UPDATE gene SET Gene_Name = '$Gene_Name',Description = '$Description' WHERE Gene_ID = '$Gene_ID'";
+        $sqli = "   UPDATE breed 
+                    SET Breed_Name = '$Breed_Name',
+                        Breed_Description = '$Breed_Description'
+                    WHERE Breed_ID = '$Breed_ID'";
 
         // ทำการลบข้อมูล
         mysqli_query($conn,$sqli); 

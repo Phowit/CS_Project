@@ -74,13 +74,13 @@
 
             <!-- Form Start -->
             <?php
-                require_once("Admin_FormGeneChicken.php");
+                require_once("Admin_FormBreedChicken.php");
             ?>
             <!-- Form End -->
 
             <!-- table Start -->
             <?php
-                require_once("Admin_TableGene.php");
+                require_once("Admin_TableBreed.php");
             ?>
             <!-- table End -->
 

@@ -11,7 +11,7 @@
 
             <!--Chart Start อุณหภูมิ-->
             <?php
-                require_once("Admin_FormGeneChicken.php");
+                require_once("Admin_FormBreedChicken.php");
             ?>
             <!--Chart End อุณหภูมิ-->
         </div>
@@ -19,15 +19,16 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from gene ";
+            $sql = "select * from breed ";
             $result = mysqli_query($conn, $sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-dark">
-                        <th scope="col" class="col-1">รหัส</th>
+                        <th scope="col" class="col-0.5">รหัส</th>
+                        <th scope="col" class="col-2">รูปตัวอย่าง</th>
                         <th scope="col" class="col-2">ชื่อสายพันธุ์ไก่</th>
-                        <th scope="col" class="col-7">คำอธิบายสายพันธุ์</th>
+                        <th scope="col" class="col-5.5">คำอธิบายสายพันธุ์</th>
                         <th scope="col" class="col-1">แก้ไข</th>
                         <th scope="col" class="col-1">ลบ</th>
                     </tr>
@@ -35,42 +36,43 @@
                 <tbody>
                     <?php
                     while ($row = $result->fetch_assoc()) {
-                        $Gene_ID = $row['Gene_ID'];
-                        $Gene_Name = $row['Gene_Name'];
-                        $Description = $row['Description'];
+                        $Breed_ID = $row['Breed_ID'];
+                        $Breed_Name = $row['Breed_Name'];
+                        $Breed_Description = $row['Breed_Description'];
                     ?>
                         <tr>
-                            <td><?php echo $row['Gene_ID']; ?></td>
-                            <td><?php echo $row['Gene_Name']; ?></td>
-                            <td><?php echo $row['Description']; ?></td>
+                            <td><?php echo $Breed_ID; ?></td>
+                            <td>a</td>
+                            <td><?php echo $Breed_Name; ?></td>
+                            <td><?php echo $Breed_Description; ?></td>
 
                             <!--แก้ไข-->
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editRecordModal<?= $row['Gene_ID']; ?>">แก้ไข</button>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditBreedModal<?= $Breed_ID; ?>">แก้ไข</button>
                             </td>
 
                             <!--Start Edit-->
-                            <div class="modal fade" id="editRecordModal<?= $row['Gene_ID']; ?>" tabindex="-1" aria-labelledby="editRecordModalLabel<?= $row['Gene_ID']; ?>" aria-hidden="true">
+                            <div class="modal fade" id="EditBreedModal<?= $Breed_ID; ?>" tabindex="-1" aria-labelledby="EditBreedModalLabel<?= $Breed_ID; ?>" aria-hidden="true">
                                 <div class="modal-dialog modal-dialog-centered modal-lg">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title" id="editRecordModalLabel<?= $row['Gene_ID']; ?>">แก้ไขข้อมูล</h5>
+                                            <h5 class="modal-title" id="EditBreedModalLabel<?= $Breed_ID; ?>">แก้ไขข้อมูล</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
                                         <div class="modal-body">
                                             <!-- Form for Editing Record -->
-                                            <form id="editRecordForm" action="Update_Gene.php" method="post">
+                                            <form id="EditBreedForm" action="Update_Breed.php" method="post">
                                                 <!-- Add your form fields here for additional request details -->
 
-                                                <input type="hidden" name="Gene_ID" class="form-control" id="Gene_ID" value="<?php echo $row['Gene_ID']; ?>" readonly>
+                                                <input type="hidden" name="Breed_ID" class="form-control" id="Breed_ID" value="<?php echo $Breed_ID; ?>" readonly>
 
                                                 <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" value="<?php echo $row['Gene_Name'] ?>" placeholder required>
+                                                    <input type="text" class="form-control" id="Breed_Name" name="Breed_Name" value="<?php echo $Breed_Name; ?>" placeholder required>
                                                     <label class="form-label">ชื่อสายพันธุ์ไก่</label>
                                                 </div>
 
                                                 <div class="form-floating mb-3">
-                                                    <textarea class="form-control" id="Description" name="Description" style="height: 150px;" placeholder><?php echo $row['Description']; ?></textarea>
+                                                    <textarea class="form-control" id="Breed_Description" name="Breed_Description" style="height: 150px;" placeholder><?php echo $Breed_Description; ?></textarea>
                                                     <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
                                                 </div>
 
@@ -88,7 +90,7 @@
                             <!--End Edit-->
 
                             <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="GeneID(<?= $row['Gene_ID']; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="GeneID(<?= $Breed_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
                             </td>
 
                             <!--Start Waring For Delete-->
@@ -107,7 +109,7 @@
 
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                            <button type="button" class="btn btn-danger" onclick="deleteGene()">ยืนยัน</button>
+                                            <button type="button" class="btn btn-danger" onclick="deleteBreed()">ยืนยัน</button>
                                         </div>
 
                                     </div>
@@ -152,17 +154,17 @@
 </script>
 
 <script>
-    var GeneID;
+    var BreedID;
 
     // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
-    function GeneID(Gene_ID) {
-        GeneID = Gene_ID;
+    function BreedID(Breed_ID) {
+        BreedID = Breed_ID;
     }
 
-    function deleteGene() {
+    function deleteBreed() {
 
         // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_Gene.php?id=" + GeneID;
+        window.location.href = "Delete_Breed.php?id=" + BreedID;
 
     }
 </script>
