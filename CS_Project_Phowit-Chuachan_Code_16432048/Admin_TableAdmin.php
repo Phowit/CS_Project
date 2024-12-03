@@ -41,19 +41,19 @@
                         $Tel = $row['Tel'];
                         $Address = $row['Address'];
                         $Email = $row['Email'];
-                        $Program_ID = $row['Program_ID'];
+                        $Program = $row['Program'];
                     ?>
                         <tr style="font-size: 13px;">
-                            <td><?php echo $row['Admin_ID']; ?></td>
-                            <td><?php echo $row['Admin_Name']; ?></td>
-                            <td><?php echo $row['Tel']; ?></td>
-                            <td><?php echo $row['Address']; ?></td>
-                            <td><?php echo $row['Email']; ?></td>
-                            <td><?php echo $row['Program_ID']; ?></td>
+                            <td><?php echo $Admin_ID; ?></td>
+                            <td><?php echo $Admin_Name; ?></td>
+                            <td><?php echo $Tel; ?></td>
+                            <td><?php echo $Address; ?></td>
+                            <td><?php echo $Email; ?></td>
+                            <td><?php echo $Program; ?></td>
                             <td> <a class="btn btn-sm btn-primary col-12">แก้ไข</a> </td>
 
                             <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="AdminID(<?= $row['Admin_ID']; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="AdminID(<?= $Admin_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
                             </td>
 
                             <!--Start Waring For Delete-->

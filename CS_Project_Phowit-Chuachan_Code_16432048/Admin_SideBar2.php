@@ -9,14 +9,14 @@
             </div>
 
             <div class="ms-3">
-                <h6 class="mb-0 text-light">หน้าหลักผู้ดูแลระบบ</h6>
+                <h6 class="mb-0 text-light">หน้าหลัก</h6>
                 <span class="text-light">Admin</span>
             </div>
         </div>
 
         <div class="navbar-nav w-100">
             <a href="Admin_Index.php" class="nav-item nav-link text-light">
-                <i class="fa fa-laptop me-2 icon"></i>หน้าหลักผู้ดูแลระบบ</a>
+                <i class="fa fa-laptop me-2 icon"></i>หน้าหลัก</a>
 
             <a href="Admin_Status.php" class="nav-item nav-link active">
                 <i class="fa fa-tachometer-alt me-2 icon"></i>จัดการข้อมูลสถานะ</a>

@@ -39,10 +39,12 @@
                         $Breed_ID = $row['Breed_ID'];
                         $Breed_Name = $row['Breed_Name'];
                         $Breed_Description = $row['Breed_Description'];
+                        $Breed_Img = $row['Breed_Img'];
+                        $base64Image = base64_encode($Breed_Img); // แปลง BLOB เป็น Base64
                     ?>
                         <tr>
                             <td><?php echo $Breed_ID; ?></td>
-                            <td>a</td>
+                            <td><?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='Breed_Img' style='height: 100px; width: auto;'>"; ?></td>
                             <td><?php echo $Breed_Name; ?></td>
                             <td><?php echo $Breed_Description; ?></td>
 
@@ -74,6 +76,11 @@
                                                 <div class="form-floating mb-3">
                                                     <textarea class="form-control" id="Breed_Description" name="Breed_Description" style="height: 150px;" placeholder><?php echo $Breed_Description; ?></textarea>
                                                     <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="file" class="form-control" id="Breed_Img" name="Breed_Img" placeholder required>
+                                                    <label class="form-label">ภาพสายพันธุ์ไก่ไข่ตัวอย่าง</label>
                                                 </div>
 
                                                 <div class="row">

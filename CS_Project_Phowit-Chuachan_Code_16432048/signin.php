@@ -63,7 +63,7 @@
                         <form action="process_login.php" method="POST">
                             <div class="d-flex align-items-center justify-content-between mb-3">
                                 <a href="index.html" class="">
-                                    <h3 class="text-dark"></i>เข้าสู่ระบบผู้ดูแล</h3>
+                                    <h3 class="text-dark"></i>เข้าสู่ระบบ</h3>
                                 </a>
                             </div>
 
