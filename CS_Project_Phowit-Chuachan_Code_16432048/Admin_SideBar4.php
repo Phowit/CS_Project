@@ -33,8 +33,6 @@
             <a href="Admin_ManageData.php" class="nav-item nav-link text-light">
                 <i class="fa fa-keyboard me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
 
-            <a href="Admin_FacultyProgram.php" class="nav-item nav-link text-light">
-                <i class="fa fa-th me-2 icon"></i>จัดการคณะและสาขา</a>
         </div>
     </nav>
 </div>

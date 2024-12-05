@@ -74,7 +74,7 @@
 
             <!-- Navbar Start -->
             <?php
-                require_once("Admin_TableAdmin.php");
+                require_once("Admin_CardAdmin.php");
             ?>
             <!-- Navbar End -->
             
