@@ -5,12 +5,15 @@ if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
     // SQL to delete the record
-    $sql = "DELETE FROM gene WHERE Gene_ID = $id";
+    $sql = "DELETE FROM breed WHERE Breed_ID = $id";
 
+    echo $sql;
+
+    
     if (mysqli_query($conn, $sql)) {
         echo "Record deleted successfully";
     } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+        //echo "Error deleting record: " . mysqli_error($conn);
     }
 }
 else {
@@ -18,4 +21,4 @@ else {
 }
 
 ?>
-<meta http-equiv="refresh" content = "0; url = Admin_ManageGeneChicken.php ">
+<meta http-equiv="refresh" content = "0; url = Admin_ManageBreedChicken.php ">

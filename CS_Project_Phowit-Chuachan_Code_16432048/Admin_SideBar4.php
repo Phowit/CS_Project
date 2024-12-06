@@ -21,7 +21,7 @@
             <a href="Admin_Status.php" class="nav-item nav-link text-light">
                 <i class="fa fa-tachometer-alt me-2 icon"></i>จัดการข้อมูลสถานะ</a>
 
-            <a href="Admin_ManageGeneChicken.php" class="nav-item nav-link text-light">
+            <a href="Admin_ManageBreedChicken.php" class="nav-item nav-link text-light">
                 <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
 
             <a href="Admin_ManageChicken.php" class="nav-item nav-link text-light">

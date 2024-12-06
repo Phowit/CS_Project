@@ -44,7 +44,7 @@
                     ?>
                         <tr>
                             <td><?php echo $Breed_ID; ?></td>
-                            <td><?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='Breed_Img' style='height: 100px; width: auto;'>"; ?></td>
+                            <td><?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='Breed_Img' style='height: auto; width: 100%; border-radius: 5px;'>"; ?></td>
                             <td><?php echo $Breed_Name; ?></td>
                             <td><?php echo $Breed_Description; ?></td>
 
@@ -63,7 +63,7 @@
                                         </div>
                                         <div class="modal-body">
                                             <!-- Form for Editing Record -->
-                                            <form id="EditBreedForm" action="Update_Breed.php" method="post">
+                                            <form id="EditBreedForm" action="Update_Breed.php" method="post" enctype="multipart/form-data">
                                                 <!-- Add your form fields here for additional request details -->
 
                                                 <input type="hidden" name="Breed_ID" class="form-control" id="Breed_ID" value="<?php echo $Breed_ID; ?>" readonly>
@@ -78,9 +78,9 @@
                                                     <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
                                                 </div>
 
+                                                <label class="form-label">ภาพสายพันธุ์ไก่ไข่ตัวอย่าง</label>
                                                 <div class="form-floating mb-3">
-                                                    <input type="file" class="form-control" id="Breed_Img" name="Breed_Img" placeholder required>
-                                                    <label class="form-label">ภาพสายพันธุ์ไก่ไข่ตัวอย่าง</label>
+                                                    <input type="file" id="Breed_Img" name="Breed_Img" value="<?php $Breed_Img; ?>" placeholder>
                                                 </div>
 
                                                 <div class="row">
@@ -97,7 +97,7 @@
                             <!--End Edit-->
 
                             <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="GeneID(<?= $Breed_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="BreedID(<?= $Breed_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
                             </td>
 
                             <!--Start Waring For Delete-->
