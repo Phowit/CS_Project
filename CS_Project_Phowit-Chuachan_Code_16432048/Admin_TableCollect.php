@@ -16,13 +16,13 @@
             <?php
             require_once("connect_db.php");
             $sql = "select 
-                        harvest.`Harvest_ID`,
-                        harvest.`Date_Harvest`,
-                        harvest.`EggAmount`,
+                        collect.`Collect_ID`,
+                        collect.`Collect_Date`,
+                        collect.`EggAmount`,
                         admin.`Admin_ID`,
                         admin.Admin_Name
-                    FROM harvest 
-                    INNER JOIN admin ON harvest.Admin_ID = admin.Admin_ID;";
+                    FROM collect 
+                    INNER JOIN admin ON collect.Admin_ID = admin.Admin_ID;";
             $result = mysqli_query($conn, $sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -39,20 +39,20 @@
                 <tbody style="font-size: 13px;">
                     <?php
                     while ($row = $result->fetch_assoc()) {
-                        $Harvest_ID = $row['Harvest_ID'];
-                        $Date_Harvest = $row['Date_Harvest'];
+                        $Collect_ID = $row['Collect_ID'];
+                        $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"]) ->format(format: "d/m/Y H:i");
                         $EggAmount = $row['EggAmount'];
                         $Admin_Name = $row['Admin_Name'];
                     ?>
                         <tr>
-                            <td><?php echo $row['Harvest_ID']; ?></td>
-                            <td><?php echo $row['Date_Harvest']; ?></td>
-                            <td><?php echo $row['EggAmount']; ?></td>
-                            <td><?php echo $row['Admin_Name']; ?></td>
+                            <td><?php echo $Collect_ID; ?></td>
+                            <td><?php echo $Collect_Date; ?></td>
+                            <td><?php echo $EggAmount; ?></td>
+                            <td><?php echo $Admin_Name; ?></td>
                             <td> <a class="btn btn-sm btn-primary col-12" href="">แก้ไข</a> </td>
 
                             <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="HarvestID(<?= $row['Harvest_ID']; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="CollectID(<?= $Collect_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
                             </td>
 
                             <!--Start Waring For Delete-->
@@ -119,14 +119,14 @@
     var HarvestID;
 
     // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
-    function HarvestID(Harvest_ID) {
-        HarvestID = Harvest_ID;
+    function CollectID(Collect_ID) {
+        CollectID = Collect_ID;
     }
 
     function deleteHarvest() {
 
         // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_Collect.php?id=" + HarvestID;
+        window.location.href = "Delete_Collect.php?id=" + CollectID;
 
     }
 </script>
