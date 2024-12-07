@@ -49,7 +49,49 @@
                             <td><?php echo $Collect_Date; ?></td>
                             <td><?php echo $EggAmount; ?></td>
                             <td><?php echo $Admin_Name; ?></td>
-                            <td> <a class="btn btn-sm btn-primary col-12" href="">แก้ไข</a> </td>
+
+                            <!--แก้ไข-->
+                            <td>
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditCollectModal<?= $Collect_ID; ?>">แก้ไข</button>
+                            </td>
+
+                            <!--Start Edit-->
+                            <div class="modal fade" id="EditCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="EditCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="EditCollectModalLabel<?= $Collect_ID; ?>">แก้ไขข้อมูล</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- Form for Editing Record -->
+                                            <form id="EditCollectForm" action="Update_Collect.php" method="post">
+                                                <!-- Add your form fields here for additional request details -->
+
+                                                <input type="hidden" name="Collect_ID" class="form-control" id="Collect_ID" value="<?php echo $Collect_ID; ?>" readonly>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="DateTime-local" class="form-control" id="Collect_Date" name="Collect_Date" value="<?php echo $Collect_Date; ?>" placeholder required>
+                                                    <label class="form-label">วันที่เก็บ</label>
+                                                </div>
+
+                                                <div class="form-floating mb-3">
+                                                    <input type="number" class="form-control" id="EggAmount" name="EggAmount" value="<?php echo $EggAmount; ?>" placeholder required>
+                                                    <label for="form-label">จำนวน (ฟอง)</label>
+                                                </div>
+
+                                                <div class="row">
+                                                    <div class="col-12" style="margin-top: 20px;">
+                                                        <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--End Edit-->
 
                             <td>
                                 <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="CollectID(<?= $Collect_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
