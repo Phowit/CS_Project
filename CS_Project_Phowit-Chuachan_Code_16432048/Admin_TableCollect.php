@@ -22,8 +22,15 @@
                         admin.`Admin_ID`,
                         admin.Admin_Name
                     FROM collect 
-                    INNER JOIN admin ON collect.Admin_ID = admin.Admin_ID;";
-            $result = mysqli_query($conn, $sql);
+                    INNER JOIN admin ON collect.Admin_ID = admin.Admin_ID
+                    WHERE admin.Admin_ID = ?;
+                    ";
+
+            $stmt = $conn->prepare($sql); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
+            $stmt->bind_param("i", $_SESSION['Admin_ID']); // ผูกค่าพารามิเตอร์
+            $stmt->execute(); // รันคำสั่ง
+            $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
+
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
@@ -120,7 +127,60 @@
                                 </div>
                             </div>
                             <!--END Warning For Delete-->
+                        </tr>
+                    <?php } ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
 
+<div class="container-fluid pt-4 px-4">
+    <div class="h-100 bg-light rounded p-4">
+        <div class="d-flex align-items-center justify-content-between mb-4">
+            <h6 class="mb-4">ข้อมูลการเก็บไข่ (ผู้ดูแลอื่น)</h6>
+
+            <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
+            <?php 
+                require_once("Admin_FormCollect.php")
+            ?>
+            <!-- จบ ฟอร์มเพิ่มข้อมูลไก่ -->
+        </div>
+        <div class="table-responsive">
+            <?php
+            require_once("connect_db.php");
+            $sql = "select 
+                        collect.`Collect_ID`,
+                        collect.`Collect_Date`,
+                        collect.`EggAmount`,
+                        admin.`Admin_ID`,
+                        admin.Admin_Name
+                    FROM collect 
+                    INNER JOIN admin ON collect.Admin_ID = admin.Admin_ID;";
+            $result = mysqli_query($conn, $sql);
+            ?>
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark" style="font-size: 14px;">
+                        <th scope="col" class="col-1">รหัส</th>
+                        <th scope="col" class="col-3">วันที่เก็บ</th>
+                        <th scope="col" class="col-2">จำนวน (ฟอง)</th>
+                        <th scope="col" class="col-6">ผู้ดูแล</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 13px;">
+                    <?php
+                    while ($row = $result->fetch_assoc()) {
+                        $Collect_ID = $row['Collect_ID'];
+                        $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"]) ->format(format: "d/m/Y H:i");
+                        $EggAmount = $row['EggAmount'];
+                        $Admin_Name = $row['Admin_Name'];
+                    ?>
+                        <tr>
+                            <td><?php echo $Collect_ID; ?></td>
+                            <td><?php echo $Collect_Date; ?></td>
+                            <td><?php echo $EggAmount; ?></td>
+                            <td><?php echo $Admin_Name; ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>

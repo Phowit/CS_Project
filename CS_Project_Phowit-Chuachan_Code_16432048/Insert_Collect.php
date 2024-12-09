@@ -7,7 +7,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // รับข้อมูลจากฟอร์ม
     $Date_Harvest = $_POST['Date_Harvest'];
     $EggAmount = $_POST['EggAmount'];
-    $Name = $_POST['Name'];
+    $Admin_Name = $_POST['Admin_Name'];
 
     // เตรียมคำสั่ง SQL
     $sqli = "insert into harvest(Date_Harvest,EggAmount,Name)";

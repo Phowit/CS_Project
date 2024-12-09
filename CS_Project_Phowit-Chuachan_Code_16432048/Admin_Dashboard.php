@@ -10,7 +10,7 @@ require_once("connect_db.php");
                 <h6 class="mb-1 text-dark">สถานะ : เซอร์โวมอเตอร์ </h6>
                 <small>(ระบบให้อาหาร)</small>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:100%; height:50px;">
+                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:75%; height:50px;">
                 </div>
             </div>
         </div>
@@ -21,7 +21,7 @@ require_once("connect_db.php");
                 <h6 class="mb-1 text-dark">สถานะ : วาล์วน้ำดื่ม</h6>
                 <small>(ระบบน้ำดื่ม)</small>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:75%; height:50px;">
                 </div>
             </div>
         </div>
@@ -32,7 +32,7 @@ require_once("connect_db.php");
                 <h6 class="mb-1 text-dark">สถานะ : วาล์วน้ำลดอุณหภูมิ</h6>
                 <small>(ควบคุมสปิงึ์เกอร์)</small>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:75%; height:50px;">
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@ require_once("connect_db.php");
                 <h6 class="mb-1 text-dark">สถานะ : วาล์วเก็บอาหารเสริม</h6>
                 <small>(อาหารเสริม)</small>
                 <div class="form-check form-switch">
-                    <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckDefault">
+                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:75%; height:50px;">
                 </div>
             </div>
         </div>
