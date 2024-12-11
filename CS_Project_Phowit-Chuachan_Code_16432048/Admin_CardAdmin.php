@@ -14,47 +14,54 @@
 
     <?php
     require_once("connect_db.php");
-    $sql = "select * from admin ";
+    $sql = "select * from user ";
     $result = mysqli_query($conn, $sql);
 
     while ($row = $result->fetch_assoc()) {
-        $Admin_ID = $row['Admin_ID'];
-        $Admin_Name = $row['Admin_Name'];
-        $Tel = $row['Tel'];
-        $Address = $row['Address'];
-        $Email = $row['Email'];
+        $Admin_ID = $row['User_ID'];
+        $User_Name = $row['User_Name'];
+        $User_Tel = $row['User_Tel'];
+        $User_Address = $row['User_Address'];
+        $User_Email = $row['User_Email'];
         $Program = $row['Program'];
-        $Admin_Image = $row['Admin_Image'];
-        $base64Image = base64_encode($Admin_Image); // แปลง BLOB เป็น Base64
+        $User_Image = $row['User_Image'];
+        $base64Image = base64_encode($User_Image); // แปลง BLOB เป็น Base64
+        $User_Status = $row['User_Status'];
     ?>
         <div class="col-sm-12 col-xl-12" style="margin-bottom: 5px;">
             <div class="bg-light rounded h-100 p-4">
                 <div class="row">
-                <div class="col-sm-12 col-xl-4">
-                    <?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='Admin_Image' style='height: 200px; width: auto;'>"; ?>
+                    <div class="col-sm-12 col-xl-4">
+                        <?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='User_Image' style='height: 200px; width: auto;'>"; ?>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-8">
+                        <h6 class="mb-4"><?php echo $User_Name; ?></h6>
+
+                        <dl class="row mb-0">
+
+                            <dt class="col-sm-4">รหัสผู้ดูแลระบบ</dt>
+                            <dd class="col-sm-8"><?php echo $Admin_ID; ?></dd>
+
+                            <dt class="col-sm-4">เบอร์โทรศัพท์</dt>
+                            <dd class="col-sm-8"><?php echo $User_Tel; ?></dd>
+
+                            <dt class="col-sm-4">ที่อยู่ติดต่อ</dt>
+                            <dd class="col-sm-8"><?php echo $User_Address; ?></dd>
+
+                            <dt class="col-sm-4">อีเมล</dt>
+                            <dd class="col-sm-8"><?php echo $User_Email; ?></dd>
+
+                            <dt class="col-sm-4 text-truncate">สาขา</dt>
+                            <dd class="col-sm-8"><?php echo $Program; ?></dd>
+
+                        </dl>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-4">
+
+                    </div>
                 </div>
-
-                <div class="col-sm-12 col-xl-8">
-                <h6 class="mb-4"><?php echo $Admin_Name; ?></h6>
-                <dl class="row mb-0">
-
-                    <dt class="col-sm-4">รหัสผู้ดูแลระบบ</dt>
-                    <dd class="col-sm-8"><?php echo $Admin_ID; ?></dd>
-
-                    <dt class="col-sm-4">เบอร์โทรศัพท์</dt>
-                    <dd class="col-sm-8"><?php echo $Tel; ?></dd>
-
-                    <dt class="col-sm-4">ที่อยู่ติดต่อ</dt>
-                    <dd class="col-sm-8"><?php echo $Address; ?></dd>
-
-                    <dt class="col-sm-4">อีเมล</dt>
-                    <dd class="col-sm-8"><?php echo $Email; ?></dd>
-
-                    <dt class="col-sm-4 text-truncate">สาขา</dt>
-                    <dd class="col-sm-8"><?php echo $Program; ?></dd>
-                    </div>
-                    </div>
-                </dl>
             </div>
         </div>
     <?php } ?> <!-- close php-->

@@ -3,7 +3,7 @@
     session_start();
 
     // หากผู้ใช้ล็อกอินแล้ว ให้ย้ายไปหน้า dashboard
-    if (isset($_SESSION['Admin_Name'])) {
+    if (isset($_SESSION['User_Name'])) {
         header("Location: Admin_Index.php");
         exit();
     }
@@ -68,12 +68,12 @@
                             </div>
 
                             <div class="form-floating mb-3">
-                                <input type="number" class="form-control" id="floatingInput" name="Admin_ID_Input" required>
-                                <label for="floatingInput">Admin ID</label>
+                                <input type="number" class="form-control" id="floatingInput" name="User_ID_Input" required>
+                                <label for="floatingInput">User ID</label>
                             </div>
 
                             <div class="form-floating mb-4">
-                                <input type="password" class="form-control" id="floatingPassword" name="Admin_Password_Input" required>
+                                <input type="password" class="form-control" id="floatingPassword" name="User_Password_Input" required>
                                 <label for="floatingPassword">Password</label>
                             </div>
 

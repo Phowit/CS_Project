@@ -10,46 +10,44 @@
             <div class="modal-body">
 
                 <!-- Form for Editing Record -->
-                <form id="addRequestForm" action="Insert_AdminData.php" method="post">
-                    <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="Admin_ID" placeholder required>
-                        <label for="Admin_ID" class="form-label">Admin ID (รหัสประจำตัวผู้ดูแลระบบ)</label>
-                    </div>
+                <form id="addRequestForm" action="Insert_AdminData.php" method="post" enctype="multipart/form-data">
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="Name" placeholder required>
-                        <label for="Name" class="form-label">Name (ชื่อ นามสกุล หรือเพียงชื่อ)</label>
+                        <input type="text" class="form-control" name="User_Name" placeholder required>
+                        <label for="User_Name" class="form-label">Name (ชื่อ นามสกุล หรือเพียงชื่อ)</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="password" class="form-control" name="Password" placeholder required>
-                        <label for="Password" class="form-label">Password (รหัสผ่าน)</label>
+                        <input type="password" class="form-control" name="User_Password" placeholder required>
+                        <label for="User_Password" class="form-label">Password (รหัสผ่าน)</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="tel" class="form-control" name="Tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
-                            placeholder="ตัวอย่าง 123-456-78-90" placeholder required>
-                        <label for="Tel" class="form-label">Tel (เบอร์โทรติดต่อ)</label>
+                        <input type="tel" class="form-control" name="User_Tel" pattern="[0-9]{3}-[0-9]{3}-[0-9]{2}-[0-9]{2}"
+                            placeholder="ตัวอย่าง 123-456-78-90" placeholder>
+                        <label for="User_Tel" class="form-label">Tel (เบอร์โทรติดต่อ) ตัวอย่าง 081-234-56-78</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="text" class="form-control" name="Address" placeholder required>
-                        <label for="Address" class="form-label">Address (ที่อยู่ติดต่อ)</label>
+                        <input type="text" class="form-control" name="User_Address" placeholder required>
+                        <label for="User_Address" class="form-label">Address (ที่อยู่ติดต่อ)</label>
                     </div>
 
                     <div class="form-floating mb-3">
-                        <input type="Email" class="form-control" name="Email" placeholder required>
-                        <label for="Email" class="form-label">Email (อีเมลติดต่อ)</label>
+                        <input type="Email" class="form-control" name="User_Email" placeholder required>
+                        <label for="User_Email" class="form-label">Email (อีเมลติดต่อ)</label>
                     </div>
 
-                    <div class="form-floating mb-3" name="Program_ID" placeholder required>
-                        <!--เลือกสาขา start -->
-                        <?php
-                            require_once("program.php");
-                        ?>
-                        <!--เลือกสาขา End-->
+                    <div class="form-floating mb-3">
+                        <input type="text" class="form-control" name="Program" placeholder required>
+                        <label for="Program" class="form-label">สาขา</label>
                     </div>
 
+                    <label>รูปภาพ</label>
+                    <div class="form-floating mb-3">
+                        <input type="file" id="User_Image" name="User_Image">
+                    </div>
+                    
                     <button type="submit" class="btn btn-primary" name="insert">บันทึก</button>
                     <button type="reset" class="btn btn-primary" value="Reset">ล้างข้อมูล</button>
                 </form>

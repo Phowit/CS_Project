@@ -5,24 +5,77 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once("connect_db.php");
 
     // รับข้อมูลจากฟอร์ม
-    $Admin_ID = $_POST['Admin_ID'];
-    $Name = $_POST['Name'];
-    $Password = $_POST['Password'];
-    $Tel = $_POST['Tel'];
-    $Address = $_POST['Address'];
-    $Email = $_POST['Email'];
-    $Program_ID = $_POST['Program_ID'];
+    $User_Name = $_POST['User_Name'];
+    $User_Password = $_POST['User_Password'];
+    $User_Tel = $_POST['User_Tel'];
+    $User_Address = $_POST['User_Address'];
+    $User_Email = $_POST['User_Email'];
+    $Program = $_POST['Program'];
 
-    // เตรียมคำสั่ง SQL
-    $sqli = "insert into admin(Admin_ID,Name,Password,Tel,Address,Email,Program_ID)";
-    $sqli .= "values('$Admin_ID','$Name','$Password','$Tel','$Address','$Email','$Program_ID')";
+    // ตรวจสอบว่ามีการอัปโหลดไฟล์หรือไม่
+    if (!empty($_FILES['User_Image']['tmp_name'])) {
+        $User_Image = file_get_contents($_FILES['User_Image']['tmp_name']);
+        $User_Image_Img = mysqli_real_escape_string($conn, $User_Image);
 
-    mysqli_query($conn,$sqli); 
-    echo"SQL = ".$sqli;
+        // เตรียมคำสั่ง SQL ในกรณีที่มีการอัพโหลดภาพ
+        $sqli = "insert into User(
+                    User_Name,
+                    User_Password,
+                    User_Tel,
+                    User_Address,
+                    User_Email,
+                    Program,
+                    User_Image,
+                    User_Status)";
+        $sqli .= "values(
+                    '$User_Name',
+                    '$User_Password',
+                    '$User_Tel',
+                    '$User_Address',
+                    '$User_Email',
+                    '$Program',
+                    '$User_Image',
+                    'Admin')";
+    } else {
+        
+        // เตรียมคำสั่ง SQL
+        $defaultImg = file_get_contents('img/User_Default.png');
+        $defaultImg = mysqli_real_escape_string($conn, $defaultImg);
 
+        // เตรียมคำสั่ง SQL ในกรณีที่มีการอัพโหลดภาพ
+        $sqli = "insert into User(
+                    User_Name,
+                    User_Password,
+                    User_Tel,
+                    User_Address,
+                    User_Email,
+                    Program,
+                    User_Image,
+                    User_Status)";
+        $sqli .= "values(
+                    '$User_Name',
+                    '$User_Password',
+                    '$User_Tel',
+                    '$User_Address',
+                    '$User_Email',
+                    '$Program',
+                    '$defaultImg',
+                    'Admin')";
+    }
 
-    $conn->close();
+    // ดำเนินการคำสั่ง SQL
+    if (mysqli_query($conn, $sqli)) {
+        echo "Record added successfully!";
+    } else {
+        echo "Error adding record: " . mysqli_error($conn);
+        echo $sqli;
+    }
+
+    // ปิดการเชื่อมต่อ
+    mysqli_close($conn);
+
+    // เปลี่ยนหน้า
+    echo '<meta http-equiv="refresh" content="0; url=Admin_ManageData.php">';
 }
 
 ?>
-<meta http-equiv="refresh" content = "0; url =Admin_ManageData.php ">
