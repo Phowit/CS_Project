@@ -1,7 +1,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-4">ข้อมูลการเก็บไข่</h6>
+            <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่ ของคุณ</h6>
 
             <!--เพิ่ม-->
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
@@ -19,15 +19,15 @@
                         collect.`Collect_ID`,
                         collect.`Collect_Date`,
                         collect.`EggAmount`,
-                        admin.`Admin_ID`,
-                        admin.Admin_Name
+                        user.`User_ID`,
+                        user.User_Name
                     FROM collect 
-                    INNER JOIN admin ON collect.Admin_ID = admin.Admin_ID
-                    WHERE admin.Admin_ID = ?;
+                    INNER JOIN user ON collect.User_ID = user.User_ID
+                    WHERE user.User_ID = ?;
                     ";
 
             $stmt = $conn->prepare($sql); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
-            $stmt->bind_param("i", $_SESSION['Admin_ID']); // ผูกค่าพารามิเตอร์
+            $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
             $stmt->execute(); // รันคำสั่ง
             $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
 
@@ -49,13 +49,13 @@
                         $Collect_ID = $row['Collect_ID'];
                         $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"]) ->format(format: "d/m/Y H:i");
                         $EggAmount = $row['EggAmount'];
-                        $Admin_Name = $row['Admin_Name'];
+                        $User_Name = $row['User_Name'];
                     ?>
                         <tr>
                             <td><?php echo $Collect_ID; ?></td>
                             <td><?php echo $Collect_Date; ?></td>
                             <td><?php echo $EggAmount; ?></td>
-                            <td><?php echo $Admin_Name; ?></td>
+                            <td><?php echo $User_Name; ?></td>
 
                             <!--แก้ไข-->
                             <td>
@@ -138,7 +138,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-4">ข้อมูลการเก็บไข่ (ผู้ดูแลอื่น)</h6>
+            <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่ (ทั้งหมด)</h6>
 
             <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
             <?php 
@@ -153,10 +153,10 @@
                         collect.`Collect_ID`,
                         collect.`Collect_Date`,
                         collect.`EggAmount`,
-                        admin.`Admin_ID`,
-                        admin.Admin_Name
+                        user.`User_ID`,
+                        user.User_Name
                     FROM collect 
-                    INNER JOIN admin ON collect.Admin_ID = admin.Admin_ID;";
+                    INNER JOIN user ON collect.User_ID = user.User_ID;";
             $result = mysqli_query($conn, $sql);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -174,13 +174,13 @@
                         $Collect_ID = $row['Collect_ID'];
                         $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"]) ->format(format: "d/m/Y H:i");
                         $EggAmount = $row['EggAmount'];
-                        $Admin_Name = $row['Admin_Name'];
+                        $User_Name = $row['User_Name'];
                     ?>
                         <tr>
                             <td><?php echo $Collect_ID; ?></td>
                             <td><?php echo $Collect_Date; ?></td>
                             <td><?php echo $EggAmount; ?></td>
-                            <td><?php echo $Admin_Name; ?></td>
+                            <td><?php echo $User_Name; ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>

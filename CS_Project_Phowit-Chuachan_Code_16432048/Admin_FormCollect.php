@@ -11,11 +11,11 @@
                 <!-- Form for Editing Record -->
 
                 <form id="addRequestForm" action="Insert_collect.php" method="post">
-                    <input type="hidden" name="Admin_ID" class="form-control" id="Admin_ID" value="<?php echo $Admin_ID; ?>" readonly>
+                    <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID = $_SESSION['User_ID']; ?>" readonly>
 
                     <div class="form-floating mb-3">
-                        <input type="datetime-local" class="form-control" name="Date_Harvest" placeholder required>
-                        <label for="Date_Harvest" class="form-label">วัน เวลา ที่เก็บเกี่ยว</label>
+                        <input type="datetime-local" class="form-control" name="Collect_Date" placeholder required>
+                        <label for="Collect_Date" class="form-label">วัน เวลา ที่เก็บเกี่ยว</label>
                     </div>
 
                     <div class="form-floating mb-3">

@@ -5,16 +5,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     require_once("connect_db.php");
 
     // รับข้อมูลจากฟอร์ม
-    $Date_Harvest = $_POST['Date_Harvest'];
+    $Collect_Date = $_POST['Collect_Date'];
     $EggAmount = $_POST['EggAmount'];
-    $Admin_Name = $_POST['Admin_Name'];
+    $User_ID = $_POST['User_ID'];
 
     // เตรียมคำสั่ง SQL
-    $sqli = "insert into harvest(Date_Harvest,EggAmount,Name)";
-    $sqli .= "values('$Date_Harvest','$EggAmount','$Name')";
+    $sqli = "insert into collect (Collect_Date,EggAmount,User_ID)";
+    $sqli .= "values('$Collect_Date','$EggAmount','$User_ID')";
 
     mysqli_query($conn,$sqli); 
-    echo"SQL = ".$sqli;
+    //echo"SQL = ".$sqli;
 
     $conn->close();
 }
