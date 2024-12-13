@@ -1,7 +1,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่ ของคุณ</h6>
+            <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่</h6>
 
             <!--เพิ่ม-->
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
@@ -138,7 +138,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่ (ทั้งหมด)</h6>
+            <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่ (ผู้ดูแลอื่น)</h6>
 
             <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
             <?php 
@@ -149,15 +149,22 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select 
+            $sqli = "select 
                         collect.`Collect_ID`,
                         collect.`Collect_Date`,
                         collect.`EggAmount`,
                         user.`User_ID`,
                         user.User_Name
                     FROM collect 
-                    INNER JOIN user ON collect.User_ID = user.User_ID;";
-            $result = mysqli_query($conn, $sql);
+                    INNER JOIN user ON collect.User_ID = user.User_ID
+                    WHERE user.`User_ID` != ?;
+                    ";
+
+                $stmt = $conn->prepare($sqli); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
+                $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
+                $stmt->execute(); // รันคำสั่ง
+                $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
+
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>

@@ -62,9 +62,7 @@
             <!-- Navbar End -->
 
             <!--table Start ข้อมูลไก่-->
-            <?php
-                require_once("User_TableChickenData.php");  
-            ?>
+
             <!--teble End ข้อมูลไก่-->
 
             <!-- Widgets Start -->
@@ -72,9 +70,7 @@
                 <div class="row g-4">
 
                     <!--ข้อมูลการเก็บไข่ start -->
-                    <?php
-                        require_once("User_TableHarvest.php");
-                    ?>
+
                     <!--ข้อมูลการเก็บไข่ End-->
 
                 </div>
