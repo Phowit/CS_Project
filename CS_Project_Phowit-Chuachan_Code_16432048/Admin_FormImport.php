@@ -3,27 +3,50 @@
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addRecordModalLabel<">เพิ่มข้อมูลสายพันธุ์ไก่</h5>
+                <h5 class="modal-title" id="addRecordModalLabel<">เพิ่มข้อมูลการนำเข้าไก่ไข่</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
             <div class="modal-body">
                 <!-- Form for Editing Record -->
-                <form id="addRequestForm" action="Insert_Chicken.php" method="post">
+                <form id="addRequestForm" action="Insert_Import.php" method="post">
+                    <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID = $_SESSION['User_ID']; ?>" readonly>
+
                     <div class="form-floating mb-3">
-                        <input type="Date" class="form-control" name="Date_in" id="Date_in" placeholder required>
-                        <label for="Date_in" class="form-label">วัน เวลา ที่นำเข้ามาเลี้ยง</label>
+                        <input type="DateTime-local" class="form-control" name="Import_Date" id="Import_Date" placeholder required>
+                        <label for="Import_Date" class="form-label">วัน เวลา ที่นำเข้า</label>
                     </div>
 
-                    <div class="form-floating mb-3">
-                        
-                            <label for="Gene" class="form-label" placeholder>สายพันธุ์ไก่</label>
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-floating">
+                                <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
+                                    <?php
+                                    require_once("connect_db.php");
+                                    $sql = "select * from breed";
+                                    $result = mysqli_query($conn, $sql);
 
-                    </div>
+                                    while ($row = $result->fetch_assoc()) {
+                                    ?>
+                                        <option value="<?= $row['Breed_ID']; ?>">
+                                            <?= $row['Breed_Name']; ?></option>
+                                    <?php   } ?>
+                                </select>
+                                <label for="Breed_ID" class="form-label" placeholder>สายพันธุ์ไก่</label>
+                            </div>
+                        </div>
+
+                        <div class="col-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" name="Import_Amount" id="Import_Amount" min="1" placeholder required>
+                                <label for="Import_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
+                            </div>
+                        </div>
+                    </div><br>
 
                     <div class="form-floating mb-3">
-                        <input type="number" class="form-control" name="Amount" id="Amount" min="1" placeholder required>
-                        <label for="Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
+                        <textarea class="form-control" id="Import_Details" name="Import_Details" style="height: 150px;" placeholder></textarea>
+                        <label for="floatingTextarea">รายละเอียด</label>
                     </div>
 
                     <button type="submit" class="btn btn-primary">บันทึก</button>
