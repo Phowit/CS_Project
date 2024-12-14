@@ -80,7 +80,9 @@
             <!-- Form End -->
 
             <!--table Start ข้อมูลไก่-->
-
+            <?php
+                require_once("Admin_TableChickenData.php");
+            ?>
             <!--teble End ข้อมูลไก่-->
         </div>
 
