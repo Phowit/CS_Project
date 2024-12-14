@@ -74,9 +74,7 @@
             <!-- Navbar End -->
 
             <!-- Form Start -->
-            <?php
-                require_once("Admin_FormChicken.php");
-            ?>
+
             <!-- Form End -->
 
             <!--table Start ข้อมูลไก่-->

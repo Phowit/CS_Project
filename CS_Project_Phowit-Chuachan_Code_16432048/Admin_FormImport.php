@@ -16,23 +16,9 @@
                     </div>
 
                     <div class="form-floating mb-3">
-                        <?php
-                        require_once("connect_db.php");
-
-                        $sql = "select * from Breed order by Breed_Name";
-                        $result = mysqli_query($conn, $sql);
-                        ?>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
-                                <?php
-                                while ($row = $result->fetch_assoc()) {
-                                ?>
-                                    <option value="<?= $row['Breed_ID']; ?>">
-                                        <?= $row['Breed_Name']; ?></option>
-                                <?php   } ?>
-                            </select>
+                        
                             <label for="Gene" class="form-label" placeholder>สายพันธุ์ไก่</label>
-                        </div>
+
                     </div>
 
                     <div class="form-floating mb-3">
