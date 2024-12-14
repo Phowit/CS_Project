@@ -19,16 +19,16 @@
                         <?php
                         require_once("connect_db.php");
 
-                        $sql = "select * from gene order by Gene_Name";
+                        $sql = "select * from Breed order by Breed_Name";
                         $result = mysqli_query($conn, $sql);
                         ?>
                         <div class="form-floating mb-3">
-                            <select class="form-select" name="Gene" id="Gene" aria-label="Floating label select example" required>
+                            <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
                                 <?php
                                 while ($row = $result->fetch_assoc()) {
                                 ?>
-                                    <option value="<?= $row['Gene_Name']; ?>">
-                                        <?= $row['Gene_Name']; ?></option>
+                                    <option value="<?= $row['Breed_ID']; ?>">
+                                        <?= $row['Breed_Name']; ?></option>
                                 <?php   } ?>
                             </select>
                             <label for="Gene" class="form-label" placeholder>สายพันธุ์ไก่</label>
@@ -38,26 +38,6 @@
                     <div class="form-floating mb-3">
                         <input type="number" class="form-control" name="Amount" id="Amount" min="1" placeholder required>
                         <label for="Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
-                    </div>
-
-                    <div class="form-floating mb-3">
-                        <?php
-                        require_once("connect_db.php");
-
-                        $sql = "select * from admin order by Admin_Name";
-                        $result = mysqli_query($conn, $sql);
-                        ?>
-                        <div class="form-floating mb-3">
-                            <select class="form-select" name="Admin_Name" id="Admin_Name" aria-label="Floating label select example" required>
-                                <?php
-                                while ($row = $result->fetch_assoc()) {
-                                ?>
-                                    <option value="<?= $row['Admin_Name']; ?>">
-                                        <?= $row['Admin_Name']; ?></option>
-                                <?php   } ?>
-                            </select>
-                            <label for="Admin_Name" class="form-label" placeholder>ชื่อผู้ใช้</label>
-                        </div>
                     </div>
 
                     <button type="submit" class="btn btn-primary">บันทึก</button>
