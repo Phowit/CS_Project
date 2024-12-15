@@ -143,7 +143,8 @@
                                 <!--End Edit-->
 
                                 <br>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="SetID(<?= $Import_ID; ?>)"
+
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="ImportID(<?= $Import_ID; ?>)"
                                     data-bs-target="#confirmDeleteModal" style="height: 35px; width: 100%;  margin-top: 5px;">ลบ
                                 </button>
                             </td>
@@ -288,7 +289,7 @@
     function deleteImportData() {
 
         // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_ChickenData.php?id=" + ImportID;
+        window.location.href = "Delete_Import.php?id=" + ImportID;
 
     }
 </script>
