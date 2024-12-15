@@ -11,7 +11,7 @@
 
     // ดำเนินการคำสั่ง SQL
     if (mysqli_query($conn, $sql)) {
-        echo "Update successful!";
+        //echo "Update successful!";
     } else {
         echo "Error updating record: " . mysqli_error($conn);
     }
@@ -20,5 +20,5 @@
     mysqli_close($conn);
 
     // เปลี่ยนหน้า
-    //echo '<meta http-equiv="refresh" content="0; url=Admin_ManageBreedChicken.php">';
+    echo '<meta http-equiv="refresh" content="0; url=Admin_ManageCollect.php">';
 ?>
