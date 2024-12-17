@@ -79,6 +79,7 @@
 
             <!--table Start ข้อมูลไก่-->
             <?php
+                //require_once("Admin_TableChickenData.php"); Admin_CardChicken.php
                 require_once("Admin_TableChickenData.php");
             ?>
             <!--teble End ข้อมูลไก่-->

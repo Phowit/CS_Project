@@ -22,10 +22,10 @@
                 <i class="fa fa-tachometer-alt me-2 icon"></i>จัดการข้อมูลสถานะ</a>
 
             <a href="Admin_ManageBreedChicken.php" class="nav-item nav-link text-light">
-                <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
+                <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่ไข่</a>
 
             <a href="Admin_ManageChicken.php" class="nav-item nav-link text-light">
-                <i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>
+                <i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่ไข่</a>
 
             <a href="Admin_ManageCollect.php" class="nav-item nav-link text-light">
                 <i class="fa fa-chart-bar me-2 icon"></i>จัดการข้อมูลไข่</a>

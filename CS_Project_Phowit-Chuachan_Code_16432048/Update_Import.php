@@ -19,12 +19,12 @@
 
     // ดำเนินการคำสั่ง SQL
     if (mysqli_query($conn, $sql)) {
-        echo "Update successful!";
+        //echo "Update successful!";
     } else {
         echo "Error updating record: " . mysqli_error($conn);
     }
 
-    echo $sql;
+    //echo $sql;
 
     // ปิดการเชื่อมต่อ
     mysqli_close($conn);
