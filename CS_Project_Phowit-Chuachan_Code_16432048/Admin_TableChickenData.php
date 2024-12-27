@@ -33,7 +33,9 @@
             </div>
 
             <div class="tab-pane fade" id="nav-remain" role="tabpanel" aria-labelledby="nav-remain-tab">
-                <a>3</a>
+            <?php
+                require_once("Admin_TableImport.php");
+            ?>
             </div>
         </div>
     </div>

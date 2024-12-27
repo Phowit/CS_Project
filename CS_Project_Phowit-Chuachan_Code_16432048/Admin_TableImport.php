@@ -42,7 +42,7 @@
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" style="font-size:13px">
                         <th scope="col" class="col-0.5">รหัส</th>
                         <th scope="col" class="col-2">ผู้บันทึก</th>
                         <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
@@ -64,7 +64,7 @@
                         $Import_Amount = $row['Import_Amount'];
                         $Import_Details = $row['Import_Details'];
                     ?>
-                        <tr>
+                        <tr style="font-size:12px">
                             <td><?php echo $Import_ID; ?></td>
                             <td><?php echo $User_Name; ?></td>
                             <td><?php echo $Import_Date_Record; ?></td>
@@ -213,7 +213,7 @@
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" style="font-size:13px">
                         <th scope="col" class="col-0.5">รหัส</th>
                         <th scope="col" class="col-2">ผู้บันทึก</th>
                         <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
@@ -234,7 +234,7 @@
                         $Import_Amount = $row['Import_Amount'];
                         $Import_Details = $row['Import_Details'];
                     ?>
-                        <tr>
+                        <tr style="font-size:12px">
                             <td><?php echo $Import_ID; ?></td>
                             <td><?php echo $User_Name; ?></td>
                             <td><?php echo $Import_Date_Record; ?></td>

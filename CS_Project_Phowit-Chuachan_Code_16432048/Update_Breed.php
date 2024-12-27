@@ -37,4 +37,6 @@
 
     // เปลี่ยนหน้า
     echo '<meta http-equiv="refresh" content="0; url=Admin_ManageBreedChicken.php">';
+    // echo = ให้ php แสดงดังนี้..., meta http-equiv="refresh" = ให้รีเฟรชหน้าเว็บ
+    // content="0; = ภายใน ... วินาที เช่น 0 วิ, url=......" = ให้โดดไปที่หน้าเว็บที่ต้องการ เช่น Admin_ManageBreedChicken.php
 ?>

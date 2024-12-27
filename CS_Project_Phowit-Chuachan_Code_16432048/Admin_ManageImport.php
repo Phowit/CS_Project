@@ -79,8 +79,8 @@
 
             <!--table Start ข้อมูลไก่-->
             <?php
-                //require_once("Admin_TableChickenData.php"); Admin_CardChicken.php
-                require_once("Admin_TableChickenData.php");
+                //require_once("Admin_TableChickenData.php"); Admin_TableImport.php
+                require_once("Admin_TableImport.php");
             ?>
             <!--teble End ข้อมูลไก่-->
         </div>
