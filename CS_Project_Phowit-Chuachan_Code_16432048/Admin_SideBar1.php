@@ -21,16 +21,13 @@
             <a href="Admin_ManageBreedChicken.php" class="nav-item nav-link text-light">
                 <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
 
-            <!--<a href="Admin_ManageChicken.php" class="nav-item nav-link text-light">
-                <i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>-->
-
-                <div class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>
-                        <div class="dropdown-menu bg-transparent border-0">
-                            <a href="Admin_ManageImport.php" class="dropdown-item">จัดการข้อมูลนำเข้าไก่</a>
-                            <a href="Admin_TableExport.php" class="dropdown-item">จัดการข้อมูลนำออกไก่</a>
-                        </div>
-                    </div>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>
+                <div class="dropdown-menu bg-transparent border-0">
+                    <a href="Admin_ManageImport.php" class="dropdown-item">จัดการข้อมูลนำเข้าไก่</a>
+                    <a href="Admin_ManageExport.php" class="dropdown-item">จัดการข้อมูลนำออกไก่</a>
+                </div>
+            </div>
 
             <a href="Admin_ManageCollect.php" class="nav-item nav-link text-light">
                 <i class="fa fa-chart-bar me-2 icon"></i>จัดการข้อมูลไข่</a>

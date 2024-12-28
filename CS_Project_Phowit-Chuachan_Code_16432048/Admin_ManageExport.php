@@ -1,12 +1,12 @@
 <?php
-require_once("connect_db.php");
-session_start();
+    require_once("connect_db.php");
+    session_start();
 
-// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
-if (!isset($_SESSION['User_ID'])) {
-    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า Login.php
-    exit();
-}
+    // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
+    if (!isset($_SESSION['User_ID'])) {
+        header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า signin.php
+        exit();
+    }
 ?>
 
 <!DOCTYPE html>
@@ -16,20 +16,20 @@ if (!isset($_SESSION['User_ID'])) {
     <meta charset="utf-8">
     <title>ระบบจัดการฟาร์มไก่ไข่อัจฉริยะด้วยเทคโนโลยีอินเทอร์เน็ตของสรรพสิ่ง</title>
 
-    <link rel="icon" type="image/x-icon" href="../My_img/chicken.png">
-
+    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
+    
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="../img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
-
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
+    
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -44,6 +44,10 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -59,31 +63,30 @@ if (!isset($_SESSION['User_ID'])) {
 
         <!-- Sidebar Start -->
         <?php
-        require_once("Admin_SideBar6.php");
-        ?>
+		    require_once("Admin_SideBar3.php");
+		?>
         <!-- Sidebar End -->
 
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
             <?php
-            require_once("Admin_NavBar.php");
+                require_once("Admin_NavBar.php");
             ?>
             <!-- Navbar End -->
 
             <!-- Form Start -->
-            <?php
-            require_once("Admin_FormBreedChicken.php");
-            ?>
+
             <!-- Form End -->
 
-            <!-- table Start -->
+            <!--table Start ข้อมูลไก่-->
             <?php
-            require_once("Admin_TableBreed.php");
+                //require_once("Admin_TableChickenData.php"); Admin_TableImport.php
+                require_once("Admin_TableExport.php");
             ?>
-            <!-- table End -->
-
+            <!--teble End ข้อมูลไก่-->
         </div>
+
         <!-- Content End -->
     </div>
 
@@ -100,7 +103,6 @@ if (!isset($_SESSION['User_ID'])) {
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
 </body>
 
 </html>

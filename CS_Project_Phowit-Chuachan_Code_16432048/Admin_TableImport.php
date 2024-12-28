@@ -1,5 +1,5 @@
 <div class="container-fluid pt-4 px-4 rounded bg-primary">
-    <div class="text-center">
+    <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6>ข้อมูลการนำเข้าไก่ไข่ของคุณ</h6>
 
@@ -44,13 +44,13 @@
                 <thead>
                     <tr class="text-dark" style="font-size:13px">
                         <th scope="col" class="col-0.5">รหัส</th>
-                        <th scope="col" class="col-2">ผู้บันทึก</th>
-                        <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
-                        <th scope="col" class="col-1">วัน เวลา <br> ที่นำเข้า</th>
-                        <th scope="col" class="col-2">สายพันธุ์</th>
-                        <th scope="col" class="col-1">จำนวน</th>
+                        <th scope="col" class="col-1.5">ผู้บันทึก</th>
+                        <th scope="col" class="col-1.5">วัน เวลา <br> ที่บันทึก</th>
+                        <th scope="col" class="col-1.5">วัน เวลา <br> ที่นำเข้า</th>
+                        <th scope="col" class="col-1.5">สายพันธุ์</th>
+                        <th scope="col" class="col-0.5">จำนวน</th>
                         <th scope="col" class="col-4">รายละเอียด</th>
-                        <th scope="col" class="col-0.5">เครื่องมือ</th>
+                        <th scope="col" class="col-1">เครื่องมือ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -73,10 +73,10 @@
                             <td><?php echo $Import_Amount; ?> ตัว</td>
                             <td><?php echo $Import_Details; ?></td>
 
-
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#editImportModal<?= $Import_ID; ?>" style="height: 35px; width: 100%;">แก้ไข
+                                <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                                        data-bs-target="#editImportModal<?= $Import_ID; ?>">
+                                        <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
                                 </button>
 
                                 <!--Start Edit-->
@@ -142,10 +142,9 @@
                                 </div>
                                 <!--End Edit-->
 
-                                <br>
-
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="ImportID(<?= $Import_ID; ?>)"
-                                    data-bs-target="#confirmDeleteModal" style="height: 35px; width: 100%;  margin-top: 5px;">ลบ
+                                <button class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 5px;"
+                                        onclick="ImportID(<?= $Import_ID; ?>)" data-bs-target="#confirmDeleteModal">
+                                        <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
                                 </button>
                             </td>
 
@@ -177,11 +176,11 @@
                 </tbody>
             </table>
         </div>
-    </div><br>
-</div><br>
+    </div>
+</div>
 
 <div class="container-fluid pt-4 px-4 rounded bg-primary">
-    <div class="text-center">
+    <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6>ข้อมูลการนำเข้าไก่ไข่ทั้งหมด</h6>
         </div>
