@@ -20,9 +20,12 @@
                         collect.`Collect_Date`,
                         collect.`EggAmount`,
                         user.`User_ID`,
-                        user.User_Name
+                        user.User_Name,
+                        breed.Breed_ID,
+                        breed.Breed_Name
                     FROM collect 
                     INNER JOIN user ON collect.User_ID = user.User_ID
+                    INNER JOIN breed ON collect.Breed_ID = breed.Breed_ID
                     WHERE user.User_ID = ?;
                     ";
 
@@ -36,11 +39,11 @@
                 <thead>
                     <tr class="text-dark" style="font-size: 14px;">
                         <th scope="col" class="col-1">รหัส</th>
-                        <th scope="col" class="col-3">วันที่เก็บ</th>
+                        <th scope="col" class="col-2">วันที่เก็บ</th>
+                        <th scope="col" class="col-3">สายพันธุ์</th>
                         <th scope="col" class="col-2">จำนวน (ฟอง)</th>
-                        <th scope="col" class="col-3">ผู้ดูแล</th>
-                        <th scope="col" class="col-1">แก้ไข</th>
-                        <th scope="col" class="col-1">ลบ</th>
+                        <th scope="col" class="col-2">ผู้ดูแล</th>
+                        <th scope="col" class="col-1">เครื่องมือ</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 13px;">
@@ -50,17 +53,21 @@
                         $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"]) ->format(format: "d/m/Y H:i");
                         $EggAmount = $row['EggAmount'];
                         $User_Name = $row['User_Name'];
+                        $Breed_Name = $row['Breed_Name'];
                     ?>
                         <tr>
                             <td><?php echo $Collect_ID; ?></td>
                             <td><?php echo $Collect_Date; ?></td>
+                            <td><?php echo $Breed_Name; ?></td>
                             <td><?php echo $EggAmount; ?></td>
                             <td><?php echo $User_Name; ?></td>
 
                             <!--แก้ไข-->
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditCollectModal<?= $Collect_ID; ?>">แก้ไข</button>
-                            </td>
+                                <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                                        data-bs-target="#EditCollectModal<?= $Collect_ID; ?>">
+                                        <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
+                                </button>
 
                             <!--Start Edit-->
                             <div class="modal fade" id="EditCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="EditCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
@@ -100,9 +107,10 @@
                             </div>
                             <!--End Edit-->
 
-                            <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="CollectID(<?= $Collect_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
-                            </td>
+                            <button type="button" class="btn" data-bs-toggle="modal" onclick="CollectID(<?= $Collect_ID; ?>)"
+                                    data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px;">
+                                    <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
+                            </button>
 
                             <!--Start Waring For Delete-->
                             <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
@@ -127,6 +135,7 @@
                                 </div>
                             </div>
                             <!--END Warning For Delete-->
+                            </td>
                         </tr>
                     <?php } ?>
                 </tbody>

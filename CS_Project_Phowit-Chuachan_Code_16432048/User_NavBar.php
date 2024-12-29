@@ -16,7 +16,7 @@
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-dark border-0 rounded-0 rounded-bottom m-0">
                 <a href="signin.php" class="dropdown-item text-light">Login Admin</a>
-                <a href="" class="dropdown-item text-light">Out of Web</a>
+                <a href="Admin_ConfirmLogOut.php" class="dropdown-item text-light">Log Out</a>
             </div>
         </div>
     </div>

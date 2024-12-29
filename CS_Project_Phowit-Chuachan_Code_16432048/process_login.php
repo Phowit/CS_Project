@@ -24,8 +24,18 @@
 
             // รหัสผ่านถูกต้อง
             $_SESSION['User_ID'] = $User_Data['User_ID']; // เก็บข้อมูลใน session
-            header("Location: Admin_Index.php"); // ย้ายไปหน้า Admin_Index.php
+            $User_Status = $row['User_Status'];
+
+            // เปลี่ยนเส้นทางตามสถานะ
+            if ($User_Status === 'Admin') {
+                header("Location: Admin_Index.php"); // หน้าสำหรับ Admin
+            } elseif ($User_Status === 'Staff') {
+                header("Location: Staff_Index.php"); // หน้าสำหรับ Staff
+            } else {
+                header("Location: User_Index.php"); // หน้าสำหรับ User ทั่วไป
+            }
             exit();
+
         } else {
             echo "รหัสผ่านไม่ถูกต้อง! <br>";
             echo $User_Password_Input , '<br>';

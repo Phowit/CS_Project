@@ -1,5 +1,5 @@
 <div class="container-fluid pt-4 px-4 rounded bg-primary">
-    <div class="text-center">
+    <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6>ข้อมูลการนำออกไก่ไข่ของคุณ</h6>
 
@@ -44,15 +44,15 @@
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" style="font-size:13px">
                         <th scope="col" class="col-0.5">รหัส</th>
                         <th scope="col" class="col-2">ผู้บันทึก</th>
                         <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
                         <th scope="col" class="col-1">วัน เวลา <br> ที่นำออก</th>
                         <th scope="col" class="col-2">สายพันธุ์</th>
-                        <th scope="col" class="col-1">จำนวน</th>
+                        <th scope="col" class="col-0.5">จำนวน</th>
                         <th scope="col" class="col-4">รายละเอียด</th>
-                        <th scope="col" class="col-0.5">เครื่องมือ</th>
+                        <th scope="col" class="col-1">เครื่องมือ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -67,7 +67,7 @@
                         $Export_Details = $row['Export_Details'];
                         $Import_Amount = $row['Import_Amount'];
                     ?>
-                        <tr>
+                        <tr style="font-size:12px">
                             <td><?php echo $Export_ID; ?></td>
                             <td><?php echo $User_Name; ?></td>
                             <td><?php echo $Export_Date_Record; ?></td>
@@ -78,8 +78,9 @@
 
 
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                    data-bs-target="#editExportModal<?= $Export_ID; ?>" style="height: 35px; width: 100%;">แก้ไข
+                                <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                                        data-bs-target="#editExportModal<?= $Export_ID; ?>">
+                                        <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
                                 </button>
 
                                 <!--Start Edit-->
@@ -133,10 +134,9 @@
                                 </div>
                                 <!--End Edit-->
 
-                                <br>
-
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="ImportID(<?= $Import_ID; ?>)"
-                                    data-bs-target="#confirmDeleteModal" style="height: 35px; width: 100%;  margin-top: 5px;">ลบ
+                                <button class="btn" data-bs-toggle="modal" onclick="ImportID(<?= $Import_ID; ?>)"
+                                        data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px;">
+                                        <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
                                 </button>
                             </td>
 
@@ -172,7 +172,7 @@
 </div><br>
 
 <div class="container-fluid pt-4 px-4 rounded bg-primary">
-    <div class="text-center">
+    <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6>ข้อมูลการนำเข้าไก่ไข่ทั้งหมด</h6>
         </div>
@@ -204,7 +204,7 @@
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark">
+                    <tr class="text-dark" style="font-size:13px">
                         <th scope="col" class="col-0.5">รหัส</th>
                         <th scope="col" class="col-2">ผู้บันทึก</th>
                         <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
@@ -225,7 +225,7 @@
                         $Import_Amount = $row['Import_Amount'];
                         $Import_Details = $row['Import_Details'];
                     ?>
-                        <tr>
+                        <tr style="font-size:12px">
                             <td><?php echo $Import_ID; ?></td>
                             <td><?php echo $User_Name; ?></td>
                             <td><?php echo $Import_Date_Record; ?></td>

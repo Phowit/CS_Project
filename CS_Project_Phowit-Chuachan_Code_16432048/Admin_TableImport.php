@@ -142,8 +142,8 @@
                                 </div>
                                 <!--End Edit-->
 
-                                <button class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 5px;"
-                                        onclick="ImportID(<?= $Import_ID; ?>)" data-bs-target="#confirmDeleteModal">
+                                <button class="btn" data-bs-toggle="modal" onclick="ImportID(<?= $Import_ID; ?>)" 
+                                        data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px;">
                                         <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
                                 </button>
                             </td>
