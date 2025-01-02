@@ -26,17 +26,8 @@ if ($result->num_rows === 1) {
     // เปลี่ยนเส้นทางตามสถานะ
     if ($User_Status === 'Admin') {
         header("Location: Admin_Index.php"); // หน้าสำหรับ Admin
-    } elseif ($User_Status === 'Staff') {
-        header("Location: Staff_Index.php"); // หน้าสำหรับ Staff
-    } elseif ($User_Status === 'User') {
-        header("Location: User_Index.php"); // หน้าสำหรับ User ทั่วไป
     } else {
-        echo $User_Password_Input, '<br>';
-        echo $User_ID_Input, '<br>';
-        echo "-------------- <br>";
-        echo $row['User_Password'], '<br>';
-        echo $row['User_ID'] , '<br>';
-        echo $User_Status;
+        header("Location: User_Index.php"); // หน้าสำหรับ User ทั่วไป
     }
     exit();
 } else {

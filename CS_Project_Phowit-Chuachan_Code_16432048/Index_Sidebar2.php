@@ -10,16 +10,16 @@
                 <h6 class="mb-0 text-light">หน้าหลัก</h6>
             </div>
         </div>
-        <div class="navbar-nav w-100 ">
-            <a href="#" class="nav-item nav-link active">
-                <i class="fa fa-laptop me-2 icon"></i>ฟาร์มเกษตร มรภ.อยุธยา</a>
+        <div class="navbar-nav w-100">
+            <a href="Index.php" class="nav-item nav-link text-light">
+                <i class="fa fa-home me-2 icon"></i>หน้าหลัก</a>
 
-            <a href="#" class="nav-item nav-link text-light">
-                <i class="fa fa-tachometer-alt me-2 icon"></i>ไก่ไข่</a>
+            <a href="Index_Farm" class="nav-item nav-link active">
+                <i class="fa fa-laptop me-2 icon"></i>ฟาร์มเกษตร ARU.</a>
 
             <a href="Admin_ManageBreedChicken.php" class="nav-item nav-link text-light">
                 <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
-<!--
+            <!--
             <div class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown"><i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่</a>
                 <div class="dropdown-menu bg-transparent border-0">
