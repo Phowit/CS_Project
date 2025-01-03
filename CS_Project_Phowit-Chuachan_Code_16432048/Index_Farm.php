@@ -29,6 +29,8 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
 </head>
 
 <body>
@@ -87,6 +89,40 @@
                         </button>
                     </div>
                 </div>
+
+                <div class="container-fluid pt-4 px-4">
+                <div class="row">
+                    <div class="col-md-6 col-sm-12 col-xl-6 ">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-2">
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d22185.51878376601!2d100.563192!3d14.348940000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e27439d817f259%3A0x985c4ac5faa7935!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lij4Liy4LiK4Lig4Lix4LiP4Lie4Lij4Liw4LiZ4LiE4Lij4Lio4Lij4Li14Lit4Lii4Li44LiY4Lii4Liy!5e1!3m2!1sth!2sth!4v1735466146515!5m2!1sth!2sth"
+                                width="100%" height="285px" style="border:0;" allowfullscreen="" loading="lazy"
+                                referrerpolicy="no-referrer-when-downgrade">
+                            </iframe>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 col-sm-12 col-xl-6">
+                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-2" style="height: 100%;">
+                            <a style="font-size:14px;">
+                                ฟาร์มเกษตรของมหาวิทยาลัยราชภัฏพระนครศรีอยุธยาเป็นศูนย์กลางการเรียนรู้
+                                และพัฒนาด้านการเกษตรที่สำคัญในภูมิภาค มีบทบาทในการสนับสนุนการเรียนการสอน การวิจัย
+                                และการบริการชุมชน โดยเน้นการประยุกต์ใช้เทคโนโลยีสมัยใหม่เพื่อเพิ่มประสิทธิภาพการผลิตทางการเกษตร
+                                <br><br>
+                                โดยนักศึกษาสาขาวิชาเกษตรศาสตร์ของมหาวิทยาลัยจะได้รับการฝึกปฏิบัติจริงในฟาร์มเกษตรนี้
+                                เพื่อพัฒนาทักษะและความรู้ในการจัดการแปลงเกษตร การดูแลพืชผล และการเลี้ยงสัตว์
+                                ซึ่งเป็นการเตรียมความพร้อมสำหรับการประกอบอาชีพในอนาคต
+                                <br><br>
+                                มหาวิทยาลัยราชภัฏพระนครศรีอยุธยา
+                                เลขที่ 96 ถ.ปรีดีพนมยงค์ ต.ประตูชัย อ.พระนครศรีอยุธยา จ.พระนครศรีอยุธยา 13000
+                                โทรศัพท์: +663 527 6555
+                                โทรสาร : +663 532 2076
+                                อีเมล : saraban@aru.ac.th
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             </div>
         </div>
     </div>

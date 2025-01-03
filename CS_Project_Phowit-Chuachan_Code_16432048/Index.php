@@ -29,6 +29,8 @@
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
 </head>
 
 <body>
@@ -60,45 +62,55 @@
                         <img src="My_img/Farm.png" alt="Farm" style="width:100%; height: auto;">
                     </div>
 
-                    <div class="col-md-10 col-sm-12 col-xl-3 p-2">
+                    <div class="col-md-10 col-sm-12 col-xl-3">
                         <!-- Carousel -->
                         <div class="col-sm-6 col-xl-12 m-2">
-                            <div class="bg-light rounded h-100 p-1">
-                                <img src="My_img/temperature.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
-                                <a>อุณหภูมิ</a>
-                                <a class="mb-1 text-dark"> : 25  ํC</a>
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center">
+                                <img src="My_img/temperature.png" style="width: 40px; height: 40px; margin-right:10px;">
+                                <div class="w-100 ms-3">
+                                    <a>อุณหภูมิโรงเรือน</a>
+                                    <p class="mb-1 text-dark"> : 25 ํC</p>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-6 col-xl-12 m-2">
-                            <div class="bg-light rounded h-100 p-1">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-3">
                                 <img src="My_img/silos.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
-                                <a>ระบบให้อาหาร</a>
-                                <h6 class="mb-1 text-dark">สถานะ : เปิด </h6>
+                                <div class="w-100 ms-3">
+                                    <a>ระบบให้อาหาร</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด </h6>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-6 col-xl-12 m-2">
-                            <div class="bg-light rounded h-100 p-1">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-3">
                                 <img src="My_img/water1.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
-                                <a>ระบบน้ำดื่ม</a>
-                                <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                <div class="w-100 ms-3">
+                                    <a>ระบบน้ำดื่ม</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-6 col-xl-12 m-2">
-                            <div class="bg-light rounded h-100 p-1">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-2">
                                 <img src="My_img/sprinkler.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
-                                <a>ระบบวาล์วน้ำสปิงึ์เกอร์ ลดอุณหภูมิ</a>
-                                <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                <div class="w-100 ms-3">
+                                    <a>ระบบวาล์วน้ำสปิงเกอร์ ลดอุณหภูมิ</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-sm-6 col-xl-12 m-2">
-                            <div class="bg-light rounded h-100 p-1">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-3">
                                 <img src="My_img/tank.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
-                                <a>ระบบให้อาหารเสริม</a>
-                                <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                <div class="w-100 ms-3">
+                                    <a>ระบบให้อาหารเสริม</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -106,36 +118,18 @@
                 </div>
             </div>
 
-            <div class="container-fluid pt-4 px-4">
+            <div class="container-fluid pt-4 px-4 m-1">
                 <div class="row">
-                    <div class="col-md-6 col-sm-12 col-xl-6 ">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-2">
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d22185.51878376601!2d100.563192!3d14.348940000000002!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e27439d817f259%3A0x985c4ac5faa7935!2z4Lih4Lir4Liy4Lin4Li04LiX4Lii4Liy4Lil4Lix4Lii4Lij4Liy4LiK4Lig4Lix4LiP4Lie4Lij4Liw4LiZ4LiE4Lij4Lio4Lij4Li14Lit4Lii4Li44LiY4Lii4Liy!5e1!3m2!1sth!2sth!4v1735466146515!5m2!1sth!2sth"
-                                width="100%" height="285px" style="border:0;" allowfullscreen="" loading="lazy"
-                                referrerpolicy="no-referrer-when-downgrade">
-                            </iframe>
-                        </div>
-                    </div>
 
-                    <div class="col-md-6 col-sm-12 col-xl-6">
-                        <div class="bg-light rounded d-flex align-items-center justify-content-between p-2" style="height: 100%;">
-                            <a style="font-size:14px;">
-                                ฟาร์มเกษตรของมหาวิทยาลัยราชภัฏพระนครศรีอยุธยาเป็นศูนย์กลางการเรียนรู้
-                                และพัฒนาด้านการเกษตรที่สำคัญในภูมิภาค มีบทบาทในการสนับสนุนการเรียนการสอน การวิจัย
-                                และการบริการชุมชน โดยเน้นการประยุกต์ใช้เทคโนโลยีสมัยใหม่เพื่อเพิ่มประสิทธิภาพการผลิตทางการเกษตร
-                                <br><br>
-                                โดยนักศึกษาสาขาวิชาเกษตรศาสตร์ของมหาวิทยาลัยจะได้รับการฝึกปฏิบัติจริงในฟาร์มเกษตรนี้
-                                เพื่อพัฒนาทักษะและความรู้ในการจัดการแปลงเกษตร การดูแลพืชผล และการเลี้ยงสัตว์
-                                ซึ่งเป็นการเตรียมความพร้อมสำหรับการประกอบอาชีพในอนาคต
-                                <br><br>
-                                มหาวิทยาลัยราชภัฏพระนครศรีอยุธยา
-                                เลขที่ 96 ถ.ปรีดีพนมยงค์ ต.ประตูชัย อ.พระนครศรีอยุธยา จ.พระนครศรีอยุธยา 13000
-                                โทรศัพท์: +663 527 6555
-                                โทรสาร : +663 532 2076
-                                อีเมล : saraban@aru.ac.th
-                            </a>
-                        </div>
+                    <!--Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิ</h6>
+                            </div>
+                            <canvas id="Temperature_Chart" style="max-width:100%; max-height:200px;"></canvas>
                     </div>
+                    <!--Chart End อาหารหลัก-->
+
                 </div>
             </div>
         </div>
@@ -158,6 +152,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- chart -->
+    <script src="chart.js"></script>
 </body>
 
 </html>

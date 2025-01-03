@@ -4,10 +4,9 @@
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
                 <img class="rounded-circle" src="My_img/chicken.png" alt="" style="width: 40px; height: 40px;">
-                <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
-                <h6 class="mb-0 text-light">หน้าหลัก</h6>
+                <h5 class="mb-0 text-light" style="font-family: 'ABeeZee';">Chicken Farm</h5>
             </div>
         </div>
         <div class="navbar-nav w-100">
