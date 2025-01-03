@@ -51,7 +51,7 @@
 
         <!-- Sidebar Start -->
         <?php
-		    require_once("Admin_SideBar2.php");
+		    require_once("Admin_SideBar.php");
 		?>
         <!-- Sidebar End -->
 

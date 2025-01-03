@@ -15,7 +15,7 @@
                 <span class="d-none d-lg-inline-flex text-light">ผู้ดูแลระบบ</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-dark border-0 rounded-0 rounded-bottom m-0">
-                <a href="Admin_Profile.php" class="dropdown-item text-light">My Profile</a>
+                <a href="#" class="dropdown-item text-light">My Profile</a>
                 <a href="Admin_ConfirmLogOut.php" class="dropdown-item text-light">Log Out</a>
             </div>
         </div>

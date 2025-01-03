@@ -54,7 +54,7 @@
             ?>
 
             <div class="container-fluid pt-4 px-4">
-                <h5>ข้อมูลฟาร์มเกษตร มหาวิทยาลัยราชภัฏพระนครศรีอยุธยา</h5>
+                <h5>ข้อมูลการเลี้ยงไก่ไข่</h5>
 
                 <div class="col-md-12 col-sm-12 col-xl-12 bg-light rounded p-2">
                     <!-- Carousel -->

@@ -63,7 +63,7 @@
 
         <!-- Sidebar Start -->
         <?php
-		    require_once("Admin_SideBar7.php");
+		    require_once("Admin_SideBar.php");
 		?>
         <!-- Sidebar End -->
 

@@ -44,7 +44,7 @@
         </div>
 
         <?php
-        require_once("Index_Sidebar1.php");
+        require_once("Index_Sidebar.php");
         ?>
 
         <!-- Blank Start -->
