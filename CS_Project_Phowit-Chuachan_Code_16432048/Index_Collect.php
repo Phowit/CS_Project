@@ -6,7 +6,7 @@
     <title>ระบบจัดการฟาร์มไก่ไข่อัจฉริยะด้วยเทคโนโลยีอินเทอร์เน็ตของสรรพสิ่ง</title>
 
     <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
-    
+
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -17,8 +17,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -52,8 +52,8 @@
 
         <!-- Sidebar Start -->
         <?php
-		    require_once("Index_SideBar.php");
-		?>
+        require_once("Index_SideBar.php");
+        ?>
         <!-- Sidebar End -->
 
 
@@ -61,13 +61,20 @@
         <div class="content">
             <!-- Navbar Start -->
             <?php
-                require_once("Index_NavBar.php");
+            require_once("Index_NavBar.php");
             ?>
             <!-- Navbar End -->
 
+            <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                <div class="d-flex align-items-center justify-content-between mb-4">
+                    <h6 class="mb-0 text-dark">จำนวนไข่ไก่ที่เก็บได้</h6>
+                </div>
+                <canvas id="Collect_Chart" style="max-width:100%; max-height:200px;"></canvas>
+            </div>
+
             <!--ข้อมูลการเก็บไข่ start -->
             <?php
-                require_once("Index_TableCollect.php");
+            require_once("Index_TableCollect.php");
             ?>
             <!--ข้อมูลการเก็บไข่ End-->
         </div>
@@ -87,6 +94,10 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- chart -->
+    <script src="chart.js"></script>
+
 </body>
 
 </html>

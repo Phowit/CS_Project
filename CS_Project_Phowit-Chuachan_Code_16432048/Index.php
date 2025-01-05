@@ -54,7 +54,7 @@
             ?>
 
             <div class="container-fluid pt-4 px-4">
-                <h5>ข้อมูลฟาร์มเกษตร มหาวิทยาลัยราชภัฏพระนครศรีอยุธยา</h5>
+                <h5>สถานะระบบ</h5>
 
                 <div class="row">
                     <div class="col-md-10 col-sm-12 col-xl-9 bg-light rounded p-2">
