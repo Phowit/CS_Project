@@ -29,10 +29,8 @@
                     breed.Breed_Name
                     FROM import
                     INNER JOIN user ON import.User_ID = user.User_ID
-                    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID
-                    WHERE import.User_ID = ?;
+                    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID;
                     ";
-
 
             $stmt = $conn->prepare($sql); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
             $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
