@@ -1,7 +1,7 @@
 <div class="container-fluid pt-4 px-4 rounded bg-primary">
     <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6>ข้อมูลการนำออกไก่ไข่ของคุณ</h6>
+            <h6>ข้อมูลการนำไก่ออก</h6>
 
             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                 data-bs-target="#addRecordModal" style="height: 35px; width: 95px;">เพิ่มข้อมูล
@@ -23,32 +23,22 @@
                     `Export_Date`,
                     `Export_Amount`,
                     `Export_Details`,
-                    export.`Import_ID`,
-                    import.`User_ID`,
                     import.`Import_Amount`,
-                    user.User_Name,
                     breed.Breed_Name
                     FROM export
                     INNER JOIN import ON import.Import_ID = export.Import_ID
-                    INNER JOIN user ON import.User_ID = user.User_ID
-                    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID
-                    WHERE import.User_ID = ?;
+                    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID;
                     ";
 
-
-            $stmt = $conn->prepare($sql); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
-            $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
-            $stmt->execute(); // รันคำสั่ง
-            $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
+            $result = mysqli_query($conn, $sql);
             ?>
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
-                    <tr class="text-dark" style="font-size:13px">
+                    <tr class="text-dark" style="font-size:14px">
                         <th scope="col" class="col-0.5">รหัส</th>
-                        <th scope="col" class="col-2">ผู้บันทึก</th>
-                        <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
-                        <th scope="col" class="col-1">วัน เวลา <br> ที่นำออก</th>
+                        <th scope="col" class="col-2">วัน เวลา ที่บันทึก</th>
+                        <th scope="col" class="col-2">วัน เวลา ที่นำออก</th>
                         <th scope="col" class="col-2">สายพันธุ์</th>
                         <th scope="col" class="col-0.5">จำนวน</th>
                         <th scope="col" class="col-4">รายละเอียด</th>
@@ -59,7 +49,6 @@
                     <?php
                     while ($row = $result->fetch_assoc()) {
                         $Export_ID = $row['Export_ID'];
-                        $User_Name = $row['User_Name'];
                         $Export_Date_Record = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Export_Date_Record"])->format(format: "d/m/Y H:i");
                         $Export_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Export_Date"])->format(format: "d/m/Y H:i");
                         $Breed_Name = $row['Breed_Name'];
@@ -69,7 +58,6 @@
                     ?>
                         <tr style="font-size:12px">
                             <td><?php echo $Export_ID; ?></td>
-                            <td><?php echo $User_Name; ?></td>
                             <td><?php echo $Export_Date_Record; ?></td>
                             <td><?php echo $Export_Date; ?></td>
                             <td><?php echo $Breed_Name; ?></td>
@@ -170,76 +158,6 @@
         </div>
     </div><br>
 </div><br>
-
-<div class="container-fluid pt-4 px-4 rounded bg-primary">
-    <div class="text-center h-100 bg-light rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6>ข้อมูลการนำเข้าไก่ไข่ทั้งหมด</h6>
-        </div>
-        <div class="table-responsive">
-            <?php
-            require_once("connect_db.php");
-            $sqli = "select 
-                    `Import_ID`,
-                    `Import_Date_Record`,
-                    `Import_Date`,
-                    `Import_Amount`,
-                    `Import_Details`,
-                    import.`Breed_ID`,
-                    import.`User_ID`,
-                    user.User_Name,
-                    breed.Breed_Name
-                    FROM import
-                    INNER JOIN user ON import.User_ID = user.User_ID
-                    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID
-                    WHERE import.User_ID != ?;
-                    ";
-
-
-            $stmt = $conn->prepare($sqli); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
-            $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
-            $stmt->execute(); // รันคำสั่ง
-            $result1 = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
-            ?>
-
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
-                <thead>
-                    <tr class="text-dark" style="font-size:13px">
-                        <th scope="col" class="col-0.5">รหัส</th>
-                        <th scope="col" class="col-2">ผู้บันทึก</th>
-                        <th scope="col" class="col-1">วัน เวลา <br> ที่บันทึก</th>
-                        <th scope="col" class="col-1">วัน เวลา <br> ที่นำเข้า</th>
-                        <th scope="col" class="col-3">สายพันธุ์</th>
-                        <th scope="col" class="col-0.5">จำนวน</th>
-                        <th scope="col" class="col-4">รายละเอียด</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    while ($row = $result1->fetch_assoc()) {
-                        $Import_ID = $row['Import_ID'];
-                        $User_Name = $row['User_Name'];
-                        $Import_Date_Record = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Import_Date_Record"])->format(format: "d/m/Y H:i");
-                        $Import_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Import_Date"])->format(format: "d/m/Y H:i");
-                        $Breed_Name = $row['Breed_Name'];
-                        $Import_Amount = $row['Import_Amount'];
-                        $Import_Details = $row['Import_Details'];
-                    ?>
-                        <tr style="font-size:12px">
-                            <td><?php echo $Import_ID; ?></td>
-                            <td><?php echo $User_Name; ?></td>
-                            <td><?php echo $Import_Date_Record; ?></td>
-                            <td><?php echo $Import_Date; ?></td>
-                            <td><?php echo $Breed_Name; ?></td>
-                            <td><?php echo $Import_Amount; ?> ตัว</td>
-                            <td><?php echo $Import_Details; ?></td>
-                        </tr>
-                    <?php } ?> <!-- close php-->
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
 
 <script>
     // Get the modal

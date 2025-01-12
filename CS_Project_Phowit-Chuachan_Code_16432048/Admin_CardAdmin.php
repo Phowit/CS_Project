@@ -154,16 +154,7 @@
 
 <div class="container-fluid pt-4 px-4">
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <h6 class="mb-0">ข้อมูลผู้ดูแลระบบ</h6>
-
-        <!--เพิ่ม-->
-        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
-
-        <!-- เริ่ม ฟอร์มเพิ่มข้อมูลไก่ -->
-        <?php
-        require_once("Admin_FormAdminData.php")
-        ?>
-        <!-- จบ ฟอร์มเพิ่มข้อมูลไก่ -->
+        <h6 class="mb-0">ข้อมูลผู้ใช้งานทั่วไป</h6>
     </div>
 
     <?php
@@ -173,9 +164,9 @@
     $stmt = $conn->prepare($sqli); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
     $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
     $stmt->execute(); // รันคำสั่ง
-    $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
+    $resulti = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
 
-    while ($row = $result->fetch_assoc()) {
+    while ($row = $resulti->fetch_assoc()) {
         $User_ID = $row['User_ID'];
         $User_Name = $row['User_Name'];
         $User_Tel = $row['User_Tel'];
@@ -193,7 +184,7 @@
                         <?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='User_Image' style='width: 80%; height: auto; border-radius: 5px;'>"; ?>
                     </div>
 
-                    <div class="col-sm-12 col-xl-8">
+                    <div class="col-sm-12 col-xl-6">
                         <h5 class="mb-4"><?php echo $User_Name; ?></h5>
 
                         <dl class="row mb-0">
@@ -214,6 +205,100 @@
                             <dd class="col-sm-8"><?php echo $Program; ?></dd>
 
                         </dl>
+                    </div>
+
+                    <div class="col-sm-12 col-xl-2">
+
+                        <!--แก้ไข-->
+                        <td>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditAdminModal<?= $User_ID; ?>" style="height:auto; width: 100%;">แก้ไข</button>
+                        </td>
+
+                        <!--Start Edit-->
+                        <div class="modal fade" id="EditAdminModal<?= $User_ID; ?>" tabindex="-1" aria-labelledby="EditAdminModal<?= $User_ID; ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="EditAdminModal<?= $User_ID; ?>">แก้ไขข้อมูล</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Form for Editing Record -->
+                                        <form id="EditBreedForm" action="Update_Admin.php" method="post" enctype="multipart/form-data">
+                                            <!-- Add your form fields here for additional request details -->
+
+                                            <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="User_Name" name="User_Name" value="<?php echo $User_Name; ?>" placeholder required>
+                                                <label class="form-label">ชื่อผู้ใช้</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="tel" class="form-control" id="User_Tel" name="User_Tel" value="<?php echo $User_Tel; ?>" placeholder required>
+                                                <label class="form-label">เบอร์โทรศัพท์</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="User_Address" name="User_Address" value="<?php echo $User_Address; ?>" placeholder required>
+                                                <label class="form-label">ที่อยู่ติดต่อ</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="email" class="form-control" id="User_Email" name="User_Email" value="<?php echo $User_Email; ?>" placeholder required>
+                                                <label class="form-label">อีเมล</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="text" class="form-control" id="Program" name="Program" value="<?php echo $Program; ?>" placeholder required>
+                                                <label class="form-label">สาขา</label>
+                                            </div>
+
+                                            <label class="form-label">ภาพผู้ดูแลระบบ</label>
+                                            <div class="form-floating mb-3">
+                                                <input type="file" id="User_Image" name="User_Image" value="<?php $User_Image; ?>" placeholder>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12" style="margin-top: 20px;">
+                                                    <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                    <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br><br>
+                        <!--End Edit-->
+
+                        <td>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="UserID(<?= $User_ID; ?>)" data-bs-target="#confirmDeleteModal" style="height:auto; width: 100%;">ลบ</button>
+                        </td>
+
+                        <!--Start Waring For Delete-->
+                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+
+                                    <div class="modal-body">
+                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
+                                    </div>
+
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                        <button type="button" class="btn btn-danger" onclick="deleteAdmin()">ยืนยัน</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <!--END Warning For Delete-->
                     </div>
                 </div>
             </div>
