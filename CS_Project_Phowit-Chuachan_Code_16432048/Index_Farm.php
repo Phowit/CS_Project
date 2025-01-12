@@ -76,7 +76,7 @@
                                 <img src="My_img/FrontFarmHug.jpg" alt="FrontFarmHug" class="d-block" style="width:100%">
                             </div>
                             <div class="carousel-item">
-                                <img src="My_img/agriculture1.jpg" alt="agriculture1" class="d-block" style="width:100%">
+                                <img src="My_img/FrontFarmHug2.jpg" alt="agriculture1" class="d-block" style="width:100%">
                             </div>
                         </div>
 

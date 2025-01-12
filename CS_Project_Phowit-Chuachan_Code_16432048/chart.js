@@ -159,7 +159,6 @@ function loadCollectChart() {
                     },
                     title: {
                         display: true,
-                        text: 'Egg Collection by Date and Breed (Grouped Bar Chart)' // ชื่อกราฟ
                     }
                 },
                 scales: {
