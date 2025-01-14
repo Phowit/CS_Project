@@ -48,7 +48,7 @@
 
         <!-- Sidebar Start -->
         <?php
-		    require_once("User_SideBar1.php");
+		    require_once("User_SideBar.php");
 		?>
         <!-- Sidebar End -->
 
@@ -61,17 +61,82 @@
             ?>
             <!-- Navbar End -->
 
-            <!--table Start ข้อมูลไก่-->
-
-            <!--teble End ข้อมูลไก่-->
-
-            <!-- Widgets Start -->
             <div class="container-fluid pt-4 px-4">
-                <div class="row g-4">
+                <h5>สถานะระบบ</h5>
 
-                    <!--ข้อมูลการเก็บไข่ start -->
+                <div class="row">
+                    <div class="col-md-10 col-sm-12 col-xl-9 bg-light rounded p-2">
+                        <!-- Carousel -->
+                        <img src="My_img/Farm.png" alt="Farm" style="width:100%; height: auto;">
+                    </div>
 
-                    <!--ข้อมูลการเก็บไข่ End-->
+                    <div class="col-md-10 col-sm-12 col-xl-3">
+                        <!-- Carousel -->
+                        <div class="col-sm-6 col-xl-12 m-2">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center">
+                                <img src="My_img/temperature.png" style="width: 40px; height: 40px; margin-right:10px;">
+                                <div class="w-100 ms-3">
+                                    <a>อุณหภูมิโรงเรือน</a>
+                                    <p class="mb-1 text-dark"> : 25 ํC</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xl-12 m-2">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-3">
+                                <img src="My_img/silos.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
+                                <div class="w-100 ms-3">
+                                    <a>ระบบให้อาหาร</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด </h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xl-12 m-2">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-3">
+                                <img src="My_img/water1.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
+                                <div class="w-100 ms-3">
+                                    <a>ระบบน้ำดื่ม</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xl-12 m-2">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-2">
+                                <img src="My_img/sprinkler.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
+                                <div class="w-100 ms-3">
+                                    <a>ระบบวาล์วน้ำสปิงเกอร์ ลดอุณหภูมิ</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-sm-6 col-xl-12 m-2">
+                            <div class="bg-light rounded h-100 p-1 d-flex align-items-center py-3">
+                                <img src="My_img/tank.png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
+                                <div class="w-100 ms-3">
+                                    <a>ระบบให้อาหารเสริม</a>
+                                    <h6 class="mb-1 text-dark">สถานะ : เปิด</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="container-fluid pt-4 px-4 m-1">
+                <div class="row">
+
+                    <!--Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิ</h6>
+                            </div>
+                            <canvas id="Temperature_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                    </div>
+                    <!--Chart End อาหารหลัก-->
 
                 </div>
             </div>
@@ -96,6 +161,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- chart -->
+    <script src="chart.js"></script>
 
     <script>
     document.addEventListener("DOMContentLoaded", function () {

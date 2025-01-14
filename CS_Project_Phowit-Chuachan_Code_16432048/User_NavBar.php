@@ -11,12 +11,11 @@
     <div class="navbar-nav align-items-center ms-auto">
         <div class="nav-item dropdown">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                <img class="rounded-circle me-lg-2" src="My_img/LogoAdmin.png" alt="" style="width: 40px; height: 40px;">
+                <img class="rounded-circle me-lg-2" src="My_img/LogoAdmin.png" style="width: 40px; height: 40px;">
                 <span class="d-none d-lg-inline-flex">ผู้ใช้ทั่วไป</span>
             </a>
             <div class="dropdown-menu dropdown-menu-end bg-dark border-0 rounded-0 rounded-bottom m-0">
-                <a href="signin.php" class="dropdown-item text-light">Login Admin</a>
-                <a href="Admin_ConfirmLogOut.php" class="dropdown-item text-light">Log Out</a>
+                <a href="User_ConfirmLogOut.php" class="dropdown-item text-light">Log Out</a>
             </div>
         </div>
     </div>
