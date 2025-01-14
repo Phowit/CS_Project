@@ -11,12 +11,9 @@
                         collect.`Collect_Date`,
                         collect.`EggAmount`,
                         breed.`Breed_ID`,
-                        breed.`Breed_Name`,
-                        user.`User_ID`,
-                        user.User_Name
+                        breed.`Breed_Name`
                     FROM collect 
-                    INNER JOIN breed ON collect.Breed_ID = breed.Breed_ID
-                    INNER JOIN user ON collect.User_ID = user.User_ID;
+                    INNER JOIN breed ON collect.Breed_ID = breed.Breed_ID;
                     ";
             $result = $conn->query($sql); // รับผลลัพธ์จากฐานข้อมูล
 
@@ -25,10 +22,9 @@
                 <thead>
                     <tr class="text-dark" style="font-size: 14px;">
                         <th scope="col" class="col-1">รหัส</th>
-                        <th scope="col" class="col-3">วันที่เก็บ</th>
-                        <th scope="col" class="col-3">สายพันธุ์</th>
-                        <th scope="col" class="col-2">จำนวน</th>
-                        <th scope="col" class="col-3">ผู้ดูแล</th>
+                        <th scope="col" class="col-4">วันที่เก็บ</th>
+                        <th scope="col" class="col-4">สายพันธุ์</th>
+                        <th scope="col" class="col-3">จำนวน</th>
                     </tr>
                 </thead>
                 <tbody style="font-size: 13px;">
@@ -38,14 +34,12 @@
                         $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"])->format(format: "d/m/Y H:i");
                         $Breed_Name = $row['Breed_Name'];
                         $EggAmount = $row['EggAmount'];
-                        $User_Name = $row['User_Name'];
                     ?>
                         <tr>
                             <td><?php echo $Collect_ID; ?></td>
                             <td><?php echo $Collect_Date; ?></td>
                             <td><?php echo $Breed_Name; ?></td>
                             <td><?php echo $EggAmount; ?> ฟอง</td>
-                            <td><?php echo $User_Name; ?></td>
                         </tr>
                     <?php } ?>
                 </tbody>

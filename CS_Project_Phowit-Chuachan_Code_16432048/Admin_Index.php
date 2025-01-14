@@ -2,11 +2,11 @@
 require_once("connect_db.php");
 session_start();
 
-    // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
-    if (!isset($_SESSION['User_ID'])) {
-        header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า Login.php
-        exit();
-    }
+// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
+if (!isset($_SESSION['User_ID'])) {
+    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า Login.php
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -130,6 +130,34 @@ session_start();
                         </div>
                     </div>
                     <!--Chart End อุณหภูมิ-->
+
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">จำนวนไข่ไก่ที่เก็บได้</h6>
+                            </div>
+                            <canvas id="Collect_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">จำนวนไก่ที่นำเข้า</h6>
+                            </div>
+                            <canvas id="Import_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="container-fluid pt-4 px-4">
+                        <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">จำนวนไก่ที่นำออก</h6>
+                            </div>
+                            <canvas id="Export_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                        </div>
+                    </div>
+
                 </div>
             </div>
             <!--Chart End อาหารเสริม & อุณหภูมิ-->
@@ -208,21 +236,6 @@ session_start();
                 }
             });
         });
-
-        /* function domeUpdate(dome_id) {
-             var dome_name = document.getElementById("dome_name").value;
-             var dome_size = document.getElementById("dome_size").value;
-             var dome_img = document.getElementById("dome_img").value;
-
-             if (dome_name.trim() == '' || dome_size.trim() == '' || dome_img.trim() == '') {
-                 alert("กรุณากรอกข้อมูลให้ครบทุกช่อง");
-             } else {
-                 window.location.href = "dome_update.php?dome_id=" + dome_id +
-                     "&dome_name=" + dome_name +
-                     "&dome_size=" + dome_size +
-                     "&dome_img=" + dome_img;
-             }
-         }*/
     </script>
 
     <!-- start Modal-->

@@ -174,6 +174,106 @@ function loadCollectChart() {
     })
 }};
 
+// โหลดกราฟ Chicken Import Level
+function loadImportChart() {
+    if (document.getElementById("Import_Chart")) {
+
+        // 1. ดึงข้อมูล JSON จาก PHP
+        fetch('Chart_Import.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
+            .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+            .then(data => {
+                const labels = data.Import_Date; // ดึงวันที่นำเข้ามาเป็นแกน X
+
+                // สร้างชุดข้อมูลแยกตามสายพันธุ์
+                const datasets = Object.keys(data.Import_Amount).map((breed, index) => ({
+                    label: breed, // ชื่อสายพันธุ์
+                    data: data.Import_Amount[breed], // จำนวนไก่ของสายพันธุ์ในแต่ละวัน
+                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
+                    borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                }));
+
+                // 2. กำหนดการตั้งค่ากราฟ
+                const ctx = document.getElementById('Import_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
+                new Chart(ctx, {
+                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                    data: {
+                        labels: labels, // กำหนดแกน X เป็นวันที่
+                        datasets: datasets // กำหนดชุดข้อมูลในกราฟ
+                    },
+                    options: {
+                        responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                        plugins: {
+                            legend: {
+                                position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                            },
+                            title: {
+                                display: true,
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: false, // ไม่ซ้อนกันในแกน X
+                            },
+                            y: {
+                                beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                            }
+                        }
+                    }
+                });
+            });
+    }
+}
+
+// โหลดกราฟ Chicken Import Level
+function loadExportChart() {
+    if (document.getElementById("Export_Chart")) {
+
+        // 1. ดึงข้อมูล JSON จาก PHP
+        fetch('Chart_Export.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
+            .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+            .then(data => {
+                const labels = data.Export_Date; // ดึงวันที่นำเข้ามาเป็นแกน X
+
+                // สร้างชุดข้อมูลแยกตามสายพันธุ์
+                const datasets = Object.keys(data.Export_Amount).map((breed, index) => ({
+                    label: breed, // ชื่อสายพันธุ์
+                    data: data.Export_Amount[breed], // จำนวนไก่ของสายพันธุ์ในแต่ละวัน
+                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
+                    borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                }));
+
+                // 2. กำหนดการตั้งค่ากราฟ
+                const ctx = document.getElementById('Export_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
+                new Chart(ctx, {
+                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                    data: {
+                        labels: labels, // กำหนดแกน X เป็นวันที่
+                        datasets: datasets // กำหนดชุดข้อมูลในกราฟ
+                    },
+                    options: {
+                        responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                        plugins: {
+                            legend: {
+                                position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                            },
+                            title: {
+                                display: true,
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: false, // ไม่ซ้อนกันในแกน X
+                            },
+                            y: {
+                                beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                            }
+                        }
+                    }
+                });
+            });
+    }
+}
+
 // เรียกใช้ฟังก์ชันตามความจำเป็นเมื่อหน้าโหลดเสร็จ
 document.addEventListener('DOMContentLoaded', () => {
     loadTemperatureChart();
@@ -181,4 +281,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadFoodTrayChart();
     loadFoodSChart();
     loadCollectChart();
+    loadImportChart();
+    loadExportChart();
 });
