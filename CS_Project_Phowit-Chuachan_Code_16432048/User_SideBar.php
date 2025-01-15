@@ -27,6 +27,9 @@
 
             <a href="User_Chicken.php" class="nav-item nav-link <?= ($currentPage == 'User_Chicken.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-chart-bar me-2 icon"></i>ข้อมูลการเลี้ยงไก่</a>
+
+            <a href="User_Data.php" class="nav-item nav-link <?= ($currentPage == 'User_Data.php') ? 'active' : 'text-light' ?>">
+                <i class="fa fa-chart-bar me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
         </div>
     </nav>
 </div>

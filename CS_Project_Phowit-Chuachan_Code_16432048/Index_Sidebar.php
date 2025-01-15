@@ -11,7 +11,7 @@
                 <img class="rounded-circle" src="My_img/chicken.png" alt="" style="width: 40px; height: 40px;">
             </div>
             <div class="ms-3">
-                <h5 class="mb-0 text-light" style="font-family: 'ABeeZee';">Chicken Farm</h5>
+                <h5 class="mb-0 text-light">Chicken Farm</h5>
             </div>
         </div>
         <div class="navbar-nav w-100">

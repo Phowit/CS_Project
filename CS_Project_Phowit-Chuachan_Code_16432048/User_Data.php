@@ -1,3 +1,14 @@
+<?php
+require_once("connect_db.php");
+session_start();
+
+// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
+if (!isset($_SESSION['User_ID'])) {
+    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า signin.php
+    exit();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -33,6 +44,8 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
@@ -47,36 +60,32 @@
         </div>
         <!-- Spinner End -->
 
-
         <!-- Sidebar Start -->
         <?php
-        require_once("Index_SideBar.php");
+        require_once("User_SideBar.php");
         ?>
         <!-- Sidebar End -->
-
 
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
             <?php
-            require_once("Index_NavBar.php");
+            require_once("User_NavBar.php");
             ?>
             <!-- Navbar End -->
 
-            <div class="container-fluid pt-4 px-4">
-            <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0 text-dark">จำนวนไข่ไก่ที่เก็บได้</h6>
-                </div>
-                <canvas id="Collect_Chart" style="max-width:100%; max-height:200px;"></canvas>
-            </div>
-            </div>
-
-            <!--ข้อมูลการเก็บไข่ start -->
+            <!-- Navbar Start -->
             <?php
-            require_once("Index_TableCollect.php");
+            require_once("User_CardUser.php");
             ?>
-            <!--ข้อมูลการเก็บไข่ End-->
+            <!-- Navbar End -->
+
+                    <!--Chart Start อุณหภูมิ-->
+                    <?php
+                    require_once("User_TableMessage.php");
+                    ?>
+                    <!--Chart End อุณหภูมิ-->
+
         </div>
         <!-- Content End -->
     </div>
@@ -94,10 +103,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <!-- chart -->
-    <script src="chart.js"></script>
-
 </body>
 
 </html>
