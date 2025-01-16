@@ -8,16 +8,17 @@
                 </div>
                 <div class="modal-body">
                     <!-- Form for Editing Record -->
-                    <form id="addRequestForm" action="Insert_UserForm.php" method="post" enctype="multipart/form-data">
+                    <form id="addRequestForm" action="Insert_UserMessage.php" method="post">
                         <!-- Add your form fields here for additional request details -->
+                        <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID = $_SESSION['User_ID']; ?>" readonly>
 
                         <div class="form-floating mb-3">
-                            <input type="text" class="form-control" id="Title" name="Title" placeholder required>
+                            <input type="text" class="form-control" id="Message_Title" name="Message_Title" placeholder required>
                             <label class="form-label">เรื่อง</label>
                         </div>
 
                         <div class="form-floating mb-3">
-                            <textarea class="form-control" id="Detail" name="Detail" style="height: 150px;" placeholder></textarea>
+                            <textarea class="form-control" id="Message_Detail" name="Message_Detail" style="height: 150px;" placeholder></textarea>
                             <label for="floatingTextarea">รายละเอียด</label>
                         </div>
 
