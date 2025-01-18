@@ -118,33 +118,6 @@
                         </div><br><br>
                         <!--End Edit-->
 
-                        <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="UserID(<?= $User_ID; ?>)" data-bs-target="#confirmDeleteModal" style="height:auto; width: 100%;">ลบ</button>
-                        </td>
-
-                        <!--Start Waring For Delete-->
-                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-
-                                    <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-
-                                    <div class="modal-body">
-                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                    </div>
-
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                        <button type="button" class="btn btn-danger" onclick="deleteAdmin()">ยืนยัน</button>
-                                    </div>
-
-                                </div>
-                            </div>
-                        </div>
-                        <!--END Warning For Delete-->
                     </div>
                 </div>
             </div>
@@ -153,9 +126,23 @@
 </div>
 
 <div class="container-fluid pt-4 px-4">
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <h6 class="mb-0">ข้อมูลผู้ใช้งานทั่วไป</h6>
+    <div class="row" style="margin: 7px;">
+        <div class="col-sm-10 col-xl-10">
+            <h6 class="mb-0">ข้อมูลผู้ใช้งานทั่วไป</h6>
+        </div>
+
+        <div class="col-sm-2 col-xl-2">
+            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal"
+                style="height: 40px; width: 70%; position: relative; left: 45%;">เพิ่มข้อมูล
+            </button>
+        </div>
     </div>
+
+    <!-- เริ่ม ฟอร์มเพิ่มข้อมูลนำเข้าไก่ไข่ -->
+    <?php
+    require_once("Admin_FormAdminData.php")
+    ?>
+    <!-- จบ ฟอร์มเพิ่มข้อมูลนำเข้าไก่ไข่ -->
 
     <?php
     require_once("connect_db.php");

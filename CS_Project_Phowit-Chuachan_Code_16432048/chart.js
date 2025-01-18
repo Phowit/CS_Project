@@ -217,6 +217,7 @@ function loadImportChart() {
                             y: {
                                 beginAtZero: true // แกน Y เริ่มต้นที่ 0
                             }
+                            
                         }
                     }
                 });

@@ -49,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ดำเนินการคำสั่ง
     if ($stmt->execute()) {
-        echo "Record added successfully!";
+        echo "<h1 style='margin-top: 20%; margin-left: 37%;'>Record added successfully!</h1>";
     } else {
         echo "Error adding record: " . $stmt->error;
     }
@@ -59,7 +59,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 
     // เปลี่ยนหน้า
-    echo '<meta http-equiv="refresh" content="0; url=Admin_ManageData.php">';
+    echo '<meta http-equiv="refresh" content="0; url=Index.php">';
 }
 
 

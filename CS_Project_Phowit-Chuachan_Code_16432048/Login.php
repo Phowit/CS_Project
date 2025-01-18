@@ -79,7 +79,7 @@
 
                             <button type="submit" class="btn btn-primary py-3 w-100 mb-4">ยืนยัน</button>
                             <a href="User_Index.php" class="btn btn-warning py-3 w-100 mb-4">ยกเลิก</a>
-                            <a class="text-center mb-0" href="User_index.php">ยังไม่มีบัญชี</a>
+                            <a class="text-center mb-0" href="SignUp.php">ยังไม่มีบัญชี</a>
 
                         </form>
                     </div>

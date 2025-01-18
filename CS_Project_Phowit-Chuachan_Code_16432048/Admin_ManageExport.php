@@ -1,12 +1,12 @@
 <?php
-    require_once("connect_db.php");
-    session_start();
+require_once("connect_db.php");
+session_start();
 
-    // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
-    if (!isset($_SESSION['User_ID'])) {
-        header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า signin.php
-        exit();
-    }
+// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
+if (!isset($_SESSION['User_ID'])) {
+    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า signin.php
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
@@ -17,7 +17,7 @@
     <title>ระบบจัดการฟาร์มไก่ไข่อัจฉริยะด้วยเทคโนโลยีอินเทอร์เน็ตของสรรพสิ่ง</title>
 
     <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
-    
+
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -28,8 +28,8 @@
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet"> 
-    
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@500;700&display=swap" rel="stylesheet">
+
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -63,26 +63,31 @@
 
         <!-- Sidebar Start -->
         <?php
-		    require_once("Admin_SideBar.php");
-		?>
+        require_once("Admin_SideBar.php");
+        ?>
         <!-- Sidebar End -->
 
         <!-- Content Start -->
         <div class="content">
             <!-- Navbar Start -->
             <?php
-                require_once("Admin_NavBar.php");
+            require_once("Admin_NavBar.php");
             ?>
             <!-- Navbar End -->
 
-            <!-- Form Start -->
-
-            <!-- Form End -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0 text-dark">จำนวนไก่ที่นำออก</h6>
+                    </div>
+                    <canvas id="Export_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                </div>
+            </div>
 
             <!--table Start ข้อมูลไก่-->
             <?php
-                //require_once("Admin_TableChickenData.php"); Admin_TableImport.php
-                require_once("Admin_TableExport.php");
+            //require_once("Admin_TableChickenData.php"); Admin_TableImport.php
+            require_once("Admin_TableExport.php");
             ?>
             <!--teble End ข้อมูลไก่-->
         </div>
@@ -103,6 +108,9 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- chart -->
+    <script src="chart.js"></script>
 </body>
 
 </html>

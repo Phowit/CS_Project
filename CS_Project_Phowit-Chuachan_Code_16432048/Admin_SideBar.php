@@ -21,6 +21,12 @@
             <a href="Admin_Index.php" class="nav-item nav-link <?= ($currentPage == 'Admin_Index.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-laptop me-2 icon"></i>หน้าหลัก</a>
 
+            <a href="Admin_Farm.php" class="nav-item nav-link <?= ($currentPage == 'Admin_Farm.php') ? 'active' : 'text-light' ?>">
+                <i class="fa fa-laptop me-2 icon"></i>หน้าหลัก</a>
+
+            <a href="Admin_Chicken.php" class="nav-item nav-link <?= ($currentPage == 'Admin_Chicken.php') ? 'active' : 'text-light' ?>">
+                <i class="fa fa-laptop me-2 icon"></i>ข้อมูลการเลี้ยงไก่</a>
+
             <a href="Admin_Status.php" class="nav-item nav-link <?= ($currentPage == 'Admin_Status.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-tachometer-alt me-2 icon"></i>จัดการข้อมูลสถานะ</a>
 

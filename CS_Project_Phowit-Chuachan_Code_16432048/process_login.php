@@ -31,10 +31,5 @@ if ($result->num_rows === 1) {
     }
     exit();
 } else {
-    echo "รหัสผ่านไม่ถูกต้อง! <br>";
-    echo $User_Password_Input, '<br>';
-    echo $User_ID_Input, '<br>';
-    echo "-------------- <br>";
-    echo $User_Data['User_Password'], '<br>';
-    echo $User_Data['User_ID'];
+    echo '<meta http-equiv="refresh" content="0; url= Index.php">';
 }

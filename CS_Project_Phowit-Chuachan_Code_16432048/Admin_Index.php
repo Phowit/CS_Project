@@ -166,39 +166,10 @@ if (!isset($_SESSION['User_ID'])) {
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
 
-                    <!-- calendar Start-->
-                    <div class="col-sm-12 col-md-6 col-xl-4">
-                        <div class="h-100 bg-light rounded p-4">
-                            <div class="d-flex align-items-center justify-content-between mb-4 text-dark">
-                                <h6 class="mb-0">ปฏิทิน</h6>
-                            </div>
-                            <div id="calender"></div>
-                        </div>
-                    </div>
-                    <!-- calendar End-->
 
-                    <!-- status Start-->
-                    <div class="col-sm-12 col-md-6 col-xl-8">
-                        <div class="h-100 bg-light rounded p-4">
-                            <h6>วิธีการเลี้ยงไก่พื้นฐาน</h6><br>
-                            <p>การเลี้ยงไก่ไข่เริ่มจากการเลือกสายพันธุ์ที่เหมาะสม เช่น ไก่โรดไทยหรือไก่เล็กฮอร์นขาว
-                                จากนั้นสร้างโรงเรือนที่มีการระบายอากาศดีและสะอาด ให้น้ำและอาหารที่มีคุณภาพสูงอย่างสม่ำเสมอ
-                                ควบคุมอุณหภูมิและแสงสว่างในโรงเรือนเพื่อให้ไก่มีสุขภาพดี
-                                ป้องกันโรคด้วยการฉีดวัคซีนและรักษาความสะอาดของโรงเรือนอย่างต่อเนื่อง
-                                สุดท้ายตรวจสอบและบันทึกผลผลิตไข่เพื่อปรับปรุงการเลี้ยงในอนาคต12</p>
-                        </div>
-                    </div>
-                    <!-- status End-->
-                    <!-- Widgets End -->
                 </div>
             </div>
             <!-- Widgets End -->
-
-            <!--Chart Start อุณหภูมิ-->
-            <?php
-            require_once("Admin_Dashboard.php");
-            ?>
-            <!--Chart End อุณหภูมิ-->
         </div>
         <!-- Content End -->
 

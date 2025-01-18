@@ -70,7 +70,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <!-- Form for Editing Record -->
-                                        <form id="EditBreedForm" action="Update_Admin.php" method="post" enctype="multipart/form-data">
+                                        <form id="EditBreedForm" action="Update_User.php" method="post" enctype="multipart/form-data">
                                             <!-- Add your form fields here for additional request details -->
 
                                             <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
@@ -133,7 +133,7 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
+                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ? ข้อมูลของคุณจะถูกลบ และจะออกจากระบบทันที</p>
                                     </div>
 
                                     <div class="modal-footer">
@@ -191,7 +191,7 @@
     function deleteAdmin() {
 
         // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_AdminData.php?id=" + UserID;
+        window.location.href = "Delete_UserLogout.php?id=" + UserID;
 
     }
 </script>
