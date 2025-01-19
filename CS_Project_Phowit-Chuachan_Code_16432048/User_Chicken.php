@@ -114,6 +114,9 @@ require_once("connect_db.php");
 
             </div><br>
 
+            <?php
+            require_once("Common_Diseases.php");
+            ?>
 
             <?php
             require_once("Index_ChickenCard.php");

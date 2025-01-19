@@ -1,8 +1,59 @@
-                            <h6>วิธีการเลี้ยงไก่พื้นฐาน</h6><br>
-                            <p>การเลี้ยงไก่ไข่เริ่มจากการเลือกสายพันธุ์ที่เหมาะสม เช่น ไก่โรดไทยหรือไก่เล็กฮอร์นขาว
-                                จากนั้นสร้างโรงเรือนที่มีการระบายอากาศดีและสะอาด ให้น้ำและอาหารที่มีคุณภาพสูงอย่างสม่ำเสมอ
-                                ควบคุมอุณหภูมิและแสงสว่างในโรงเรือนเพื่อให้ไก่มีสุขภาพดี
-                                ป้องกันโรคด้วยการฉีดวัคซีนและรักษาความสะอาดของโรงเรือนอย่างต่อเนื่อง
-                                สุดท้ายตรวจสอบและบันทึกผลผลิตไข่เพื่อปรับปรุงการเลี้ยงในอนาคต12</p>
+<!--Start add-->
+            <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="addRecordModalLabel<">เพิ่มชุดคำสั่งควบคุม</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Form for Editing Record -->
+                            <form id="addRequestForm" action="Insert_GeneChicken.php" method="post">
+                                <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" placeholder required>
+                                    <label class="form-label">อุณหภูมิเริ่มทำงาน</label>
+                                </div>
 
-                                
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" id="Description" name="Description" style="height: 150px;" placeholder></textarea>
+                                    <label for="floatingTextarea">จำนวนรอบให้อาหาร</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="Date" class="form-control" name="Date_in" id="Date_in" placeholder required>
+                                    <label for="Date_in" class="form-label">เวลาให้น้ำ</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <input type="datetime-local" class="form-control" name="Date_Harvest" placeholder required>
+                                    <label for="Date_Harvest" class="form-label">วัน เวลา ให้อาหารเสริม</label>
+                                </div>
+
+                                <div class="form-floating mb-3">
+                                    <?php
+                                    require_once("connect_db.php");
+
+                                    $sql = "select * from admin order by Admin_Name";
+                                    $result = mysqli_query($conn, $sql);
+                                    ?>
+                                    <div class="form-floating mb-3">
+                                        <select class="form-select" name="Admin_Name" id="Admin_Name" aria-label="Floating label select example" required>
+                                            <?php
+                                            while ($row = $result->fetch_assoc()) {
+                                            ?>
+                                                <option value="<?= $row['Admin_Name']; ?>">
+                                                    <?= $row['Admin_Name']; ?></option>
+                                            <?php   } ?>
+                                        </select>
+                                        <label for="Admin_Name" class="form-label" placeholder>ผู้ดูแลที่บันทึก</label>
+                                    </div>
+                                </div>
+
+                                <button type="submit" class="btn btn-primary me-4">บันทึก</button>
+                                <button type="reset" class="btn btn-primary me-4" value="Reset">ล้างข้อมูล</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--End add-->

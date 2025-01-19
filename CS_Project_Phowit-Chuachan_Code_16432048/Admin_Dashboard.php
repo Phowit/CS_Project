@@ -12,9 +12,18 @@ require_once("connect_db.php");
                     <small>(ระบบให้อาหาร)</small>
                 </div>
 
-                <div class="form-switch text-center">
-                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                <div class="row">
+                    <div class="col-3"> ปิด </div>
+
+                    <div class="col-6">
+                        <div class="form-switch text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                        </div>
+                    </div>
+
+                    <div class="col-3"> เปิด </div>
                 </div>
+                
             </div>
         </div>
 
@@ -26,9 +35,18 @@ require_once("connect_db.php");
                     <small>(ระบบน้ำดื่ม)</small>
                 </div>
 
-                <div class="form-switch text-center">
-                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                <div class="row">
+                    <div class="col-3"> ปิด </div>
+
+                    <div class="col-6">
+                        <div class="form-switch text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                        </div>
+                    </div>
+
+                    <div class="col-3"> เปิด </div>
                 </div>
+
             </div>
         </div>
 
@@ -40,9 +58,18 @@ require_once("connect_db.php");
                     <small>(ควบคุมสปิงเกอร์)</small>
                 </div>
 
-                <div class="form-switch text-center">
-                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                <div class="row">
+                    <div class="col-3"> ปิด </div>
+
+                    <div class="col-6">
+                        <div class="form-switch text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                        </div>
+                    </div>
+
+                    <div class="col-3"> เปิด </div>
                 </div>
+
             </div>
         </div>
 
@@ -54,9 +81,18 @@ require_once("connect_db.php");
                     <small>(อาหารเสริม)</small>
                 </div>
 
-                <div class="form-switch text-center">
-                    <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                <div class="row">
+                    <div class="col-3"> ปิด </div>
+
+                    <div class="col-6">
+                        <div class="form-switch text-center">
+                            <input class="form-check-input" type="checkbox" role="switch" id="#" style="width:50px; height:30px;">
+                        </div>
+                    </div>
+
+                    <div class="col-3"> เปิด </div>
                 </div>
+
             </div>
         </div>
     </div>

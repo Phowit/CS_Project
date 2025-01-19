@@ -36,6 +36,8 @@ session_start();
 
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
 
 <body>
@@ -66,11 +68,40 @@ session_start();
 
             <!-- Widget Start -->
             <div class="container">
-            <!--Chart Start อุณหภูมิ-->
-            <?php
-            require_once("Admin_Dashboard.php");
-            ?>
-            <!--Chart End อุณหภูมิ-->
+                <!--Chart Start อุณหภูมิ-->
+                <?php
+                require_once("Admin_Dashboard.php");
+                ?>
+                <!--Chart End อุณหภูมิ-->
+
+                <!--Chart Start อุณหภูมิ-->
+                <?php
+                require_once("Admin_TableDataControl.php");
+                ?>
+                <!--Chart End อุณหภูมิ-->
+
+                <div class="row">
+                    <div class="col-sm-10 col-xl-7">
+                        <!--Chart Start อุณหภูมิ-->
+                        <?php
+                        require_once("Admin_TableStatus.php");
+                        ?>
+                        <!--Chart End อุณหภูมิ-->
+                    </div>
+
+                    <div class="col-sm-2 col-xl-5">
+
+                        <div class="pt-4">
+                            <div class="h-100 bg-light rounded p-4">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h6 class="mb-0">Calender</h6>
+                                </div>
+                                <div id="calender"></div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
     </div>

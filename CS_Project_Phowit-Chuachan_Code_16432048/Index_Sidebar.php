@@ -25,7 +25,7 @@
                 <i class="fa fa-chart-bar me-2 icon"></i>ข้อมูลการเก็บไข่</a>
                 
             <a href="Index_Chicken.php" class="nav-item nav-link <?= ($currentPage == 'Index_Chicken.php') ? 'active' : 'text-light' ?>">
-                <i class="fa fa-keyboard me-2 icon"></i>ข้อมูลการเลี้ยงไก่</a>
+                <i class="fas fa-building me-2 icon"></i>ข้อมูลการเลี้ยงไก่</a>
 
             <a href="Login.php" class="nav-item nav-link text-light">
                 <i class="fa fa-keyboard me-2 icon"></i>เข้าสู่ระบบ</a>

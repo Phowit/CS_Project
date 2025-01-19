@@ -1,100 +1,66 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0">ข้อมูลชุดคำสั่งควบคุม</h6>
-
-            <!--เพิ่ม-->
-            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
-
-            <!--Start add-->
-            <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
-                <div class="modal-dialog modal-dialog-centered modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="addRecordModalLabel<">เพิ่มชุดคำสั่งควบคุม</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <!-- Form for Editing Record -->
-                            <form id="addRequestForm" action="Insert_GeneChicken.php" method="post">
-                                <div class="form-floating mb-3">
-                                    <input type="text" class="form-control" id="Gene_Name" name="Gene_Name" placeholder required>
-                                    <label class="form-label">อุณหภูมิเริ่มทำงาน</label>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="Description" name="Description" style="height: 150px;" placeholder></textarea>
-                                    <label for="floatingTextarea">จำนวนรอบให้อาหาร</label>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input type="Date" class="form-control" name="Date_in" id="Date_in" placeholder required>
-                                    <label for="Date_in" class="form-label">เวลาให้น้ำ</label>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <input type="datetime-local" class="form-control" name="Date_Harvest" placeholder required>
-                                    <label for="Date_Harvest" class="form-label">วัน เวลา ให้อาหารเสริม</label>
-                                </div>
-
-                                <div class="form-floating mb-3">
-                                    <?php
-                                    require_once("connect_db.php");
-
-                                    $sql = "select * from admin order by Admin_Name";
-                                    $result = mysqli_query($conn, $sql);
-                                    ?>
-                                    <div class="form-floating mb-3">
-                                        <select class="form-select" name="Admin_Name" id="Admin_Name" aria-label="Floating label select example" required>
-                                            <?php
-                                            while ($row = $result->fetch_assoc()) {
-                                            ?>
-                                                <option value="<?= $row['Admin_Name']; ?>">
-                                                    <?= $row['Admin_Name']; ?></option>
-                                            <?php   } ?>
-                                        </select>
-                                        <label for="Admin_Name" class="form-label" placeholder>ผู้ดูแลที่บันทึก</label>
-                                    </div>
-                                </div>
-
-                                <button type="submit" class="btn btn-primary me-4">บันทึก</button>
-                                <button type="reset" class="btn btn-primary me-4" value="Reset">ล้างข้อมูล</button>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!--End add-->
+            <h6 class="mb-0">แผงควบคุม</h6>
         </div>
-        <div class="table-responsive">
+        <div class="table-responsive p-1">
             <?php
             require_once("connect_db.php");
-            $sql = "select 
-                        datacontrol.`DateControl_ID`,
-                        datacontrol.`Temperature_range`,
-                        datacontrol.`TimeFoodS`,
-                        datacontrol.`TimeWater`,
-                        datacontrol.`FoodTray_rang`,
-                        datacontrol.`TimeFood_1`,
-                        datacontrol.`TimeFood_2`,
-                        datacontrol.`TimeFood_3`,
-                        datacontrol.`Admin_ID`,
-                        admin.Admin_Name
-                    FROM datacontrol 
-                    INNER JOIN admin ON datacontrol.Admin_ID = admin.Admin_ID;";
+            $sql = "SELECT * FROM `datacontrol`";
             $result = mysqli_query($conn, $sql);
+
+            $sql1 = "   select `TimeFood_ID`,`TimeFood`,TimeFood.DateControl_ID FROM timefood 
+                        INNER JOIN datacontrol ON datacontrol.DateControl_ID = timefood.DateControl_ID
+                        ORDER BY `TimeFood`";
+            $result1 = mysqli_query($conn, $sql1);
+
             ?>
-            <table class="table text-start align-middle table-bordered table-hover mb-0">
+            <table class="table text-start align-middle table-bordered mb-0">
                 <thead>
                     <tr class="text-dark">
-                        <th scope="col" class="col-1" style="font-size: 14px;">รหัสชุดควบคุม</th>
-                        <th scope="col" class="col-1" style="font-size: 14px;">อุณหภูมิไม่เกิน</th>
-                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้อาหาร<br>(รอบที่1)</th>
-                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้อาหาร<br>(รอบที่2)</th>
-                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้น้ำ</th>
-                        <th scope="col" class="col-1.5" style="font-size: 14px;">เวลาให้อาหารเสริม</th>
-                        <th scope="col" class="col-2" style="font-size: 14px;">ระดับอาหารในถาด<br>ที่ต้องแจ้งเตือน(%)</th>
-                        <th scope="col" class="col-2" style="font-size: 14px;">ผู้ดูแลที่บันทึก</th>
+                        <th scope="col" class="col-3">ระดับอุณหภูมิ</th>
+                        <th scope="col" class="col-3">เวลาให้อาหารเสริม</th>
+                        <th scope="col" class="col-3">เวลาให้น้ำ</th>
+                        <th scope="col" class="col-3">
+                            <div class="row">
+                                <div class="col-8">
+                                    เวลาให้อาหาร
+                                </div>
+                                <button type="button" class="btn btn-warning p-1" data-bs-toggle="modal"
+                                    data-bs-target="#addTimeFoodModal" style="height: 30px; width: 70px; font-size: 12px;">เพิ่มข้อมูล
+                                </button>
+
+                                <!--Start add-->
+                                <div class="modal fade" id="addTimeFoodModal" tabindex="-1" aria-labelledby="addTimeFoodModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="addTimeFoodModalLabel<">เพิ่มเวลาให้อาหารไก่</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <!-- Form for Editing Record -->
+
+                                                <form id="addaddTimeFoodModalForm" action="Insert_TimeFood.php" method="post">
+
+                                                    <div class="form-floating mb-3">
+                                                        <input type="time" class="form-control" name="TimeFood" placeholder required>
+                                                        <label for="TimeFood" class="form-label">วัน เวลา ที่เก็บเกี่ยว</label>
+                                                    </div>
+
+                                                    <button type="submit" class="btn btn-primary md-4">บันทึก</button>
+                                                    <button type="reset" class="btn btn-primary md-4" value="Reset">ล้างข้อมูล</button>
+                                                </form>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--End add-->
+                            </div>
+
+                        </th>
                     </tr>
                 </thead>
 
@@ -103,22 +69,140 @@
                     while ($row = $result->fetch_assoc()) {
                         $DateControl_ID = $row['DateControl_ID'];
                         $Temperature_range = $row['Temperature_range'];
-                        $TimeFoodS = $row['TimeFoodS'];
-                        $FoodTray_rang = $row['FoodTray_rang'];
-                        $TimeFood_1 = $row['TimeFood_1'];
-                        $TimeFood_2 = $row['TimeFood_2'];
+                        $TimeFoodS = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["TimeFoodS"]) ->format(format: "d/m/Y H:i");
                         $TimeWater = $row['TimeWater'];
-                        $Admin_Name = $row['Admin_Name'];
                     ?>
-                        <tr>
-                            <td style="font-size: 13px;"><?php echo $row['DateControl_ID']; ?></td>
-                            <td style="font-size: 13px;"><?php echo $row['Temperature_range']; ?></td>
-                            <td style="font-size: 13px;"><?php echo $row['TimeFood_1']; ?></td>
-                            <td style="font-size: 13px;"><?php echo $row['TimeFood_2']; ?></td>
-                            <td style="font-size: 13px;"><?php echo $row['TimeWater']; ?></td>
-                            <td style="font-size: 13px;"><?php echo $row['TimeFoodS']; ?></td>
-                            <td style="font-size: 13px;"><?php echo $row['FoodTray_rang']; ?>%</td>
-                            <td style="font-size: 13px;"><?php echo $row['Admin_Name']; ?></td>
+                        <tr style="font-size: 13px;">
+                            <td>
+                                <form action="Update_Temperature_range.php" method="post">
+                                    <div class="form-floating">
+                                        <div class="row" style="height: 50px;">
+                                            <div class="col-8 pt-3">
+                                                <h5><?php echo $Temperature_range; ?>°C</h5>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn float-end">
+                                                    <img src='My_img/save.png' style='width: auto; height: 30px;'>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="number" class="form-control" name="Temperature_range" id="Temperature_range">
+                                    </div>
+                                </form>
+                            </td>
+
+                            <td>
+                                <form action="Update_TimeFoodS.php" method="post">
+                                    <div class="form-floating">
+                                        <div class="row" style="height: 50px;">
+                                            <div class="col-8 pt-3">
+                                                <a><?php echo $TimeFoodS; ?></a>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn float-end">
+                                                    <img src='My_img/save.png' style='width: auto; height: 30px;'>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="Datetime-local" class="form-control" name="TimeFoodS" id="TimeFoodS">
+                                    </div>
+                                </form>
+                            </td>
+
+                            <td>
+                                <form action="Update_TimeWater.php" method="post">
+                                    <div class="form-floating">
+                                        <div class="row" style="height: 50px;">
+                                            <div class="col-8 pt-3">
+                                                <a><?php echo $TimeWater; ?></a>
+                                            </div>
+                                            <div class="col-4">
+                                                <button type="submit" class="btn float-end">
+                                                    <img src='My_img/save.png' style='width: auto; height: 30px;'>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <input type="time" class="form-control" name="TimeWater" id="TimeWater">
+                                    </div>
+                                </form>
+                            </td>
+
+                            <td>
+                                <?php
+                                // ดึงค่าจากผลลัพธ์ทีละแถว
+                                while ($row = $result1->fetch_assoc()) {
+                                    $TimeFood_ID = $row['TimeFood_ID']; // เพิ่มค่า TimeFood 
+                                    $TimeFood = $row['TimeFood'];
+
+                                ?>
+                                    <a style="font-size:15px;"><?php echo $TimeFood; ?></a>
+                                    <button type="button" class="btn" data-bs-toggle="modal" data-bs-target="#EditTimeFoodModal<?= $TimeFood_ID; ?>">
+                                        <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
+                                    </button>
+
+                                    <!--Start Edit-->
+                                    <div class="modal fade" id="EditTimeFoodModal<?= $TimeFood_ID; ?>" tabindex="-1" aria-labelledby="EditTimeFoodModalLabel<?= $TimeFood_ID; ?>" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="EditTimeFoodModalLabel<?= $TimeFood_ID; ?>">แก้ไขข้อมูล</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Form for Editing Import ทดสอบ การแก้ไขข้อมูลการนำเข้าไก่ไข่ครั้งที่ 1 -->
+                                                    <form id="EditTimeFoodForm" action="Update_TimeFood.php" method="post">
+                                                        <input type="hidden" class="form-control" name="TimeFood_ID" id="TimeFood_ID" value="<?php echo $TimeFood_ID; ?>" readonly>
+
+                                                        <div class="row">
+                                                            <div class="col-8">
+                                                                <div class="form-floating">
+                                                                    <input type="time" class="form-control" name="TimeFood" id="TimeFood" value="<?php echo $TimeFood; ?>" placeholder required>
+                                                                    <label for="TimeFood" class="form-label">เวลาให้อาหาร</label>
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="col-4">
+                                                                <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                            </div>
+                                                        </div><br>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--End Edit-->
+
+                                    <button class="btn" data-bs-toggle="modal" onclick="TimeFoodID(<?= $TimeFood_ID; ?>)"
+                                        data-bs-target="#confirmDeleteModal">
+                                        <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
+                                    </button>
+
+                                    <!--Start Waring For Delete-->
+                                    <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered">
+                                            <div class="modal-content">
+
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+
+                                                <div class="modal-body">
+                                                    <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
+                                                </div>
+
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                                    <button type="button" class="btn btn-danger" onclick="deleteTimeFood()">ยืนยัน</button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--END Warning For Delete-->
+                                    <br>
+                                <?php   }   ?>
+                            </td>
                         </tr>
                     <?php } ?> <!-- close php-->
                 </tbody>
@@ -126,3 +210,47 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Get the modal
+    var modal = document.getElementById("myModal");
+
+    // Get the button that opens the modal
+    var btn = document.getElementById("myBtn");
+
+    // Get the <span> element that closes the modal
+    var span = document.getElementsByClassName("btn-close")[0];
+
+    // When the user clicks on the button, open the modal
+    btn.onclick = function() {
+        modal.style.display = "block";
+    }
+
+    // When the user clicks on <span> (x), close the modal
+    span.onclick = function() {
+        modal.style.display = "none";
+    }
+
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
+    }
+</script>
+
+<script>
+    var ImportID;
+
+    // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
+    function TimeFoodID(TimeFood_ID) {
+        TimeFoodID = TimeFood_ID;
+    }
+
+    function deleteTimeFood() {
+
+        // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
+        window.location.href = "Delete_TimeFood.php?id=" + TimeFoodID;
+
+    }
+</script>
