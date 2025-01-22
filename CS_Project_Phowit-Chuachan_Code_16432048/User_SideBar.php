@@ -15,6 +15,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             </div>
         </div>
         <div class="navbar-nav w-100">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <a href="User_Index.php" class="nav-item nav-link <?= ($currentPage == 'User_Index.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-laptop me-2 icon"></i>หน้าหลักผู้ใช้ทั่วไป</a>
 
@@ -30,11 +31,12 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <a href="User_Data.php" class="nav-item nav-link <?= ($currentPage == 'User_Data.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-keyboard me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
 
-                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
             <a href="User_Message.php" class="nav-item nav-link <?= ($currentPage == 'User_Message.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-sticky-note-o me-2 icon"></i>การส่งข้อความ</a>
+
+            <a href="User_ConfirmLogOut.php" class="nav-item nav-link text-light">
+                <i class="fa fa-sign-out me-2 icon"></i>การส่งข้อความ</a>
         </div>
     </nav>
 </div>
-<!-- Sidebar End -->
+<!-- Sidebar End  fa fa-sign-out-->
