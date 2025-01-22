@@ -26,5 +26,5 @@
     mysqli_close($conn);
 
     // เปลี่ยนหน้า
-    echo '<meta http-equiv="refresh" content="0; url=User_Data.php">';
+    echo '<meta http-equiv="refresh" content="0; url=User_Message.php">';
 ?>

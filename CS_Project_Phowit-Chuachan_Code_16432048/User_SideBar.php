@@ -29,6 +29,11 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
             <a href="User_Data.php" class="nav-item nav-link <?= ($currentPage == 'User_Data.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-keyboard me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
+
+                <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+            <a href="User_Message.php" class="nav-item nav-link <?= ($currentPage == 'User_Message.php') ? 'active' : 'text-light' ?>">
+                <i class="fa fa-sticky-note-o me-2 icon"></i>การส่งข้อความ</a>
         </div>
     </nav>
 </div>

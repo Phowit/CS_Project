@@ -53,11 +53,11 @@
                         </dl>
                     </div>
 
-                    <div class="col-sm-12 col-xl-2">
+                    <div class="col-sm-1 col-xl-2">
 
                         <!--แก้ไข-->
-                        <td>
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditAdminModal<?= $User_ID; ?>" style="height:auto; width: 100%;">แก้ไข</button>
+                        <td class="">
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditAdminModal<?= $User_ID; ?>" style="height:auto; width: 65%; font-size:12px;">แก้ไข</button>
                         </td>
 
                         <!--Start Edit-->
@@ -119,7 +119,7 @@
                         <!--End Edit-->
 
                         <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="UserID(<?= $User_ID; ?>)" data-bs-target="#confirmDeleteModal" style="height:auto; width: 100%;">ลบ</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="UserID(<?= $User_ID; ?>)" data-bs-target="#confirmDeleteModal" style="height:auto; width: 65%; font-size:12px;">ลบ</button>
                         </td>
 
                         <!--Start Waring For Delete-->
@@ -143,7 +143,49 @@
 
                                 </div>
                             </div>
-                        </div>
+                        </div><br><br>
+
+                        <td>
+                            <button type="button" class="btn btn-warning p-1" data-bs-toggle="modal" data-bs-target="#EditPassModal<?= $User_ID; ?>" style="height:auto; width: 65%; font-size:12px;">เปลี่ยนรหัสผ่าน</button>
+                        </td>
+
+                        <!--Start Edit-->
+                        <div class="modal fade" id="EditPassModal<?= $User_ID; ?>" tabindex="-1" aria-labelledby="EditPassModal<?= $User_ID; ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="EditPassModal<?= $User_ID; ?>">เปลี่ยนรหัสผ่าน</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <!-- Form for Editing Record -->
+                                        <form id="EditBreedForm" action="Update_UserPass.php" method="post">
+                                            <!-- Add your form fields here for additional request details -->
+
+                                            <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control" id="Old_User_Password" name="Old_User_Password" required>
+                                                <label class="form-label">รหัสผ่านเดิม</label>
+                                            </div>
+
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control" id="New_User_Password" name="New_User_Password" required>
+                                                <label class="form-label">รหัสผ่านใหม่</label>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12" style="margin-top: 20px;">
+                                                    <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                    <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div><br><br>
+                        <!--End Edit-->
                         <!--END Warning For Delete-->
                     </div>
                 </div>

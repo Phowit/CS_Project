@@ -74,11 +74,11 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            <!-- Navbar Start -->
+            <!--Chart Start อุณหภูมิ-->
             <?php
-            require_once("User_CardUser.php");
+            require_once("User_TableMessage.php");
             ?>
-            <!-- Navbar End -->
+            <!--Chart End อุณหภูมิ-->
 
         </div>
         <!-- Content End -->
