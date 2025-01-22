@@ -5,18 +5,18 @@
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
-<div class="sidebar pe-4 pb-3">
+<div class="sidebar pe-1 pb-3">
     <nav class="navbar bg-dark navbar-primary">
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
-                <img class="rounded-circle" src="My_img/chicken.png" alt="" style="width: 40px; height: 40px;">
+                <img class="rounded-circle" src="My_img/chicken.png" style="width: 40px; height: 40px;">
                 <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
             <div class="ms-3">
                 <h5 class="mb-0 text-light">Chicken Farm</h5>
             </div>
         </div>
-        <div class="navbar-nav w-100 ">
+        <div class="navbar-nav w-100">
             <a href="Admin_Index.php" class="nav-item nav-link <?= ($currentPage == 'Admin_Index.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-laptop me-2 icon"></i>หน้าหลัก</a>
 
@@ -33,8 +33,8 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <i class="far fa-file-alt me-2 icon"></i>จัดการข้อมูลพันธุ์ไก่</a>
 
             <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle text-light"
-                    data-bs-toggle="dropdown"><i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่
+                <a class="nav-link dropdown-toggle text-light" data-bs-toggle="dropdown">
+                    <i class="fa fa-table me-2 icon"></i>จัดการข้อมูลไก่
                 </a>
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="Admin_ManageImport.php" class="dropdown-item <?= ($currentPage == 'Admin_ManageImport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำเข้าไก่</a>
