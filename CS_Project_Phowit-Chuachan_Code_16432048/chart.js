@@ -125,54 +125,58 @@ function loadFoodSChart() {
 }
 
 
-// โหลดกราฟ Food Supplement Level
+// โหลดกราฟ Collect Chart
 function loadCollectChart() {
     if (document.getElementById("Collect_Chart")) {
 
-    // 1. ดึงข้อมูล JSON จาก PHP
-    fetch('Chart_Collect.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
-    .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
-    .then(data => {
-        const labels = data.Collect_Date; // ดึงวันที่เก็บไข่มาเป็นแกน X
+        // ดึงข้อมูล JSON จาก PHP
+        fetch('Chart_Collect.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
+        .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+        .then(data => {
+            const labels = data.Collect_Date; // วันที่เก็บไข่ (แกนตั้ง)
+            const eggAmounts = data.EggAmount; // จำนวนไข่ (แกนนอน)
 
-        // สร้างชุดข้อมูลแยกตามสายพันธุ์
-        const datasets = Object.keys(data.EggAmount).map((breed, index) => ({
-            label: breed, // ชื่อสายพันธุ์
-            data: data.EggAmount[breed], // จำนวนไข่ของสายพันธุ์ในแต่ละวัน
-            backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
-            borderWidth: 1 // ความหนาขอบแท่งกราฟ
-        }));
-
-        // 2. กำหนดการตั้งค่ากราฟ
-        const ctx = document.getElementById('Collect_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
-        new Chart(ctx, {
-            type: 'bar', // ประเภทกราฟเป็นแท่ง
-            data: {
-                labels: labels, // กำหนดแกน X เป็นวันที่
-                datasets: datasets // กำหนดชุดข้อมูลในกราฟ
-            },
-            options: {
-                responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
-                plugins: {
-                    legend: {
-                        position: 'top' // ตำแหน่งของคำอธิบายกราฟ
-                    },
-                    title: {
-                        display: true,
-                    }
+            // กำหนดการตั้งค่ากราฟ
+            const ctx = document.getElementById('Collect_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
+            new Chart(ctx, {
+                type: 'bar', // ประเภทกราฟเป็นแท่ง
+                data: {
+                    labels: labels, // กำหนดแกนตั้งเป็นวันที่
+                    datasets: [{
+                        label: 'จำนวนการเก็บไข่', // ชื่อชุดข้อมูล
+                        data: eggAmounts, // กำหนดแกนนอนเป็นจำนวนไข่
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)', // สีแท่งกราฟแบบโปร่งแสง
+                        borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                    }]
                 },
-                scales: {
-                    x: {
-                        stacked: false, // ไม่ซ้อนกันในแกน X
+                options: {
+                    maintainAspectRatio: false, // ไม่บังคับอัตราส่วนกราฟ
+                    indexAxis: 'y', // เปลี่ยนกราฟเป็นแนวนอน (แกนตั้ง: labels)
+                    responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                    plugins: {
+                        legend: {
+                            position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                        },
+                        title: {
+                            display: true,
+                            text: 'กราฟแสดงจำนวนการเก็บไข่ในแต่ละวัน' // ชื่อกราฟ
+                        }
                     },
-                    y: {
-                        beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                    scales: {
+                        x: {
+                            beginAtZero: true, // แกนนอนเริ่มต้นที่ 0
+                            barPercentage: 0.6, // ความกว้างของแท่ง (ค่าเริ่มต้นประมาณ 0.9)
+                            categoryPercentage: 0.8, // ระยะห่างระหว่างแท่ง
+                        },
+                        y: {
+                            beginAtZero: false // ไม่บังคับแกนตั้งเริ่มที่ 0
+                        }
                     }
                 }
-            }
+            });
         });
-    })
-}};
+    }
+}
 
 // โหลดกราฟ Chicken Import Level
 function loadImportChart() {
