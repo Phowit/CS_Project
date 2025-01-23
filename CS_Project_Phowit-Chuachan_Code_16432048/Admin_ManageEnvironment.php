@@ -38,6 +38,9 @@ session_start();
     <link href="css/style.css" rel="stylesheet">
 
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <link href="Progress.css" rel="stylesheet">
+
 </head>
 
 <body>
