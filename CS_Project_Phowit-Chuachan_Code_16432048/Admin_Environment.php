@@ -71,9 +71,78 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            <?php
-            require_once("System_status.php");
-            ?>
+            <!-- Chart Start อาหารหลัก & อาหารในถาด-->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+                    <!--Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิ</h6>
+                            </div>
+                            <canvas id="Temperature_Chart"></canvas>
+                        </div>
+                    </div>
+                    <!--Chart End อาหารหลัก-->
+
+                    <!--Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารหลัก</h6>
+                            </div>
+                            <canvas id="Food_Chart"></canvas>
+
+                        </div>
+                    </div>
+                    <!--Chart End อาหารหลัก-->
+                </div>
+            </div>
+            <!--Chart End อาหารหลัก & อาหารในถาด-->
+
+            <!--Chart Start อาหารเสริม & อุณหภูมิ-->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <!--Chart Start อาหารเสริม-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารในถาด</h6>
+                            </div>
+                            <canvas id="FoodTray_Chart"></canvas>
+
+                        </div>
+                    </div>
+                    <!--Chart End อาหารเสริม-->
+
+                    <!--Chart Start อุณหภูมิ-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารเสริม</h6>
+                            </div>
+                            <canvas id="FoodS_Chart"></canvas>
+
+                        </div>
+                    </div>
+                    <!--Chart End อุณหภูมิ-->
+
+                </div>
+            </div>
+            <!--Chart End อาหารเสริม & อุณหภูมิ-->
+
+            <!-- Widgets Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+
+
+                </div>
+            </div>
+            <!-- Widgets End -->
         </div>
         <!-- Content End -->
 

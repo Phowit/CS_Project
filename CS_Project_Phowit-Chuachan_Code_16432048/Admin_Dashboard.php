@@ -6,10 +6,9 @@ require_once("connect_db.php");
     <div class="row g-4">
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded h-100 p-3">
-                <div style="height:120px;" class="text-center">
-                    <img src="My_img/silos.png" alt="" style="width: 50px; height: 50px;">
-                    <h6 class="mb-1 text-dark">เซอร์โวมอเตอร์ </h6>
-                    <small>(ระบบให้อาหาร)</small>
+                <div class="text-center">
+                    <img src="My_img/silos.png" style="width: 50px; height: 50px;">
+                    <h6 class="mb-1 text-dark">ระบบให้อาหาร </h6>
                 </div>
 
                 <div class="row">
@@ -29,10 +28,9 @@ require_once("connect_db.php");
 
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded h-100 p-3">
-                <div style="height:120px;" class="text-center">
-                    <img src="My_img/water1.png" alt="" style="width: 50px; height: 50px;">
-                    <h6 class="mb-1 text-dark">วาล์วน้ำดื่ม</h6>
-                    <small>(ระบบน้ำดื่ม)</small>
+                <div class="text-center">
+                    <img src="My_img/water1.png" style="width: 50px; height: 50px;">
+                    <h6 class="mb-1 text-dark">ระบบน้ำดื่ม</h6>
                 </div>
 
                 <div class="row">
@@ -52,10 +50,9 @@ require_once("connect_db.php");
 
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded h-100 p-3">
-                <div style="height:120px;" class="text-center">
-                    <img src="My_img/sprinkler.png" alt="" style="width: 50px; height: 50px;">
-                    <h6 class="mb-1 text-dark">วาล์วน้ำลดอุณหภูมิ</h6>
-                    <small>(ควบคุมสปิงเกอร์)</small>
+                <div class="text-center">
+                    <img src="My_img/sprinkler.png" style="width: 50px; height: 50px;">
+                    <h6 class="mb-1 text-dark">สปิงเกอร์</h6>
                 </div>
 
                 <div class="row">
@@ -75,10 +72,9 @@ require_once("connect_db.php");
 
         <div class="col-sm-6 col-xl-3">
             <div class="bg-light rounded h-100 p-3">
-                <div style="height:120px;" class="text-center">
-                    <img src="My_img/tank.png" alt="" style="width: 50px; height: 50px;">
-                    <h6 class="mb-1 text-dark">วาล์วเก็บอาหารเสริม</h6>
-                    <small>(อาหารเสริม)</small>
+                <div class="text-center">
+                    <img src="My_img/tank.png" style="width: 50px; height: 50px;">
+                    <h6 class="mb-1 text-dark">ระบบอาหารเสริม</h6>
                 </div>
 
                 <div class="row">

@@ -80,36 +80,11 @@ session_start();
                 ?>
                 <!--Chart End อุณหภูมิ-->
 
-                <div class="row">
-                    <div class="col-sm-10 col-xl-7">
-                        <!--Chart Start อุณหภูมิ-->
-                        <?php
-                        require_once("Admin_TableStatus.php");
-                        ?>
-                        <!--Chart End อุณหภูมิ-->
-                    </div>
-
-                    <div class="col-sm-2 col-xl-5">
-
-                        <div class="pt-4">
-                            <div class="h-100 bg-light rounded p-4">
-                                <div class="d-flex align-items-center justify-content-between">
-                                    <h6 class="mb-0">Calender</h6>
-                                </div>
-                                <div id="calender"></div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div>
             </div>
         </div>
     </div>
     <!-- Content End -->
 
-
-    <!-- Back to Top -->
-    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->

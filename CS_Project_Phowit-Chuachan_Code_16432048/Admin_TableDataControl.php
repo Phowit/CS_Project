@@ -1,6 +1,6 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
-        <div class="d-flex align-items-center justify-content-between mb-4">
+        <div class="d-flex align-items-center justify-content-between mb-2">
             <h6 class="mb-0">แผงควบคุม</h6>
         </div>
         <div class="table-responsive p-1">
