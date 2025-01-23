@@ -38,7 +38,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <a class="nav-link dropdown-toggle text-light p-1" data-bs-toggle="dropdown">
                     <i class="fa fa-table me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อมูลไก่
                 </a>
-                <div class="dropdown-menu bg-transparent border-0" style="height: 35px; width: 35px;">
+                <div class="dropdown-menu bg-transparent border-0">
                     <a href="Admin_ManageImport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageImport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำเข้าไก่</a>
                     <a href="Admin_ManageExport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageExport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำออกไก่</a>
                 </div>
@@ -46,6 +46,9 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 
             <a href="Admin_ManageData.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_ManageData.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-keyboard me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อมูลผู้ใช้</a>
+
+            <a href="Admin_Message.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_Message.php') ? 'active' : 'text-light' ?>">
+                <i class="fa fa-newspaper-o me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อความ</a>
 
             <a href="Admin_Farm.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_Farm.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-university me-1 icon" style="height: 35px; width: 35px;"></i>ฟาร์มเกษตร ARU.</a>
