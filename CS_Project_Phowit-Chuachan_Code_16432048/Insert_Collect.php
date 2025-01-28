@@ -7,11 +7,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // รับข้อมูลจากฟอร์ม
     $Collect_Date = $_POST['Collect_Date'];
     $EggAmount = $_POST['EggAmount'];
-    $User_ID = $_POST['User_ID'];
 
     // เตรียมคำสั่ง SQL
-    $sqli = "insert into collect (Collect_Date,EggAmount,User_ID)";
-    $sqli .= "values('$Collect_Date','$EggAmount','$User_ID')";
+    $sqli = "insert into collect (Collect_Date,EggAmount)";
+    $sqli .= "values('$Collect_Date','$EggAmount')";
 
     mysqli_query($conn,$sqli); 
     //echo"SQL = ".$sqli;

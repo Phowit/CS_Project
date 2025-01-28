@@ -11,7 +11,7 @@
 
             <!--Chart Start อุณหภูมิ-->
             <?php
-                require_once("Admin_FormBreedChicken.php");
+            require_once("Admin_FormBreedChicken.php");
             ?>
             <!--Chart End อุณหภูมิ-->
         </div>
@@ -28,9 +28,8 @@
                         <th scope="col" class="col-0.5">รหัส</th>
                         <th scope="col" class="col-2">รูปตัวอย่าง</th>
                         <th scope="col" class="col-2">ชื่อสายพันธุ์ไก่</th>
-                        <th scope="col" class="col-5.5">คำอธิบายสายพันธุ์</th>
-                        <th scope="col" class="col-1">แก้ไข</th>
-                        <th scope="col" class="col-1">ลบ</th>
+                        <th scope="col" class="col-6">คำอธิบายสายพันธุ์</th>
+                        <th scope="col" class="col-1.5">เครื่องมือ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -50,80 +49,83 @@
 
                             <!--แก้ไข-->
                             <td>
-                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#EditBreedModal<?= $Breed_ID; ?>">แก้ไข</button>
-                            </td>
+                                <button type="button" class="btn" data-bs-toggle="modal" 
+                                    data-bs-target="#EditBreedModal<?= $Breed_ID; ?>" style="height:30px; width:46%; padding: 5px;">
+                                    <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
+                                </button>
 
-                            <!--Start Edit-->
-                            <div class="modal fade" id="EditBreedModal<?= $Breed_ID; ?>" tabindex="-1" aria-labelledby="EditBreedModalLabel<?= $Breed_ID; ?>" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered modal-lg">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="EditBreedModalLabel<?= $Breed_ID; ?>">แก้ไขข้อมูล</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- Form for Editing Record -->
-                                            <form id="EditBreedForm" action="Update_Breed.php" method="post" enctype="multipart/form-data">
-                                                <!-- Add your form fields here for additional request details -->
+                                <!--Start Edit-->
+                                <div class="modal fade" id="EditBreedModal<?= $Breed_ID; ?>" tabindex="-1" aria-labelledby="EditBreedModalLabel<?= $Breed_ID; ?>" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="EditBreedModalLabel<?= $Breed_ID; ?>">แก้ไขข้อมูล</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <!-- Form for Editing Record -->
+                                                <form id="EditBreedForm" action="Update_Breed.php" method="post" enctype="multipart/form-data">
+                                                    <!-- Add your form fields here for additional request details -->
 
-                                                <input type="hidden" name="Breed_ID" class="form-control" id="Breed_ID" value="<?php echo $Breed_ID; ?>" readonly>
+                                                    <input type="hidden" name="Breed_ID" class="form-control" id="Breed_ID" value="<?php echo $Breed_ID; ?>" readonly>
 
-                                                <div class="form-floating mb-3">
-                                                    <input type="text" class="form-control" id="Breed_Name" name="Breed_Name" value="<?php echo $Breed_Name; ?>" placeholder required>
-                                                    <label class="form-label">ชื่อสายพันธุ์ไก่</label>
-                                                </div>
-
-                                                <div class="form-floating mb-3">
-                                                    <textarea class="form-control" id="Breed_Description" name="Breed_Description" style="height: 150px;" placeholder><?php echo $Breed_Description; ?></textarea>
-                                                    <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
-                                                </div>
-
-                                                <label class="form-label">ภาพสายพันธุ์ไก่ไข่ตัวอย่าง</label>
-                                                <div class="form-floating mb-3">
-                                                    <input type="file" id="Breed_Img" name="Breed_Img" value="<?php $Breed_Img; ?>" placeholder>
-                                                </div>
-
-                                                <div class="row">
-                                                    <div class="col-12" style="margin-top: 20px;">
-                                                        <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
-                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="Breed_Name" name="Breed_Name" value="<?php echo $Breed_Name; ?>" placeholder required>
+                                                        <label class="form-label">ชื่อสายพันธุ์ไก่</label>
                                                     </div>
-                                                </div>
-                                            </form>
+
+                                                    <div class="form-floating mb-3">
+                                                        <textarea class="form-control" id="Breed_Description" name="Breed_Description" style="height: 150px;" placeholder><?php echo $Breed_Description; ?></textarea>
+                                                        <label for="floatingTextarea">คำอธิบายสายพันธุ์ไก่</label>
+                                                    </div>
+
+                                                    <label class="form-label">ภาพสายพันธุ์ไก่ไข่ตัวอย่าง</label>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="file" id="Breed_Img" name="Breed_Img" value="<?php $Breed_Img; ?>" placeholder>
+                                                    </div>
+
+                                                    <div class="row">
+                                                        <div class="col-12" style="margin-top: 20px;">
+                                                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                            <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                            <!--End Edit-->
+                                <!--End Edit-->
 
-                            <td>
-                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="BreedID(<?= $Breed_ID; ?>)" data-bs-target="#confirmDeleteModal">ลบ</button>
+                                <button type="button" class="btn" data-bs-toggle="modal" onclick="BreedID(<?= $Breed_ID; ?>)"
+                                    data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px; margin-top:5px;">
+                                    <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
+                                </button>
+
+                                <!--Start Waring For Delete-->
+                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-content">
+
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
+                                            </div>
+
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
+                                                <button type="button" class="btn btn-danger" onclick="deleteBreed()">ยืนยัน</button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--END Warning For Delete-->
                             </td>
-
-                            <!--Start Waring For Delete-->
-                            <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-dialog-centered">
-                                    <div class="modal-content">
-
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-
-                                        <div class="modal-body">
-                                            <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                        </div>
-
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                            <button type="button" class="btn btn-danger" onclick="deleteBreed()">ยืนยัน</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                            </div>
-                            <!--END Warning For Delete-->
-
                         </tr>
                     <?php } ?>
                 </tbody>

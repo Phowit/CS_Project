@@ -4,7 +4,7 @@ session_start();
 
 // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
 if (!isset($_SESSION['User_ID'])) {
-    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า Login.php
+    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า signin.php
     exit();
 }
 ?>
@@ -16,14 +16,14 @@ if (!isset($_SESSION['User_ID'])) {
     <meta charset="utf-8">
     <title>ระบบจัดการฟาร์มไก่ไข่อัจฉริยะด้วยเทคโนโลยีอินเทอร์เน็ตของสรรพสิ่ง</title>
 
-    <link rel="icon" type="image/x-icon" href="../My_img/chicken.png">
+    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
 
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
 
     <!-- Favicon -->
-    <link href="../img/favicon.ico" rel="icon">
+    <link href="img/favicon.ico" rel="icon">
 
     <!-- Google Web Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -47,7 +47,7 @@ if (!isset($_SESSION['User_ID'])) {
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script></div>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 </head>
 
 <body>
@@ -71,23 +71,54 @@ if (!isset($_SESSION['User_ID'])) {
         <div class="content">
             <!-- Navbar Start -->
             <?php
-            require_once("Admin_NavBar.php");
+            require 'Admin_NavBar.php';
             ?>
             <!-- Navbar End -->
 
-            <!-- Form Start -->
-            <?php
-            require_once("Admin_FormBreedChicken.php");
-            ?>
-            <!-- Form End -->
+            <div class="row" style="margin-left:5px;">
+                <div class="col-12">
+                    <div class="container-fluid pt-3 px-2">
+                        <div class="bg-light text-center rounded p-2">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">จำนวนไก่แต่ละสายพันธุ์</h6>
+                            </div>
+                            <canvas id="Remain_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                        </div>
+                    </div>
+                </div>
 
-            <!-- table Start -->
-            <?php
-            require_once("Admin_TableBreed.php");
-            ?>
-            <!-- table End -->
+                <div class="col-12">
+                    <div class="container-fluid pt-3 px-2">
+                        <div class="bg-light text-center rounded p-2">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">จำนวนไก่ในโรงเรือนทั้งหมด</h6>
+                            </div>
+                            <canvas id="Total_Chart" style="max-width:100%; max-height:200px;"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
+            <div class="row" style="margin-left:5px;">
+                <div class="col-6">
+                    <!--table Start ข้อมูลไก่-->
+                    <?php
+                    require_once("Admin_TableRemain.php");
+                    ?>
+                    <!--teble End ข้อมูลไก่-->
+                </div>
+
+                <div class="col-6">
+                    <!--table Start ข้อมูลไก่-->
+                    <?php
+                    require_once("Admin_TableTotal.php");
+                    ?>
+                    <!--teble End ข้อมูลไก่-->
+                </div>
+            </div>
+            
         </div>
+
         <!-- Content End -->
     </div>
 
@@ -105,6 +136,8 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
+    <!-- chart -->
+    <script src="chart.js"></script>
 </body>
 
 </html>

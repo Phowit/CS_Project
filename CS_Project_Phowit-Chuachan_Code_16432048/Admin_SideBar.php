@@ -41,6 +41,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <div class="dropdown-menu bg-transparent border-0">
                     <a href="Admin_ManageImport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageImport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำเข้าไก่</a>
                     <a href="Admin_ManageExport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageExport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำออกไก่</a>
+                    <a href="Admin_ManageTotal.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageTotal.php') ? 'active' : 'text-light' ?>">ข้อมูลรวมไก่ไข่</a>
                 </div>
             </div>
 

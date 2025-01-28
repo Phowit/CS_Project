@@ -279,6 +279,89 @@ function loadExportChart() {
     }
 }
 
+// โหลดกราฟ Chicken Remain Level
+function loadRemainChart() {
+    if (document.getElementById("Remain_Chart")) {
+
+        // 1. ดึงข้อมูล JSON จาก PHP
+        fetch('Chart_Remain.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
+            .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+            .then(data => {
+                const labels = data.Remain_Date; // ดึงวันที่คงเหลือมาเป็นแกน X
+
+                // สร้างชุดข้อมูลแยกตามสายพันธุ์
+                const datasets = Object.keys(data.Remain_Amount).map((breed, index) => ({
+                    label: breed, // ชื่อสายพันธุ์
+                    data: data.Remain_Amount[breed], // จำนวนไก่คงเหลือของสายพันธุ์ในแต่ละวัน
+                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
+                    borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                }));
+
+                // 2. กำหนดการตั้งค่ากราฟ
+                const ctx = document.getElementById('Remain_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
+                new Chart(ctx, {
+                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                    data: {
+                        labels: labels, // กำหนดแกน X เป็นวันที่
+                        datasets: datasets // กำหนดชุดข้อมูลในกราฟ
+                    },
+                    options: {
+                        responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                        plugins: {
+                            legend: {
+                                position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                            },
+                            title: {
+                                display: true,
+                                text: 'Chicken Remain Level' // ชื่อกราฟ
+                            }
+                        },
+                        scales: {
+                            x: {
+                                stacked: false, // ไม่ซ้อนกันในแกน X
+                            },
+                            y: {
+                                beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                            }
+                        }
+                    }
+                });
+            });
+    }
+}
+
+// โหลดกราฟ Temperature
+function loadTotalChart() {
+    if (document.getElementById("Total_Chart")) {
+        fetch('Chart_Total.php') // ควรตรวจสอบชื่อไฟล์ PHP
+            .then(response => response.json())
+            .then(data => {
+                console.log("Total Chart Data:", data); // แสดงข้อมูลที่ได้รับใน console
+                if (!data || !data.Total_Date || !data.Total) {
+                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data); // ถ้าข้อมูลไม่ครบ จะพิมพ์ข้อความนี้
+                    return;
+                }
+
+                const ctx3 = document.getElementById("Total_Chart").getContext("2d");
+                new Chart(ctx3, {
+                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                    data: {
+                        labels: data.Total_Date,
+                        datasets: [{
+                            label: "Total",
+                            fill: true,
+                            backgroundColor: "rgba(232, 211, 255, 1)",
+                            borderWidth: 1 ,// ความหนาขอบแท่งกราฟ
+                            data: data.Total,
+                        }],
+                    },
+                    options: { responsive: true },
+                });
+            })
+            .catch(error => console.error("Error loading Total chart:", error)); // ถ้ามี error แสดงข้อความนี้
+    }
+}
+
 // เรียกใช้ฟังก์ชันตามความจำเป็นเมื่อหน้าโหลดเสร็จ
 document.addEventListener('DOMContentLoaded', () => {
     loadTemperatureChart();
@@ -288,4 +371,6 @@ document.addEventListener('DOMContentLoaded', () => {
     loadCollectChart();
     loadImportChart();
     loadExportChart();
+    loadRemainChart();
+    loadTotalChart();
 });

@@ -23,7 +23,7 @@
         $base64Image = base64_encode($User_Image); // แปลง BLOB เป็น Base64
         $User_Status = $row['User_Status'];
     ?>
-        <div class="col-sm-12 col-xl-12" style="margin-bottom: 5px;">
+        <div class="col-sm-12 col-xl-12 mb-5">
             <div class="bg-light rounded h-100 p-4">
                 <div class="row">
                     <div class="col-sm-12 col-xl-4">
