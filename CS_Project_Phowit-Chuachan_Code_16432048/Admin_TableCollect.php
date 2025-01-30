@@ -30,18 +30,18 @@
                     ?>
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
-                            <tr class="text-dark" style="font-size: 14px;">
+                            <tr class="text-dark p-1" style="font-size: 14px;">
                                 <th scope="col" class="col-1">รหัส</th>
                                 <th scope="col" class="col-4">วันที่เก็บ</th>
                                 <th scope="col" class="col-3">จำนวน</th>
                                 <th scope="col" class="col-3">เครื่องมือ</th>
                             </tr>
                         </thead>
-                        <tbody style="font-size: 13px;">
+                        <tbody style="font-size: 13px;" class="p-1">
                             <?php
                             while ($row = $result->fetch_assoc()) {
                                 $Collect_ID = $row['Collect_ID'];
-                                $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"])->format(format: "d/m/Y H:i");
+                                $Collect_Date = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Collect_Date"])->format(format: "d/m/Y");
                                 $EggAmount = $row['EggAmount'];
                             ?>
                                 <tr>
