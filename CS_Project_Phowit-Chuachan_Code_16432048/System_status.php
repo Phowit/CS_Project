@@ -104,7 +104,7 @@
                                 <img src="My_img/silo(2).png" alt="" style="width: 40px; height: 40px; margin-right:10px;">
                                 <div class="w-100 ms-3">
                                     <a>ระดับอาหารในถัง</a>
-                                    <h6 class="mb-1 text-dark">สถานะ : <?php echo $FoodLevel; ?></h6>
+                                    <h6 class="mb-1 text-dark">สถานะ : <?php echo $FoodLevel; ?> %</h6>
                                 </div>
                             </div>
                         </div>
