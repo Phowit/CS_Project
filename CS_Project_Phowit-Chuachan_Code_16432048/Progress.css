@@ -18,3 +18,24 @@
     transition: height 0.5s ease; /* เพิ่ม Animation เวลาเปลี่ยนค่า */
     z-index: 1;
 }
+
+/* Container สำหรับ Progress Bar */
+.progress-container1 {
+    width: 30px; /* กำหนดความกว้างเต็ม */
+    height: 55px; /* กำหนดความสูงของ Container */
+    background-color: #f0f0f0; /* สีพื้นหลัง */
+    border-radius: 10px; /* มุมมน */
+    position: relative; /* ตั้งตำแหน่งสำหรับองค์ประกอบภายใน */
+    margin-top: 1px;
+}
+
+/* Progress Bar */
+.progress-bar1 {
+    width: 100%; /* กำหนดความกว้างเต็มของ Progress Bar */
+    background-color: #4caf50; /* สีของ Progress Bar */
+    height: 0%; /* ค่าเริ่มต้นของความสูง */
+    position: absolute; /* ตั้งตำแหน่งให้ Progress Bar */
+    bottom: 0; /* เริ่มจากด้านล่าง */
+    transition: height 0.5s ease; /* เพิ่ม Animation เวลาเปลี่ยนค่า */
+    z-index: 1;
+}

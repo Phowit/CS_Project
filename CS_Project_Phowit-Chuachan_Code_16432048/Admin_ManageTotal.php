@@ -75,42 +75,12 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            <div class="row" style="margin-left:5px;">
-                <div class="col-12">
-                    <div class="container-fluid pt-3 px-2">
-                        <div class="bg-light text-center rounded p-2">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0 text-dark">จำนวนไก่แต่ละสายพันธุ์</h6>
-                            </div>
-                            <canvas id="Remain_Chart" style="max-width:100%; max-height:200px;"></canvas>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-12">
-                    <div class="container-fluid pt-3 px-2">
-                        <div class="bg-light text-center rounded p-2">
-                            <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0 text-dark">จำนวนไก่ในโรงเรือนทั้งหมด</h6>
-
-                                <?php
-                                $sql = "SELECT `Total` FROM `total` ORDER BY `Total_Date` DESC LIMIT 1";
-
-                                $result = mysqli_query($conn, $sql);
-
-                                while ($row = $result->fetch_assoc()) { $Total = $row['Total']; }
-                                ?>
-                                
-                                <a><?php echo "ปัจจุบัน ".$Total . " ตัว"; ?></a>
-                            </div>
-                            <canvas id="Total_Chart" style="max-width:100%; max-height:200px;"></canvas>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <?php
+            require_once('Canvas_Chart_Remain.php');
+            ?>
 
             <div class="row" style="margin-left:5px;">
-                <div class="col-6">
+                <div class="col-12">
                     <!--table Start ข้อมูลไก่-->
                     <?php
                     require_once("Admin_TableRemain.php");
@@ -118,36 +88,37 @@ if (!isset($_SESSION['User_ID'])) {
                     <!--teble End ข้อมูลไก่-->
                 </div>
 
+                <!-- ตาราง total ที่อาจารย์ให้เอาออกจากการแสดงผล
                 <div class="col-6">
-                    <!--table Start ข้อมูลไก่-->
+
                     <?php
-                    require_once("Admin_TableTotal.php");
+                    //require_once("Admin_TableTotal.php");
                     ?>
-                    <!--teble End ข้อมูลไก่-->
+
                 </div>
             </div>
+-->
+            </div>
 
+            <!-- Content End -->
         </div>
 
-        <!-- Content End -->
-    </div>
+        <!-- JavaScript Libraries -->
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="lib/chart/chart.min.js"></script>
+        <script src="lib/easing/easing.min.js"></script>
+        <script src="lib/waypoints/waypoints.min.js"></script>
+        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+        <script src="lib/tempusdominus/js/moment.min.js"></script>
+        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/chart/chart.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/tempusdominus/js/moment.min.js"></script>
-    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- Template Javascript -->
+        <script src="js/main.js"></script>
 
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
-
-    <!-- chart -->
-    <script src="chart.js"></script>
+        <!-- chart -->
+        <script src="chart.js"></script>
 </body>
 
 </html>

@@ -45,6 +45,8 @@ if (!isset($_SESSION['User_ID'])) {
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    
+    <link href="Progress.css" rel="stylesheet">
 </head>
 
 <body>
@@ -76,10 +78,6 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
         </div>
         <!-- Content End -->
-
-
-        <!-- Back to Top -->
-        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
     <!-- JavaScript Libraries -->
@@ -96,52 +94,6 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- chart -->
-    <script src="chart.js"></script>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var currentPage = '<?php echo basename($_SERVER['PHP_SELF']); ?>'; // ดึงชื่อของหน้า PHP ที่ถูกโหลดอยู่
-
-            var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-
-            navLinks.forEach(function(link) {
-                if (link.getAttribute('href') === currentPage) {
-                    link.classList.add('active');
-                }
-            });
-        });
-    </script>
-
-    <!-- start Modal-->
-    <script>
-        // Get the modal
-        var modal = document.getElementById("Modal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
-    <!-- start Modal-->
 </body>
 
 </html>

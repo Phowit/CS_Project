@@ -31,6 +31,8 @@
     <link href="css/style.css" rel="stylesheet">
 
     <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
+        
+    <link href="Progress.css" rel="stylesheet">
 </head>
 
 <body>
@@ -75,9 +77,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <!-- chart -->
-    <script src="chart.js"></script>
 </body>
 
 </html>

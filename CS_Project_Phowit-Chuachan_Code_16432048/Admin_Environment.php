@@ -91,7 +91,7 @@ if (!isset($_SESSION['User_ID'])) {
                         <div class="bg-light text-center rounded p-4">
 
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0 text-dark">ระดับอาหารหลัก</h6>
+                                <h6 class="mb-0 text-dark">ระดับอาหารในถัง</h6>
                             </div>
                             <canvas id="Food_Chart"></canvas>
 

@@ -1,7 +1,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="row">
 
-        <div class="col-sm-5 col-xl-5">
+        <div class="col-sm-12 col-xl-12">
             <div class="h-100 bg-light rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-4">ข้อมูลการเก็บไข่ไก่</h6>
@@ -31,10 +31,10 @@
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark p-1" style="font-size: 14px;">
-                                <th scope="col" class="col-1">รหัส</th>
-                                <th scope="col" class="col-4">วันที่เก็บ</th>
-                                <th scope="col" class="col-3">จำนวน</th>
-                                <th scope="col" class="col-3">เครื่องมือ</th>
+                                <th scope="col" class="col-1">ลำดับ</th>
+                                <th scope="col" class="col-7">วันที่เก็บ</th>
+                                <th scope="col" class="col-3">จำนวน (ฟอง)</th>
+                                <th scope="col" class="col-1">เครื่องมือ</th>
                             </tr>
                         </thead>
                         <tbody style="font-size: 13px;" class="p-1">
@@ -47,7 +47,7 @@
                                 <tr>
                                     <td><?php echo $Collect_ID; ?></td>
                                     <td><?php echo $Collect_Date; ?></td>
-                                    <td><?php echo $EggAmount; ?> (ฟอง)</td>
+                                    <td><?php echo $EggAmount; ?></td>
 
                                     <!--แก้ไข-->
                                     <td>
@@ -94,34 +94,6 @@
                                         </div>
                                         <!--End Edit-->
 
-                                        <button type="button" class="btn" data-bs-toggle="modal" onclick="CollectID(<?= $Collect_ID; ?>)"
-                                            data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px;">
-                                            <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
-                                        </button>
-
-                                        <!--Start Waring For Delete-->
-                                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog modal-dialog-centered">
-                                                <div class="modal-content">
-
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
-                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-
-                                                    <div class="modal-body">
-                                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                                    </div>
-
-                                                    <div class="modal-footer">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                                        <button type="button" class="btn btn-danger" onclick="deleteHarvest()">ยืนยัน</button>
-                                                    </div>
-
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--END Warning For Delete-->
                                     </td>
                                 </tr>
                             <?php } ?>

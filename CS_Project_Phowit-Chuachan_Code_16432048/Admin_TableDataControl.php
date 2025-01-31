@@ -89,6 +89,7 @@
                                         <input type="number" class="form-control" name="Temperature_range" id="Temperature_range">
                                     </div>
                                 </form>
+                                <a>(สปิงค์เกอร์จะทำงาน เมื่ออุณหภูมิถึงระดับที่กำหนด)</a>
                             </td>
 
                             <td>
@@ -107,6 +108,7 @@
                                         <input type="Datetime-local" class="form-control" name="TimeFoodS" id="TimeFoodS">
                                     </div>
                                 </form>
+                                <a>(ให้อาหารเสริม ตามวัน และเวลาที่กำหนด)</a>
                             </td>
 
                             <td>
@@ -125,6 +127,7 @@
                                         <input type="time" class="form-control" name="TimeWater" id="TimeWater">
                                     </div>
                                 </form>
+                                <a>(เปิดน้ำตามเวลาที่กำหนดในทุกๆวัน)</a>
                             </td>
 
                             <td>
