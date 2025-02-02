@@ -37,11 +37,8 @@ mysqli_query($conn, $sql1);
 // เริ่ม ส่วนการรวมค่า total -----------------------------------------------------------
 $sql2 = "   SELECT r1.*
             FROM remain r1
-            JOIN (
-                SELECT Breed_ID, MAX(remain_ID) AS max_id
-                FROM remain
-                GROUP BY Breed_ID
-            ) r2 ON r1.Breed_ID = r2.Breed_ID AND r1.remain_ID = r2.max_id;
+            JOIN (SELECT Breed_ID, MAX(Remain_Date) AS max_date FROM remain GROUP BY Breed_ID)
+            r2 ON r1.Breed_ID = r2.Breed_ID AND r1.Remain_Date = r2.max_date;
             ";                         //เลือกค่า remain ทั้งหมดมา โดยที่ สายพันธุ์ไม่ซ้ำ และเป็นค่าล่าสุดของแต่ละสายพันธุ์เท่านั้น
 
 $result2 = $conn->query($sql2); // นำค่ามาเก็บไว้

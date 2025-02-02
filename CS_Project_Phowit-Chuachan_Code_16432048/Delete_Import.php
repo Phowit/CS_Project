@@ -40,11 +40,8 @@ if (isset($_GET['id'])) {
     // เริ่ม การหักลบค่าออกจากฐาน ในตาราง total
     $sql1 = "   SELECT r1.*
                 FROM remain r1
-                JOIN (
-                    SELECT Breed_ID, MAX(remain_ID) AS max_id
-                    FROM remain
-                    GROUP BY Breed_ID
-                ) r2 ON r1.Breed_ID = r2.Breed_ID AND r1.remain_ID = r2.max_id;
+                JOIN (SELECT Breed_ID, MAX(Remain_Date) AS max_date FROM remain GROUP BY Breed_ID)
+                r2 ON r1.Breed_ID = r2.Breed_ID AND r1.Remain_Date = r2.max_date;
                 ";                         //เลือกค่า remain ทั้งหมดมา โดยที่ สายพันธุ์ไม่ซ้ำ และเป็นค่าล่าสุดของแต่ละสายพันธุ์เท่านั้น
 
     $result1 = $conn->query($sql1); // นำค่ามาเก็บไว้
@@ -66,10 +63,10 @@ if (isset($_GET['id'])) {
     // เริ่ม การลบข้อมูลการนำเข้า
     $sql3 = "DELETE FROM import WHERE Import_ID = $id";
 
-    if (mysqli_query($conn, $sqli)) {
+    if (mysqli_query($conn, $sql3)) {
         //echo "Record deleted successfully";
     } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+        //echo "Error deleting record: " . mysqli_error($conn);
     }
     // จบ การลบข้อมูลการนำเข้า
 }
