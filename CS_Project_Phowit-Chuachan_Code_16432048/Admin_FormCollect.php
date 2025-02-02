@@ -13,7 +13,14 @@
                 <form id="addRequestForm" action="Insert_collect.php" method="post">
 
                     <div class="form-floating mb-3">
-                        <input type="datetime-local" class="form-control" name="Collect_Date" placeholder required>
+                        <?php
+                        // ตั้งค่า timezone (เปลี่ยนตามพื้นที่ของคุณ)
+                        date_default_timezone_set('Asia/Bangkok'); 
+
+                        // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
+                        $currentDateTime = date('Y-m-d\TH:i');
+                        ?>
+                        <input type="datetime-local" class="form-control" name="Collect_Date" value="<?php echo $currentDateTime; ?>" placeholder required>
                         <label for="Collect_Date" class="form-label">วัน เวลา ที่เก็บเกี่ยว</label>
                     </div>
 

@@ -13,7 +13,14 @@
                     <input type="hidden" class="form-control" name="Export_ID" id="Export_ID" value="<?php echo $Export_ID ?>" readonly>
 
                     <div class="form-floating mb-3">
-                        <input type="DateTime-local" class="form-control" name="Export_Date" id="Import_Date" placeholder required>
+                        <?php
+                        // ตั้งค่า timezone (เปลี่ยนตามพื้นที่ของคุณ)
+                        date_default_timezone_set('Asia/Bangkok'); 
+
+                        // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
+                        $currentDateTime = date('Y-m-d\TH:i');
+                        ?>
+                        <input type="DateTime-local" class="form-control" name="Export_Date" id="Import_Date" value="<?php echo $currentDateTime; ?>" placeholder required>
                         <label for="Export_Date" class="form-label">วัน เวลา ที่ส่งออก</label>
                     </div>
 
