@@ -8,12 +8,14 @@
             <?php
             require_once("connect_db.php");
 
-            $sql = "SELECT 
-                        `Remain_Amount`,
-                        `Remain_Date`,
-                        breed.`Breed_Name`
-                        FROM `remain`
-                        INNER JOIN breed ON breed.Breed_ID = remain.Breed_ID";
+            $sql = "WITH Ranked AS (
+                    SELECT *, ROW_NUMBER() 
+                    OVER (PARTITION BY Breed_ID ORDER BY Remain_Date DESC) AS rn FROM remain)
+                    SELECT Ranked.*, breed.Breed_Name 
+                    FROM Ranked 
+                    INNER JOIN breed ON breed.Breed_ID = Ranked.Breed_ID
+                    WHERE rn = 1;
+                    ";
 
             $result = mysqli_query($conn, $sql);
             ?>
