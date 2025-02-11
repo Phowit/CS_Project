@@ -6,10 +6,10 @@ $sql_remain = "SELECT
         breed.Breed_Name, 
         SUM(Remain_Amount) AS Remain_Amount, 
         Remain_Date 
-    FROM remain 
-    INNER JOIN breed ON remain.Breed_ID = breed.Breed_ID 
-    GROUP BY breed.Breed_Name, Remain_Date 
-    ORDER BY Remain_Date DESC"; // คิวรีข้อมูลจากตาราง remain และ breed
+        FROM remain 
+        INNER JOIN breed ON remain.Breed_ID = breed.Breed_ID 
+        GROUP BY breed.Breed_Name, Remain_Date 
+        ORDER BY Remain_Date DESC"; // คิวรีข้อมูลจากตาราง remain และ breed
 $result_remain = $conn->query($sql_remain); // รันคิวรีและเก็บผลลัพธ์
 
 $data = [

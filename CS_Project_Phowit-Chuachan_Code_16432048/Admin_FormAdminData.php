@@ -1,4 +1,4 @@
-<!--Start add-->
+<!--Start add New Admin -->
 <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -9,8 +9,9 @@
 
             <div class="modal-body">
 
-                <!-- Form for Editing Record -->
-                <form id="addRequestForm" action="Insert_AdminData.php" method="post" enctype="multipart/form-data">
+                <!-- Start Form for Insert New Admin -->
+                <form id="addRequestForm" action="Insert_AdminData.php" method="post" enctype="multipart/form-data"> 
+                    <!-- enctype="multipart/form-data" (use for image)-->
 
                     <div class="form-floating mb-3">
                         <input type="text" class="form-control" name="User_Name" placeholder required>
@@ -51,10 +52,10 @@
                     <button type="submit" class="btn btn-primary" name="insert">บันทึก</button>
                     <button type="reset" class="btn btn-primary" value="Reset">ล้างข้อมูล</button>
                 </form>
-                <!-- Form for Editing Record -->
+                <!-- End Form for Insert New Admin -->
 
             </div>
         </div>
     </div>
 </div>
-<!--End add-->
+<!--End add New Admin -->

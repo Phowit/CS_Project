@@ -60,7 +60,6 @@ if (!isset($_SESSION['User_ID'])) {
         </div>
         <!-- Spinner End -->
 
-
         <!-- Sidebar Start -->
         <?php
         require_once("Admin_SideBar.php");
@@ -81,14 +80,14 @@ if (!isset($_SESSION['User_ID'])) {
 
             <div class="row" style="margin-left:5px;">
                 <div class="col-12">
-                    <!--table Start ข้อมูลไก่-->
+                    <!-- Start table-->
                     <?php
                     require_once("Admin_TableRemain.php");
                     ?>
-                    <!--teble End ข้อมูลไก่-->
+                    <!-- End table-->
                 </div>
 
-                <!-- ตาราง total ที่อาจารย์ให้เอาออกจากการแสดงผล
+                <!-- ตาราง total ที่อาจารย์ให้เอาออกจากการแสดงผล แต่ยังคงเก็บไว้ในฐาน
                 <div class="col-6">
 
                     <?php

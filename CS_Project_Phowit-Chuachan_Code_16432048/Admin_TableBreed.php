@@ -19,8 +19,8 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from breed ";
-            $result = mysqli_query($conn, $sql);
+            $sql_Table_Breed = "select * from breed ";
+            $result_Table_Breed = mysqli_query($conn, $sql_Table_Breed);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result_Table_Breed->fetch_assoc()) {
                         $Breed_ID = $row['Breed_ID'];
                         $Breed_Name = $row['Breed_Name'];
                         $Breed_Description = $row['Breed_Description'];

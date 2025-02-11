@@ -4,11 +4,11 @@
 
 require_once("connect_db.php");
 
-$sql = "SELECT * FROM total";
-$result = $conn->query(query: $sql);
+$sql_Total = "SELECT * FROM total";
+$result_Total = $conn->query(query: $sql_Total);
 
 $data = ["Total" => [], "Total_Date" => []];
-while ($row = $result->fetch_assoc()) {
+while ($row = $result_Total->fetch_assoc()) {
     $data["Total"][] = $row["Total"];
     $data["Total_Date"][] = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Total_Date"]) ->format(format: "d/m/Y");
 }

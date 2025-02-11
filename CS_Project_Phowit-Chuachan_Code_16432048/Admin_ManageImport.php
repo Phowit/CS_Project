@@ -60,7 +60,6 @@ if (!isset($_SESSION['User_ID'])) {
         </div>
         <!-- Spinner End -->
 
-
         <!-- Sidebar Start -->
         <?php
         require_once("Admin_SideBar.php");
@@ -84,12 +83,11 @@ if (!isset($_SESSION['User_ID'])) {
                 </div>
             </div>
 
-            <!--table Start ข้อมูลไก่-->
+            <!-- Start table-->
             <?php
-            //require_once("Admin_TableChickenData.php"); Admin_TableImport.php
             require_once("Admin_TableImport.php");
             ?>
-            <!--teble End ข้อมูลไก่-->
+            <!-- End table-->
         </div>
 
         <!-- Content End -->

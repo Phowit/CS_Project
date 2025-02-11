@@ -72,11 +72,11 @@
             ?>
             <!-- Navbar End -->
 
-            <!-- Navbar Start -->
+            <!-- Start Card data admin-->
             <?php
                 require_once("Admin_CardAdmin.php");
             ?>
-            <!-- Navbar End -->
+            <!-- End Card data admin-->
             
         </div>
         <!-- Content End -->

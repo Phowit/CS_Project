@@ -53,6 +53,11 @@
                         $Breed_Name = $row['Breed_Name'];
                         $Import_Amount = $row['Import_Amount'];
                         $Import_Details = $row['Import_Details'];
+
+                        // ตรวจสอบว่าพบข้อมูลหรือไม่
+                        $import_date = isset($row['Import_Date']) ? date('Y-m-d\TH:i', strtotime($row['Import_Date'])) : '';
+
+                        $old_Breed_ID = isset($row_old['Breed_ID']) ? $row_old['Breed_ID'] : '';
                     ?>
                         <tr style="font-size:12px">
                             <td><?php echo $Import_ID; ?></td>
@@ -82,33 +87,35 @@
                                                     <input type="hidden" class="form-control" name="Import_ID" id="Import_ID" value="<?php echo $Import_ID; ?>" readonly>
 
                                                     <div class="form-floating mb-3">
-                                                        <input type="DateTime-local" class="form-control" name="Import_Date" id="Import_Date" value="<?php echo $Import_Date; ?>" placeholder required>
-                                                        <label for="Import_Date" class="form-label">วัน เวลา ที่นำเข้ามาเลี้ยง</label>
+                                                        <input type="DateTime-local" class="form-control" name="Import_Date" id="Import_Date" value="<?php echo htmlspecialchars($import_date); ?>" placeholder required>
+                                                        <label for="Import_Date" class="form-label">วัน เวลา ที่นำเข้ามาเลี้ยง (<?php echo $Import_Date; ?>)</label>
                                                     </div>
 
                                                     <div class="row">
                                                         <div class="col-8">
                                                             <div class="form-floating">
-                                                                <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
-                                                                    <?php
-                                                                    require_once("connect_db.php");
-                                                                    $sql0 = "select * from breed";
-                                                                    $result0 = mysqli_query($conn, $sql0);
+                                                            <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
+    <?php
+    require_once("connect_db.php");
+    $sql0 = "SELECT * FROM breed";
+    $result0 = mysqli_query($conn, $sql0);
 
-                                                                    while ($row = $result0->fetch_assoc()) {
-                                                                    ?>
-                                                                        <option value="<?= $row['Breed_ID']; ?>">
-                                                                            <?= $row['Breed_Name']; ?></option>
-                                                                    <?php   } ?>
-                                                                </select>
-                                                                <label for="Breed_ID" class="form-label" placeholder>สายพันธุ์ไก่</label>
+    while ($row_breed = $result0->fetch_assoc()) { // เปลี่ยนชื่อ row เป็น row_breed ป้องกันข้อมูลชนกัน
+        $selected = ($row_breed['Breed_ID'] == $row['Breed_ID']) ? 'selected' : ''; // ใช้ $row['Breed_ID'] เพื่อเทียบค่าเก่า
+    ?>
+        <option value="<?= $row_breed['Breed_ID']; ?>" <?= $selected; ?>>
+            <?= $row_breed['Breed_Name']; ?>
+        </option>
+    <?php } ?>
+</select>
+                                                                <label for="Breed_ID" class="form-label" placeholder>สายพันธุ์ไก่ (<?php echo $Breed_Name; ?>)</label>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-4">
                                                             <div class="form-floating">
-                                                                <input type="number" class="form-control" name="Import_Amount" id="Import_Amount" min="1" value="<?php echo $Import_Amount; ?>" placeholder required>
-                                                                <label for="Import_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
+                                                                <input type="number" class="form-control" name="New_Import_Amount" id="New_Import_Amount" min="1" value="<?php echo $Import_Amount; ?>" placeholder required>
+                                                                <label for="New_Import_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
                                                             </div>
                                                         </div>
                                                     </div><br>

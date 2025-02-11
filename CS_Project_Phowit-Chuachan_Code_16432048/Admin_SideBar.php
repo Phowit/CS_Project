@@ -1,7 +1,7 @@
 <!-- Sidebar Start -->
 
 <?php
-// ดึงชื่อไฟล์ปัจจุบัน
+// ดึงชื่อไฟล์ปัจจุบัน เอาไว้ตรวจสอบเงื่อนไขใน side bar แต่ละตัว
 $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
@@ -19,6 +19,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
         <div class="navbar-nav w-100">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 
+<!-- code ($currentPage == 'Admin_Index.php') ? 'active' : 'text-light' = if currentPage =.... will show 'active' but if not will show 'text-light'-->
             <a href="Admin_Index.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_Index.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-laptop me-1 icon" style="height: 35px; width: 35px;"></i>หน้าหลัก</a>
 

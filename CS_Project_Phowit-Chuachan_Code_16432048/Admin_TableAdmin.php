@@ -16,8 +16,8 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql = "select * from admin ";
-            $result = mysqli_query($conn, $sql);
+            $sql_Table_Admin = "select * from admin ";
+            $result__Table_Admin = mysqli_query($conn, $sql_Table_Admin);
             ?>
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -35,7 +35,7 @@
                 </thead>
                 <tbody>
                     <?php
-                    while ($row = $result->fetch_assoc()) {
+                    while ($row = $result_Table_Admin->fetch_assoc()) {
                         $Admin_ID = $row['Admin_ID'];
                         $Admin_Name = $row['Admin_Name'];
                         $Tel = $row['Tel'];

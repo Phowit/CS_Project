@@ -8,14 +8,14 @@
             </div>
 
             <div class="modal-body">
-                <!-- Form for Editing Record -->
 
+                <!-- Form for Insert Collect -->
                 <form id="addRequestForm" action="Insert_collect.php" method="post">
 
                     <div class="form-floating mb-3">
                         <?php
-                        // ตั้งค่า timezone (เปลี่ยนตามพื้นที่ของคุณ)
-                        date_default_timezone_set('Asia/Bangkok'); 
+                        // For Show Time Now In Input  
+                        date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า timezone (เปลี่ยนตามพื้น)
 
                         // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
                         $currentDateTime = date('Y-m-d\TH:i');
@@ -32,6 +32,7 @@
                     <button type="submit" class="btn btn-primary md-4">บันทึก</button>
                     <button type="reset" class="btn btn-primary md-4" value="Reset">ล้างข้อมูล</button>
                 </form>
+                <!-- Form for Insert Collect -->
 
             </div>
         </div>

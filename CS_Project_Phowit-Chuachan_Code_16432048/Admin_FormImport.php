@@ -14,8 +14,8 @@
 
                     <div class="form-floating mb-3">
                         <?php
-                        // ตั้งค่า timezone (เปลี่ยนตามพื้นที่ของคุณ)
-                        date_default_timezone_set('Asia/Bangkok'); 
+                        // For Show Time Now In Input
+                        date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า timezone (เปลี่ยนตามพื้น)
 
                         // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
                         $currentDateTime = date('Y-m-d\TH:i');

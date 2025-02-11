@@ -74,11 +74,11 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            <!--Chart Start อุณหภูมิ-->
+            <!-- Start Table-->
             <?php
             require_once("Admin_TableMessage.php");
             ?>
-            <!--Chart End อุณหภูมิ-->
+            <!-- End Table-->
 
         </div>
         <!-- Content End -->

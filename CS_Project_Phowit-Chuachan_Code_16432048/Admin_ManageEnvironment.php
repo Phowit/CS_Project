@@ -53,13 +53,11 @@ session_start();
         </div>
         <!-- Spinner End -->
 
-
         <!-- Sidebar Start -->
         <?php
         require_once("Admin_SideBar.php");
         ?>
         <!-- Sidebar End -->
-
 
         <!-- Content Start -->
         <div class="content">
@@ -71,17 +69,17 @@ session_start();
 
             <!-- Widget Start -->
             <div class="container">
-                <!--Chart Start อุณหภูมิ-->
+                <!--Start Dashboard Environment -->
                 <?php
                 require_once("Admin_Dashboard.php");
                 ?>
-                <!--Chart End อุณหภูมิ-->
+                <!--End Dashboard Environment-->
 
-                <!--Chart Start อุณหภูมิ-->
+                <!-- Start Table-->
                 <?php
                 require_once("Admin_TableDataControl.php");
                 ?>
-                <!--Chart End อุณหภูมิ-->
+                <!-- End Table-->
 
             </div>
         </div>

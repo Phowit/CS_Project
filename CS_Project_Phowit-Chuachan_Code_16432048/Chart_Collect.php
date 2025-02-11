@@ -5,9 +5,9 @@ require_once("connect_db.php"); // เชื่อมต่อฐานข้อ
 $sql_collect = "SELECT 
         Collect_Date, 
         SUM(EggAmount) AS EggAmount 
-    FROM collect 
-    GROUP BY Collect_Date 
-    ORDER BY Collect_Date DESC"; // คิวรีข้อมูลจากตาราง collect
+        FROM collect 
+        GROUP BY Collect_Date 
+        ORDER BY Collect_Date DESC"; // คิวรีข้อมูลจากตาราง collect
 $result_collect = $conn->query($sql_collect); // รันคิวรีและเก็บผลลัพธ์
 
 $data = [

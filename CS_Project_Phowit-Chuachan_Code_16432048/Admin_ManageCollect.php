@@ -75,11 +75,11 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            <!--ข้อมูลการเก็บไข่ start -->
+            <!--Table start -->
             <?php
             require_once("Admin_TableCollect.php");
             ?>
-            <!--ข้อมูลการเก็บไข่ End-->
+            <!--Table End-->
 
         </div>
         <!-- Content End -->

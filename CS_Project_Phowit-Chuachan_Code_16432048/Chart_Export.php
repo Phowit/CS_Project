@@ -6,11 +6,11 @@ $sql_export = "SELECT
         breed.Breed_Name, 
         SUM(Export_Amount) AS Export_Amount, 
         Export_Date
-    FROM export 
-    INNER JOIN import ON import.import_ID = export.Import_ID 
-    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID 
-    GROUP BY breed.Breed_Name, Export_Date 
-    ORDER BY Export_Date DESC"; // คิวรีข้อมูลจากตาราง import และ breed
+        FROM export 
+        INNER JOIN import ON import.import_ID = export.Import_ID 
+        INNER JOIN breed ON import.Breed_ID = breed.Breed_ID 
+        GROUP BY breed.Breed_Name, Export_Date 
+        ORDER BY Export_Date DESC"; // คิวรีข้อมูลจากตาราง import และ breed
 $result_Export = $conn->query($sql_export); // รันคิวรีและเก็บผลลัพธ์
 
 $data = [

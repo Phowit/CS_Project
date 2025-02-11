@@ -73,9 +73,11 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
+            <!-- Start Index Dashboard -->
             <?php
             require_once("System_status.php");
             ?>
+            <!-- End Index Dashboard -->
         </div>
         <!-- Content End -->
     </div>

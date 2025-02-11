@@ -6,10 +6,10 @@ $sql_import = "SELECT
         breed.Breed_Name, 
         SUM(Import_Amount) AS Import_Amount, 
         Import_Date 
-    FROM import 
-    INNER JOIN breed ON import.Breed_ID = breed.Breed_ID 
-    GROUP BY breed.Breed_Name, Import_Date 
-    ORDER BY Import_Date DESC"; // คิวรีข้อมูลจากตาราง import และ breed
+        FROM import 
+        INNER JOIN breed ON import.Breed_ID = breed.Breed_ID 
+        GROUP BY breed.Breed_Name, Import_Date 
+        ORDER BY Import_Date DESC"; // คิวรีข้อมูลจากตาราง import และ breed
 $result_import = $conn->query($sql_import); // รันคิวรีและเก็บผลลัพธ์
 
 $data = [
