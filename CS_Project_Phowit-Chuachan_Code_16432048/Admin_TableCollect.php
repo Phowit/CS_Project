@@ -22,7 +22,8 @@
                     collect.`Collect_ID`,
                     collect.`Collect_Date`,
                     collect.`EggAmount`
-                    FROM collect;
+                    FROM collect
+                    ORDER BY collect.`Collect_Date` DESC;
                     ";
 
                     $result = mysqli_query($conn, $sql);
