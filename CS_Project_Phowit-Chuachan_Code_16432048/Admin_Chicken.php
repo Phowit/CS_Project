@@ -128,8 +128,8 @@ require_once("connect_db.php");
             ?>
 
             <!-- Footer Start -->
-            <div class="container-fluid pt-1 px-3 fs-6">
-                <div class="bg-light rounded-top p-2">
+            <div class="container-fluid pt-1 px-3">
+                <div class="bg-light rounded-top p-2" style="font-size: 12px;">
                     <div class="row">
                         <div class="col-12 col-sm-12 text-center text-sm-start mb-2">
                             ธนกร สุทธิธร. (2559). บทบาทของโภชนาการต่อการผลิตไก่ไข่. วารสารสัตวบาลไทย, 1(1), 1-10. 
