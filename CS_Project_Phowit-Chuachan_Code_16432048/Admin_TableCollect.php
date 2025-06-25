@@ -104,12 +104,12 @@
             </div>
         </div>
 
-        <div class="col-sm-7 col-xl-7">
-            <div class="bg-light text-center rounded p-4 m-1">
+        <div class="col-sm-12 col-xl-12 mt-2">
+            <div class="bg-light text-center rounded p-4 mb-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
                     <h6 class="mb-0 text-dark">จำนวนไข่ไก่ที่เก็บได้</h6>
                 </div>
-                <canvas id="Collect_Chart" style="max-width:100%; max-height:1000px;"></canvas>
+                <canvas id="Collect_Chart" style="max-width:100%; max-height:500px;"></canvas>
             </div>
         </div>
     </div>

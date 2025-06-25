@@ -129,30 +129,44 @@ function loadFoodSChart() {
 function loadCollectChart() {
     if (document.getElementById("Collect_Chart")) {
 
+        // ตรวจสอบว่ามีอินสแตนซ์ของกราฟเก่าอยู่หรือไม่ และทำลายมัน
+        // นี่คือขั้นตอนสำคัญหากคุณมีการเรียกใช้ loadCollectChart ซ้ำๆ
+        let existingChart = Chart.getChart("Collect_Chart");
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
         // ดึงข้อมูล JSON จาก PHP
         fetch('Chart_Collect.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
-        .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json(); // แปลงผลลัพธ์เป็น JSON
+        })
         .then(data => {
-            const labels = data.Collect_Date; // วันที่เก็บไข่ (แกนตั้ง)
-            const eggAmounts = data.EggAmount; // จำนวนไข่ (แกนนอน)
+            const labels = data.Collect_Date; // วันที่เก็บไข่ (จะกลายเป็นแกนนอน)
+            const eggAmounts = data.EggAmount; // จำนวนไข่ (จะกลายเป็นแกนตั้ง)
 
             // กำหนดการตั้งค่ากราฟ
             const ctx = document.getElementById('Collect_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
             new Chart(ctx, {
-                type: 'bar', // ประเภทกราฟเป็นแท่ง
+                type: 'bar', // ประเภทกราฟเป็นแท่ง (แนวตั้งคือค่าเริ่มต้นของ 'bar')
                 data: {
-                    labels: labels, // กำหนดแกนตั้งเป็นวันที่
+                    labels: labels, // กำหนดแกนนอนเป็นวันที่
                     datasets: [{
                         label: 'จำนวนการเก็บไข่', // ชื่อชุดข้อมูล
-                        data: eggAmounts, // กำหนดแกนนอนเป็นจำนวนไข่
+                        data: eggAmounts, // กำหนดแกนตั้งเป็นจำนวนไข่
                         backgroundColor: 'rgba(75, 192, 192, 0.7)', // สีแท่งกราฟแบบโปร่งแสง
+                        borderColor: 'rgba(75, 192, 192, 1)', // สีขอบแท่งกราฟ
                         borderWidth: 1 // ความหนาขอบแท่งกราฟ
                     }]
                 },
                 options: {
                     maintainAspectRatio: false, // ไม่บังคับอัตราส่วนกราฟ
-                    indexAxis: 'y', // เปลี่ยนกราฟเป็นแนวนอน (แกนตั้ง: labels)
                     responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                    // *** ลบ หรือ คอมเมนต์ 'indexAxis: 'y'' ออกไป เพื่อให้เป็นกราฟแนวตั้ง ***
+                    // indexAxis: 'y', // ถ้าเปิดไว้ จะทำให้เป็นแนวนอน
                     plugins: {
                         legend: {
                             position: 'top' // ตำแหน่งของคำอธิบายกราฟ
@@ -163,17 +177,30 @@ function loadCollectChart() {
                         }
                     },
                     scales: {
-                        x: {
-                            beginAtZero: true, // แกนนอนเริ่มต้นที่ 0
-                            barPercentage: 0.6, // ความกว้างของแท่ง (ค่าเริ่มต้นประมาณ 0.9)
-                            categoryPercentage: 0.8, // ระยะห่างระหว่างแท่ง
+                        x: { // ตอนนี้ x คือแกนหมวดหมู่ (วันที่)
+                            beginAtZero: true, // แกน x เริ่มต้นที่ 0 (มักไม่จำเป็นสำหรับแกน labels)
+                            // สามารถเพิ่ม title ได้หากต้องการให้มีชื่อแกน
+                            title: {
+                                display: true,
+                                text: 'วันและเวลาที่เก็บไข่'
+                            }
                         },
-                        y: {
-                            beginAtZero: false // ไม่บังคับแกนตั้งเริ่มที่ 0
+                        y: { // ตอนนี้ y คือแกนค่า (จำนวนไข่)
+                            beginAtZero: true, // แกน y เริ่มต้นที่ 0
+                            // สามารถเพิ่ม title ได้หากต้องการให้มีชื่อแกน
+                            title: {
+                                display: true,
+                                text: 'จำนวนไข่ (ฟอง)'
+                            }
                         }
                     }
                 }
             });
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+            // เพิ่มการแจ้งเตือนผู้ใช้หากเกิดข้อผิดพลาดในการโหลดข้อมูล
+            alert('ไม่สามารถโหลดข้อมูลกราฟได้ กรุณาลองใหม่อีกครั้ง');
         });
     }
 }
