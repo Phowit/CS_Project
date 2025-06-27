@@ -77,35 +77,21 @@ if (!isset($_SESSION['User_ID'])) {
 
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-light text-center rounded p-1">
-                            <?php
-                            // For Show Time Now In Input  
-                            date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า timezone (เปลี่ยนตามพื้น)
-
-                            // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
-                            $currentDateTime = date('d-m-Y');
-
-                            if ($currentDateTime == $currentDateTime) {
-                                $StatusDayOfChart = "$currentDateTime (วันนี้) ";
-                            }
-                            else {
-                                $StatusDayOfChart = $currentDateTime;
-                            }
-                            ?>
                             <div class="d-flex align-items-center justify-content-between mb-1">
                                 <div class="col-8">
-                                    <a>ข้อมูลของ <?php echo $StatusDayOfChart; ?></a>
+                                    <h6 class="mb-0 text-dark">ข้อมูลกราฟประจำวันที่: <span id="displaySelectedDate"></span></h6>
+                                    <!-- <span id="displaySelectedDate"></span> ใช้คู่กับ js เพื่ออัพเดทข้อมูลกราฟ แทนการสร้างใหม่ เพื่อเพิ่มประสิทธิภาพ-->
                                 </div>
 
                                 <div class="col-2">
-                                    <input type="Datetime" class="form-control" name="TimeFoodS" id="TimeFoodS" value="<?php echo $currentDateTime; ?>">
+                                    <input type="date" class="form-control" id="chartDatePicker" value="<?php echo date('Y-m-d'); ?>">
                                 </div>
 
-                                <div class="col-2 d-flex">
-                                    <button type="submit" class="btn float-end">
-                                        <img src='My_img/search.png' style='width: auto; height: 30px;'>
+                                <div class="col-2 d-flex justify-content-end">
+                                    <button type="button" class="btn btn-primary" id="searchChartData">
+                                        <i class="fa fa-search"></i> ค้นหา
                                     </button>
                                 </div>
-
                             </div>
                         </div>
 

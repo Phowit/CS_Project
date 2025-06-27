@@ -1,17 +1,43 @@
 <?php
 
-// Chart_FoodLevel
+// Chart_FoodLevel.php
 
 require_once("connect_db.php");
 
-$sql_FoodLevel = "SELECT FoodLevel, DT_record FROM status ORDER BY DT_record DESC LIMIT 5";
-$result_FoodLevel = $conn->query(query: $sql_FoodLevel);
+// 1. รับค่าวันที่จาก GET parameter
+// ถ้ามีค่า 'date' ใน URL (เช่น Chart_FoodLevel.php?date=2024-06-27)
+// ให้ใช้ค่านั้น ถ้าไม่มี (เช่น โหลดครั้งแรกโดยตรง หรือไม่ได้ส่ง parameter มา)
+// ให้ใช้เป็นวันที่ปัจจุบันของระบบ
+$selectedDate = isset($_GET['date']) ? $_GET['date'] : date('Y-m-d');
+
+// (ไม่บังคับแต่แนะนำ) ตรวจสอบความถูกต้องของวันที่
+// ตรวจสอบว่ารูปแบบวันที่เป็น YYYY-MM-DD
+if (!preg_match("/^\d{4}-\d{2}-\d{2}$/", $selectedDate)) {
+    // หากวันที่ที่ส่งมาไม่ถูกต้อง ให้ใช้เป็นวันที่ปัจจุบันแทน เพื่อป้องกัน SQL Injection หรือ Error
+    $selectedDate = date('Y-m-d');
+}
+
+// 2. สร้าง SQL query โดยใช้เงื่อนไข WHERE DATE(DT_record) = 'selectedDate'
+// และเปลี่ยน LIMIT 5 ออก เพื่อดึงข้อมูลทั้งหมดของวันที่เลือก
+// เปลี่ยน ORDER BY เป็น ASC เพื่อให้ข้อมูลเรียงตามเวลาจากเช้าไปดึกในกราฟ
+$sql_FoodLevel = "SELECT FoodLevel, DT_record 
+                  FROM status 
+                  WHERE DATE(DT_record) = '$selectedDate' 
+                  ORDER BY DT_record ASC"; 
+
+$result_FoodLevel = $conn->query($sql_FoodLevel);
 
 $data = ["FoodLevel" => [], "DT_record" => []];
 while ($row = $result_FoodLevel->fetch_assoc()) {
     $data["FoodLevel"][] = $row["FoodLevel"];
-    $data["DT_record"][] = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["DT_record"]) ->format(format: "d/m/Y");
+    // จัดรูปแบบ DT_record ให้แสดงเฉพาะเวลา (HH:MM:SS) 
+    // เนื่องจากกราฟจะแสดงข้อมูลของวันเดียวกันอยู่แล้ว
+    $data["DT_record"][] = date_create_from_format("Y-m-d H:i:s", $row["DT_record"])->format("H:i:s");
 }
 
 echo json_encode($data);
+
+// ปิดการเชื่อมต่อฐานข้อมูล
+$conn->close();
+
 ?>

@@ -1,17 +1,66 @@
+// ประกาศตัวแปร global เพื่อเก็บ instance ของ Chart แต่ละตัว
+// นี่คือสิ่งที่สำคัญเพื่อให้เราสามารถทำลายกราฟเก่าก่อนสร้างใหม่ได้
+let temperatureChartInstance = null;
+let foodChartInstance = null;
+let foodTrayChartInstance = null;
+let foodSChartInstance = null;
+let collectChartInstance = null;
+let importChartInstance = null;
+let exportChartInstance = null;
+let remainChartInstance = null;
+let totalChartInstance = null;
+
+
+// ฟังก์ชันกลางสำหรับโหลดกราฟทั้งหมดตามวันที่ที่ระบุ
+// dateString ควรอยู่ในรูปแบบ YYYY-MM-DD
+function loadAllChartsByDate(selectedDate) {
+    // อัปเดตวันที่ที่แสดงบนหน้าจอ
+    const displayDateElement = document.getElementById("displaySelectedDate");
+    if (displayDateElement) {
+        // แปลง YYYY-MM-DD เป็น DD/MM/YYYY สำหรับแสดงผล
+        const [year, month, day] = selectedDate.split('-');
+        displayDateElement.textContent = `${day}/${month}/${year}`;
+    }
+
+    // เรียกฟังก์ชันโหลดกราฟแต่ละตัว โดยส่งวันที่ที่เลือกเข้าไปด้วย
+    loadTemperatureChart(selectedDate);
+    loadFoodChart(selectedDate);
+    loadFoodTrayChart(selectedDate);
+    loadFoodSChart(selectedDate);
+    loadCollectChart(selectedDate);
+    loadImportChart(selectedDate);
+    loadExportChart(selectedDate);
+    loadRemainChart(selectedDate);
+    loadTotalChart(selectedDate);
+}
+
+
 // โหลดกราฟ Temperature
-function loadTemperatureChart() {
+function loadTemperatureChart(selectedDate = null) {
     if (document.getElementById("Temperature_Chart")) {
-        fetch('Chart_Temperature.php') // ควรตรวจสอบชื่อไฟล์ PHP
+        // สร้าง URL สำหรับ fetch โดยเพิ่ม parameter 'date'
+        let url = 'Chart_Temperature.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`; // เช่น Chart_Temperature.php?date=2024-11-01
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log("Temperature Chart Data:", data); // แสดงข้อมูลที่ได้รับใน console
+                console.log("Temperature Chart Data:", data);
                 if (!data || !data.DT_record || !data.T_Level) {
-                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data); // ถ้าข้อมูลไม่ครบ จะพิมพ์ข้อความนี้
+                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data);
                     return;
                 }
 
-                const ctx3 = document.getElementById("Temperature_Chart").getContext("2d");
-                new Chart(ctx3, {
+                const ctx = document.getElementById("Temperature_Chart").getContext("2d");
+
+                // ตรวจสอบและทำลายกราฟเก่าหากมีอยู่
+                if (temperatureChartInstance) {
+                    temperatureChartInstance.destroy();
+                }
+
+                temperatureChartInstance = new Chart(ctx, {
                     type: "line",
                     data: {
                         labels: data.DT_record,
@@ -25,24 +74,35 @@ function loadTemperatureChart() {
                     options: { responsive: true },
                 });
             })
-            .catch(error => console.error("Error loading Temperature chart:", error)); // ถ้ามี error แสดงข้อความนี้
+            .catch(error => console.error("Error loading Temperature chart:", error));
     }
 }
 
 // โหลดกราฟ Food Level
-function loadFoodChart() {
+function loadFoodChart(selectedDate = null) {
     if (document.getElementById("Food_Chart")) {
-        fetch('Chart_FoodLevel.php') // ควรตรวจสอบชื่อไฟล์ PHP
+        let url = 'Chart_FoodLevel.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log("Food Level Chart Data:", data); // แสดงข้อมูลที่ได้รับใน console
+                console.log("Food Level Chart Data:", data);
                 if (!data || !data.DT_record || !data.FoodLevel) {
-                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data); // ถ้าข้อมูลไม่ครบ จะพิมพ์ข้อความนี้
+                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data);
                     return;
                 }
 
-                const ctx3 = document.getElementById("Food_Chart").getContext("2d");
-                new Chart(ctx3, {
+                const ctx = document.getElementById("Food_Chart").getContext("2d");
+
+                // ตรวจสอบและทำลายกราฟเก่าหากมีอยู่
+                if (foodChartInstance) {
+                    foodChartInstance.destroy();
+                }
+
+                foodChartInstance = new Chart(ctx, {
                     type: "line",
                     data: {
                         labels: data.DT_record,
@@ -56,24 +116,35 @@ function loadFoodChart() {
                     options: { responsive: true },
                 });
             })
-            .catch(error => console.error("Error loading Food chart:", error)); // ถ้ามี error แสดงข้อความนี้
+            .catch(error => console.error("Error loading Food chart:", error));
     }
 }
 
 // โหลดกราฟ Food Tray Level
-function loadFoodTrayChart() {
+function loadFoodTrayChart(selectedDate = null) {
     if (document.getElementById("FoodTray_Chart")) {
-        fetch('Chart_FoodTrayLevel.php') // ควรตรวจสอบชื่อไฟล์ PHP
+        let url = 'Chart_FoodTrayLevel.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log("Food Tray Chart Data:", data); // แสดงข้อมูลที่ได้รับใน console
+                console.log("Food Tray Chart Data:", data);
                 if (!data || !data.DT_record || !data.FoodTray1 || !data.FoodTray2) {
-                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data); // ถ้าข้อมูลไม่ครบ จะพิมพ์ข้อความนี้
+                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data);
                     return;
                 }
 
-                const ctx1 = document.getElementById("FoodTray_Chart").getContext("2d");
-                new Chart(ctx1, {
+                const ctx = document.getElementById("FoodTray_Chart").getContext("2d");
+
+                // ตรวจสอบและทำลายกราฟเก่าหากมีอยู่
+                if (foodTrayChartInstance) {
+                    foodTrayChartInstance.destroy();
+                }
+
+                foodTrayChartInstance = new Chart(ctx, {
                     type: "bar",
                     data: {
                         labels: data.DT_record,
@@ -90,24 +161,35 @@ function loadFoodTrayChart() {
                     options: { responsive: true },
                 });
             })
-            .catch(error => console.error("Error loading Food Tray chart:", error)); // ถ้ามี error แสดงข้อความนี้
+            .catch(error => console.error("Error loading Food Tray chart:", error));
     }
 }
 
 // โหลดกราฟ Food Supplement Level
-function loadFoodSChart() {
+function loadFoodSChart(selectedDate = null) {
     if (document.getElementById("FoodS_Chart")) {
-        fetch('Chart_FoodSLevel.php') // ควรตรวจสอบชื่อไฟล์ PHP
+        let url = 'Chart_FoodSLevel.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log("Food Supplement Chart Data:", data); // แสดงข้อมูลที่ได้รับใน console
+                console.log("Food Supplement Chart Data:", data);
                 if (!data || !data.DT_record || !data.FoodSLevel) {
-                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data); // ถ้าข้อมูลไม่ครบ จะพิมพ์ข้อความนี้
+                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data);
                     return;
                 }
 
-                const ctx1 = document.getElementById("FoodS_Chart").getContext("2d");
-                new Chart(ctx1, {
+                const ctx = document.getElementById("FoodS_Chart").getContext("2d");
+
+                // ตรวจสอบและทำลายกราฟเก่าหากมีอยู่
+                if (foodSChartInstance) {
+                    foodSChartInstance.destroy();
+                }
+
+                foodSChartInstance = new Chart(ctx, {
                     type: "bar",
                     data: {
                         labels: data.DT_record,
@@ -120,74 +202,69 @@ function loadFoodSChart() {
                     options: { responsive: true },
                 });
             })
-            .catch(error => console.error("Error loading Food Supplement chart:", error)); // ถ้ามี error แสดงข้อความนี้
+            .catch(error => console.error("Error loading Food Supplement chart:", error));
     }
 }
 
-
 // โหลดกราฟ Collect Chart
-function loadCollectChart() {
+function loadCollectChart(selectedDate = null) {
     if (document.getElementById("Collect_Chart")) {
+        let url = 'Chart_Collect.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
 
-        // ตรวจสอบว่ามีอินสแตนซ์ของกราฟเก่าอยู่หรือไม่ และทำลายมัน
-        // นี่คือขั้นตอนสำคัญหากคุณมีการเรียกใช้ loadCollectChart ซ้ำๆ
         let existingChart = Chart.getChart("Collect_Chart");
         if (existingChart) {
             existingChart.destroy();
         }
 
-        // ดึงข้อมูล JSON จาก PHP
-        fetch('Chart_Collect.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
+        fetch(url)
         .then(response => {
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
-            return response.json(); // แปลงผลลัพธ์เป็น JSON
+            return response.json();
         })
         .then(data => {
-            const labels = data.Collect_Date; // วันที่เก็บไข่ (จะกลายเป็นแกนนอน)
-            const eggAmounts = data.EggAmount; // จำนวนไข่ (จะกลายเป็นแกนตั้ง)
+            const labels = data.Collect_Date;
+            const eggAmounts = data.EggAmount;
 
-            // กำหนดการตั้งค่ากราฟ
-            const ctx = document.getElementById('Collect_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
-            new Chart(ctx, {
-                type: 'bar', // ประเภทกราฟเป็นแท่ง (แนวตั้งคือค่าเริ่มต้นของ 'bar')
+            const ctx = document.getElementById('Collect_Chart').getContext('2d');
+            collectChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
+                type: 'bar',
                 data: {
-                    labels: labels, // กำหนดแกนนอนเป็นวันที่
+                    labels: labels,
                     datasets: [{
-                        label: 'จำนวนการเก็บไข่', // ชื่อชุดข้อมูล
-                        data: eggAmounts, // กำหนดแกนตั้งเป็นจำนวนไข่
-                        backgroundColor: 'rgba(75, 192, 192, 0.7)', // สีแท่งกราฟแบบโปร่งแสง
-                        borderColor: 'rgba(75, 192, 192, 1)', // สีขอบแท่งกราฟ
-                        borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                        label: 'จำนวนการเก็บไข่',
+                        data: eggAmounts,
+                        backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                        borderColor: 'rgba(75, 192, 192, 1)',
+                        borderWidth: 1
                     }]
                 },
                 options: {
-                    maintainAspectRatio: false, // ไม่บังคับอัตราส่วนกราฟ
-                    responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
-                    // *** ลบ หรือ คอมเมนต์ 'indexAxis: 'y'' ออกไป เพื่อให้เป็นกราฟแนวตั้ง ***
-                    // indexAxis: 'y', // ถ้าเปิดไว้ จะทำให้เป็นแนวนอน
+                    maintainAspectRatio: false,
+                    responsive: true,
                     plugins: {
                         legend: {
-                            position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                            position: 'top'
                         },
                         title: {
                             display: true,
-                            text: 'กราฟแสดงจำนวนการเก็บไข่ในแต่ละวัน' // ชื่อกราฟ
+                            text: 'กราฟแสดงจำนวนการเก็บไข่ในแต่ละวัน'
                         }
                     },
                     scales: {
-                        x: { // ตอนนี้ x คือแกนหมวดหมู่ (วันที่)
-                            beginAtZero: true, // แกน x เริ่มต้นที่ 0 (มักไม่จำเป็นสำหรับแกน labels)
-                            // สามารถเพิ่ม title ได้หากต้องการให้มีชื่อแกน
+                        x: {
+                            beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'วันและเวลาที่เก็บไข่'
                             }
                         },
-                        y: { // ตอนนี้ y คือแกนค่า (จำนวนไข่)
-                            beginAtZero: true, // แกน y เริ่มต้นที่ 0
-                            // สามารถเพิ่ม title ได้หากต้องการให้มีชื่อแกน
+                        y: {
+                            beginAtZero: true,
                             title: {
                                 display: true,
                                 text: 'จำนวนไข่ (ฟอง)'
@@ -199,43 +276,47 @@ function loadCollectChart() {
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
-            // เพิ่มการแจ้งเตือนผู้ใช้หากเกิดข้อผิดพลาดในการโหลดข้อมูล
             alert('ไม่สามารถโหลดข้อมูลกราฟได้ กรุณาลองใหม่อีกครั้ง');
         });
     }
 }
 
 // โหลดกราฟ Chicken Import Level
-function loadImportChart() {
+function loadImportChart(selectedDate = null) {
     if (document.getElementById("Import_Chart")) {
+        let url = 'Chart_Import.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
 
-        // 1. ดึงข้อมูล JSON จาก PHP
-        fetch('Chart_Import.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
-            .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+        let existingChart = Chart.getChart("Import_Chart");
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        fetch(url)
+            .then(response => response.json())
             .then(data => {
-                const labels = data.Import_Date; // ดึงวันที่นำเข้ามาเป็นแกน X
-
-                // สร้างชุดข้อมูลแยกตามสายพันธุ์
+                const labels = data.Import_Date;
                 const datasets = Object.keys(data.Import_Amount).map((breed, index) => ({
-                    label: breed, // ชื่อสายพันธุ์
-                    data: data.Import_Amount[breed], // จำนวนไก่ของสายพันธุ์ในแต่ละวัน
-                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
-                    borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                    label: breed,
+                    data: data.Import_Amount[breed],
+                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`,
+                    borderWidth: 1
                 }));
 
-                // 2. กำหนดการตั้งค่ากราฟ
-                const ctx = document.getElementById('Import_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
-                new Chart(ctx, {
-                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                const ctx = document.getElementById('Import_Chart').getContext('2d');
+                importChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
+                    type: 'bar',
                     data: {
-                        labels: labels, // กำหนดแกน X เป็นวันที่
-                        datasets: datasets // กำหนดชุดข้อมูลในกราฟ
+                        labels: labels,
+                        datasets: datasets
                     },
                     options: {
-                        responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                        responsive: true,
                         plugins: {
                             legend: {
-                                position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                                position: 'top'
                             },
                             title: {
                                 display: true,
@@ -243,12 +324,11 @@ function loadImportChart() {
                         },
                         scales: {
                             x: {
-                                stacked: false, // ไม่ซ้อนกันในแกน X
+                                stacked: false,
                             },
                             y: {
-                                beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                                beginAtZero: true
                             }
-                            
                         }
                     }
                 });
@@ -256,37 +336,42 @@ function loadImportChart() {
     }
 }
 
-// โหลดกราฟ Chicken Import Level
-function loadExportChart() {
+// โหลดกราฟ Chicken Export Level
+function loadExportChart(selectedDate = null) {
     if (document.getElementById("Export_Chart")) {
+        let url = 'Chart_Export.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
 
-        // 1. ดึงข้อมูล JSON จาก PHP
-        fetch('Chart_Export.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
-            .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+        let existingChart = Chart.getChart("Export_Chart");
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        fetch(url)
+            .then(response => response.json())
             .then(data => {
-                const labels = data.Export_Date; // ดึงวันที่นำเข้ามาเป็นแกน X
-
-                // สร้างชุดข้อมูลแยกตามสายพันธุ์
+                const labels = data.Export_Date;
                 const datasets = Object.keys(data.Export_Amount).map((breed, index) => ({
-                    label: breed, // ชื่อสายพันธุ์
-                    data: data.Export_Amount[breed], // จำนวนไก่ของสายพันธุ์ในแต่ละวัน
-                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
-                    borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                    label: breed,
+                    data: data.Export_Amount[breed],
+                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`,
+                    borderWidth: 1
                 }));
 
-                // 2. กำหนดการตั้งค่ากราฟ
-                const ctx = document.getElementById('Export_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
-                new Chart(ctx, {
-                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                const ctx = document.getElementById('Export_Chart').getContext('2d');
+                exportChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
+                    type: 'bar',
                     data: {
-                        labels: labels, // กำหนดแกน X เป็นวันที่
-                        datasets: datasets // กำหนดชุดข้อมูลในกราฟ
+                        labels: labels,
+                        datasets: datasets
                     },
                     options: {
-                        responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                        responsive: true,
                         plugins: {
                             legend: {
-                                position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                                position: 'top'
                             },
                             title: {
                                 display: true,
@@ -294,10 +379,10 @@ function loadExportChart() {
                         },
                         scales: {
                             x: {
-                                stacked: false, // ไม่ซ้อนกันในแกน X
+                                stacked: false,
                             },
                             y: {
-                                beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                                beginAtZero: true
                             }
                         }
                     }
@@ -307,48 +392,53 @@ function loadExportChart() {
 }
 
 // โหลดกราฟ Chicken Remain Level
-function loadRemainChart() {
+function loadRemainChart(selectedDate = null) {
     if (document.getElementById("Remain_Chart")) {
+        let url = 'Chart_Remain.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
 
-        // 1. ดึงข้อมูล JSON จาก PHP
-        fetch('Chart_Remain.php') // ระบุ URL ที่ชี้ไปยังไฟล์ PHP ที่ส่งข้อมูล JSON
-            .then(response => response.json()) // แปลงผลลัพธ์เป็น JSON
+        let existingChart = Chart.getChart("Remain_Chart");
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        fetch(url)
+            .then(response => response.json())
             .then(data => {
-                const labels = data.Remain_Date; // ดึงวันที่คงเหลือมาเป็นแกน X
-
-                // สร้างชุดข้อมูลแยกตามสายพันธุ์
+                const labels = data.Remain_Date;
                 const datasets = Object.keys(data.Remain_Amount).map((breed, index) => ({
-                    label: breed, // ชื่อสายพันธุ์
-                    data: data.Remain_Amount[breed], // จำนวนไก่คงเหลือของสายพันธุ์ในแต่ละวัน
-                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`, // สีแท่งกราฟแบบโปร่งแสง
-                    borderWidth: 1 // ความหนาขอบแท่งกราฟ
+                    label: breed,
+                    data: data.Remain_Amount[breed],
+                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`,
+                    borderWidth: 1
                 }));
 
-                // 2. กำหนดการตั้งค่ากราฟ
-                const ctx = document.getElementById('Remain_Chart').getContext('2d'); // เตรียมพื้นที่สำหรับกราฟ
-                new Chart(ctx, {
-                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                const ctx = document.getElementById('Remain_Chart').getContext('2d');
+                remainChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
+                    type: 'bar',
                     data: {
-                        labels: labels, // กำหนดแกน X เป็นวันที่
-                        datasets: datasets // กำหนดชุดข้อมูลในกราฟ
+                        labels: labels,
+                        datasets: datasets
                     },
                     options: {
-                        responsive: true, // ทำให้กราฟตอบสนองต่อขนาดหน้าจอ
+                        responsive: true,
                         plugins: {
                             legend: {
-                                position: 'top' // ตำแหน่งของคำอธิบายกราฟ
+                                position: 'top'
                             },
                             title: {
                                 display: true,
-                                text: 'Chicken Remain Level' // ชื่อกราฟ
+                                text: 'Chicken Remain Level'
                             }
                         },
                         scales: {
                             x: {
-                                stacked: false, // ไม่ซ้อนกันในแกน X
+                                stacked: false,
                             },
                             y: {
-                                beginAtZero: true // แกน Y เริ่มต้นที่ 0
+                                beginAtZero: true
                             }
                         }
                     }
@@ -357,47 +447,106 @@ function loadRemainChart() {
     }
 }
 
-// โหลดกราฟ Temperature
-function loadTotalChart() {
+// โหลดกราฟ Total Chart
+function loadTotalChart(selectedDate = null) {
     if (document.getElementById("Total_Chart")) {
-        fetch('Chart_Total.php') // ควรตรวจสอบชื่อไฟล์ PHP
+        let url = 'Chart_Total.php';
+        if (selectedDate) {
+            url += `?date=${selectedDate}`;
+        }
+
+        let existingChart = Chart.getChart("Total_Chart");
+        if (existingChart) {
+            existingChart.destroy();
+        }
+
+        fetch(url)
             .then(response => response.json())
             .then(data => {
-                console.log("Total Chart Data:", data); // แสดงข้อมูลที่ได้รับใน console
+                console.log("Total Chart Data:", data);
                 if (!data || !data.Total_Date || !data.Total) {
-                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data); // ถ้าข้อมูลไม่ครบ จะพิมพ์ข้อความนี้
+                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data);
                     return;
                 }
 
-                const ctx3 = document.getElementById("Total_Chart").getContext("2d");
-                new Chart(ctx3, {
-                    type: 'bar', // ประเภทกราฟเป็นแท่ง
+                const ctx = document.getElementById("Total_Chart").getContext("2d");
+                totalChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
+                    type: 'bar',
                     data: {
                         labels: data.Total_Date,
                         datasets: [{
                             label: "Total",
                             fill: true,
                             backgroundColor: "rgba(232, 211, 255, 1)",
-                            borderWidth: 1 ,// ความหนาขอบแท่งกราฟ
+                            borderWidth: 1 ,
                             data: data.Total,
                         }],
                     },
                     options: { responsive: true },
                 });
             })
-            .catch(error => console.error("Error loading Total chart:", error)); // ถ้ามี error แสดงข้อความนี้
+            .catch(error => console.error("Error loading Total chart:", error));
     }
 }
 
-// เรียกใช้ฟังก์ชันตามความจำเป็นเมื่อหน้าโหลดเสร็จ
+
+// เมื่อ DOM โหลดเสร็จ:
 document.addEventListener('DOMContentLoaded', () => {
-    loadTemperatureChart();
-    loadFoodChart();
-    loadFoodTrayChart();
-    loadFoodSChart();
-    loadCollectChart();
-    loadImportChart();
-    loadExportChart();
-    loadRemainChart();
-    loadTotalChart();
+    // 1. ดึงวันที่ปัจจุบันมาเป็นค่าเริ่มต้น
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0'); // เดือน 0-11
+    const day = String(today.getDate()).padStart(2, '0');
+    const currentDateFormatted = `${year}-${month}-${day}`; // รูปแบบ YYYY-MM-DD
+
+    // ตั้งค่า input type="date" เป็นวันที่ปัจจุบัน
+    const datePicker = document.getElementById("chartDatePicker");
+    if (datePicker) {
+        datePicker.value = currentDateFormatted;
+    }
+
+    // แสดงวันที่ปัจจุบันบนหน้าจอ
+    const displayDateElement = document.getElementById("displaySelectedDate");
+    if (displayDateElement) {
+        displayDateElement.textContent = `${day}/${month}/${year}`;
+    }
+
+    // โหลดกราฟทั้งหมดด้วยวันที่ปัจจุบันเมื่อหน้าเว็บโหลดครั้งแรก
+    loadAllChartsByDate(currentDateFormatted);
+
+    // 2. เพิ่ม Event Listener เมื่อมีการเปลี่ยนแปลงวันที่ใน Date Picker หรือคลิกปุ่มค้นหา
+    const searchButton = document.getElementById("searchChartData");
+    if (searchButton) {
+        searchButton.addEventListener('click', () => {
+            const selectedDate = datePicker.value; // ดึงวันที่ที่ผู้ใช้เลือก
+            if (selectedDate) {
+                loadAllChartsByDate(selectedDate); // โหลดกราฟใหม่ตามวันที่ที่เลือก
+            } else {
+                alert("กรุณาเลือกวันที่ที่ต้องการค้นหา");
+            }
+        });
+    }
+
+    // โค้ดสำหรับเมนู Active (ส่วนนี้ยังคงเดิม)
+    var currentPage = '<?php echo basename($_SERVER["PHP_SELF"]); ?>';  //=======
+    var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
+    navLinks.forEach(function(link) {
+        if (link.getAttribute('href') === currentPage) {
+            link.classList.add('active');
+        }
+    });
+
+    // โค้ดสำหรับ Modal (ส่วนนี้ยังคงเดิม)
+    var modal = document.getElementById("Modal");
+    var btn = document.getElementById("myBtn");
+    var span = document.getElementsByClassName("close")[0];
+    if (btn) {
+        btn.onclick = function() { modal.style.display = "block"; }
+    }
+    if (span) {
+        span.onclick = function() { modal.style.display = "none"; }
+    }
+    window.onclick = function(event) {
+        if (event.target == modal) { modal.style.display = "none"; }
+    }
 });
