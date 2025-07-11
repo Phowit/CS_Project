@@ -157,14 +157,80 @@ if (!isset($_SESSION['User_ID'])) {
             </div>
             <!--Chart End อาหารเสริม & อุณหภูมิ-->
 
-            <!-- Widgets Start -->
+
+
+            <!-- Total Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-12">
+                        <div class="bg-light text-center rounded">
+                            <div class="d-flex align-items-center justify-content-between p-3">
+                                <h6 class="text-dark">ข้อมูลกราฟสภาพแวดล้อมทั้งหมด</h6>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
 
+                    <!--Total Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิ</h6>
+                            </div>
+                            <canvas id="Total_Temperature_Chart"></canvas>
+                        </div>
+                    </div>
+                    <!--Total Chart End อาหารหลัก-->
+
+                    <!--Total Chart Start อาหารหลัก-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารในถัง</h6>
+                            </div>
+                            <canvas id="Total_Food_Chart"></canvas>
+                        </div>
+                    </div>
+                    <!--Total Chart End อาหารหลัก-->
 
                 </div>
             </div>
-            <!-- Widgets End -->
+
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <!--Chart Start อาหารเสริม-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารในถาด</h6>
+                            </div>
+                            <canvas id="Total_FoodTray_Chart"></canvas>
+
+                        </div>
+                    </div>
+                    <!--Chart End อาหารเสริม-->
+
+                    <!--Chart Start อุณหภูมิ-->
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light text-center rounded p-4">
+
+                            <div class="d-flex align-items-center justify-content-between mb-4">
+                                <h6 class="mb-0 text-dark">ระดับอาหารเสริม</h6>
+                            </div>
+                            <canvas id="Total_FoodS_Chart"></canvas>
+
+                        </div>
+                    </div>
+                    <!--Chart End อุณหภูมิ-->
+
+                </div>
+            </div>
+
         </div>
         <!-- Content End -->
 
@@ -189,6 +255,9 @@ if (!isset($_SESSION['User_ID'])) {
 
     <!-- chart -->
     <script src="chart.js"></script>
+
+    <!-- Total chart -->
+    <script src="chart_Total.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {

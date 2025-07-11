@@ -214,9 +214,9 @@ function loadCollectChart(selectedDate = null) {
             url += `?date=${selectedDate}`;
         }
 
-        let existingChart = Chart.getChart("Collect_Chart");
-        if (existingChart) {
-            existingChart.destroy();
+        // *** ใช้ตัวแปร global collectChartInstance ที่ประกาศไว้ด้านบน ***
+        if (collectChartInstance) {
+            collectChartInstance.destroy();
         }
 
         fetch(url)
@@ -227,11 +227,17 @@ function loadCollectChart(selectedDate = null) {
             return response.json();
         })
         .then(data => {
+            // ตรวจสอบข้อมูลก่อนนำไปใช้
+            if (!data || !data.Collect_Date || !data.EggAmount) {
+                console.error("JSON data for Collect Chart is incomplete:", data);
+                return;
+            }
+
             const labels = data.Collect_Date;
             const eggAmounts = data.EggAmount;
 
             const ctx = document.getElementById('Collect_Chart').getContext('2d');
-            collectChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
+            collectChartInstance = new Chart(ctx, { 
                 type: 'bar',
                 data: {
                     labels: labels,
@@ -275,66 +281,96 @@ function loadCollectChart(selectedDate = null) {
             });
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
-            alert('ไม่สามารถโหลดข้อมูลกราฟได้ กรุณาลองใหม่อีกครั้ง');
+            console.error('Error loading Collect chart:', error);
+            // alert('ไม่สามารถโหลดข้อมูลกราฟการเก็บไข่ได้ กรุณาลองใหม่อีกครั้ง'); // ไม่ควร alert บ่อยเกินไป
         });
     }
 }
 
-// โหลดกราฟ Chicken Import Level
-function loadImportChart(selectedDate = null) {
-    if (document.getElementById("Import_Chart")) {
-        let url = 'Chart_Import.php';
-        if (selectedDate) {
-            url += `?date=${selectedDate}`;
-        }
+// ใน chart.js ของคุณ
+let importChart; // กำหนดตัวแปรสำหรับเก็บ instance ของ Chart
 
-        let existingChart = Chart.getChart("Import_Chart");
-        if (existingChart) {
-            existingChart.destroy();
-        }
+function loadImportChart(selectedDate) {
+    fetch(`Chart_Import.php?date=${selectedDate}`)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            const ctx = document.getElementById('Import_Chart').getContext('2d');
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                const labels = data.Import_Date;
-                const datasets = Object.keys(data.Import_Amount).map((breed, index) => ({
-                    label: breed,
-                    data: data.Import_Amount[breed],
-                    backgroundColor: `rgba(${50 + index * 50}, ${100 + index * 30}, ${150 + index * 20}, 0.7)`,
-                    borderWidth: 1
-                }));
+            // ทำลายกราฟเก่าถ้ามีอยู่
+            if (importChart) {
+                importChart.destroy();
+            }
 
-                const ctx = document.getElementById('Import_Chart').getContext('2d');
-                importChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
-                    type: 'bar',
-                    data: {
-                        labels: labels,
-                        datasets: datasets
+            importChart = new Chart(ctx, {
+                type: 'line', // หรือ 'bar' ถ้าคุณต้องการ Bar Chart
+                data: {
+                    labels: data.labels, // ชั่วโมง
+                    datasets: data.datasets // แต่ละสายพันธุ์เป็น dataset
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        title: {
+                            display: true,
+                            text: 'กราฟจำนวนไก่ที่นำเข้า แยกตามสายพันธุ์'
+                        }
                     },
-                    options: {
-                        responsive: true,
-                        plugins: {
-                            legend: {
-                                position: 'top'
-                            },
+                    scales: {
+                        x: {
                             title: {
                                 display: true,
+                                text: 'เวลา (ชั่วโมง)'
                             }
                         },
-                        scales: {
-                            x: {
-                                stacked: false,
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'จำนวนไก่ (ตัว)'
                             },
-                            y: {
-                                beginAtZero: true
-                            }
+                            beginAtZero: true
                         }
                     }
-                });
+                }
             });
-    }
+        })
+        .catch(error => {
+            console.error('Error fetching import data:', error);
+        });
 }
+
+// เรียกใช้เมื่อโหลดหน้าเว็บครั้งแรก หรือเมื่อมีการเปลี่ยนวันที่
+// (สมมติว่าคุณมีฟังก์ชัน loadAllChartsByDate() ที่เรียกใช้ loadImportChart)
+// ในไฟล์หลักของคุณ:
+// document.addEventListener('DOMContentLoaded', function() {
+//     const chartDatePicker = document.getElementById('chartDatePicker');
+//     const searchChartDataBtn = document.getElementById('searchChartData');
+//
+//     // ตั้งค่าวันที่เริ่มต้นบน displaySelectedDate
+//     const initialDate = chartDatePicker.value;
+//     const formattedDate = new Date(initialDate).toLocaleDateString('th-TH', {
+//         year: 'numeric', month: 'long', day: 'numeric'
+//     });
+//     document.getElementById('displaySelectedDate').textContent = formattedDate;
+//
+//     loadImportChart(initialDate); // โหลดกราฟ Import ในครั้งแรก
+//
+//     searchChartDataBtn.addEventListener('click', function() {
+//         const selectedDate = chartDatePicker.value;
+//         const formattedDate = new Date(selectedDate).toLocaleDateString('th-TH', {
+//             year: 'numeric', month: 'long', day: 'numeric'
+//         });
+//         document.getElementById('displaySelectedDate').textContent = formattedDate;
+//
+//         loadImportChart(selectedDate); // โหลดกราฟ Import เมื่อกดค้นหา
+//         // คุณจะต้องเรียก loadChart สำหรับกราฟอื่นๆ ด้วย
+//     });
+// });
 
 // โหลดกราฟ Chicken Export Level
 function loadExportChart(selectedDate = null) {
@@ -502,25 +538,37 @@ document.addEventListener('DOMContentLoaded', () => {
     // ตั้งค่า input type="date" เป็นวันที่ปัจจุบัน
     const datePicker = document.getElementById("chartDatePicker");
     if (datePicker) {
-        datePicker.value = currentDateFormatted;
+        // ตรวจสอบว่ามีค่า date ใน URL หรือไม่
+        const urlParams = new URLSearchParams(window.location.search);
+        const dateParam = urlParams.get('date');
+
+        if (dateParam) {
+            // ถ้ามี parameter 'date' ใน URL ให้ใช้ค่านั้น
+            datePicker.value = dateParam;
+            // อัปเดต displaySelectedDate ด้วยวันที่จาก URL
+            const [urlYear, urlMonth, urlDay] = dateParam.split('-');
+            document.getElementById('displaySelectedDate').textContent = `${urlDay}/${urlMonth}/${urlYear}`;
+            // โหลดกราฟทั้งหมดด้วยวันที่จาก URL
+            loadAllChartsByDate(dateParam);
+        } else {
+            // ถ้าไม่มี parameter 'date' ใน URL ให้ใช้ค่าเริ่มต้น (วันที่ปัจจุบัน)
+            datePicker.value = currentDateFormatted;
+            // แสดงวันที่ปัจจุบันบนหน้าจอ
+            document.getElementById('displaySelectedDate').textContent = `${day}/${month}/${year}`;
+            // โหลดกราฟทั้งหมดด้วยวันที่ปัจจุบันเมื่อหน้าเว็บโหลดครั้งแรก
+            loadAllChartsByDate(currentDateFormatted);
+        }
     }
 
-    // แสดงวันที่ปัจจุบันบนหน้าจอ
-    const displayDateElement = document.getElementById("displaySelectedDate");
-    if (displayDateElement) {
-        displayDateElement.textContent = `${day}/${month}/${year}`;
-    }
 
-    // โหลดกราฟทั้งหมดด้วยวันที่ปัจจุบันเมื่อหน้าเว็บโหลดครั้งแรก
-    loadAllChartsByDate(currentDateFormatted);
-
-    // 2. เพิ่ม Event Listener เมื่อมีการเปลี่ยนแปลงวันที่ใน Date Picker หรือคลิกปุ่มค้นหา
+    // 2. เพิ่ม Event Listener เมื่อคลิกปุ่มค้นหา
     const searchButton = document.getElementById("searchChartData");
     if (searchButton) {
         searchButton.addEventListener('click', () => {
             const selectedDate = datePicker.value; // ดึงวันที่ที่ผู้ใช้เลือก
             if (selectedDate) {
-                loadAllChartsByDate(selectedDate); // โหลดกราฟใหม่ตามวันที่ที่เลือก
+                // เปลี่ยน URL ของหน้าเว็บ เพื่อให้ PHP โหลดข้อมูลตารางใหม่
+                window.location.href = `?date=${selectedDate}`;
             } else {
                 alert("กรุณาเลือกวันที่ที่ต้องการค้นหา");
             }
@@ -528,7 +576,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // โค้ดสำหรับเมนู Active (ส่วนนี้ยังคงเดิม)
-    var currentPage = '<?php echo basename($_SERVER["PHP_SELF"]); ?>';  //=======
+    var currentPage = '<?php echo basename($_SERVER["PHP_SELF"]); ?>';
     var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
     navLinks.forEach(function(link) {
         if (link.getAttribute('href') === currentPage) {
@@ -541,12 +589,18 @@ document.addEventListener('DOMContentLoaded', () => {
     var btn = document.getElementById("myBtn");
     var span = document.getElementsByClassName("close")[0];
     if (btn) {
-        btn.onclick = function() { modal.style.display = "block"; }
+        btn.onclick = function() {
+            modal.style.display = "block";
+        }
     }
     if (span) {
-        span.onclick = function() { modal.style.display = "none"; }
+        span.onclick = function() {
+            modal.style.display = "none";
+        }
     }
     window.onclick = function(event) {
-        if (event.target == modal) { modal.style.display = "none"; }
+        if (event.target == modal) {
+            modal.style.display = "none";
+        }
     }
 });

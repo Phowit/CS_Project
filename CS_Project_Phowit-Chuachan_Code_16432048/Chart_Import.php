@@ -1,50 +1,97 @@
 <?php
+
+// Chart_Import.php
+
 require_once("connect_db.php"); // เชื่อมต่อฐานข้อมูล
 
-// 1. ดึงข้อมูลวันที่นำเข้า, สายพันธุ์, จำนวนที่นำเข้ามาจากฐานข้อมูล
-$sql_import = "SELECT 
-        breed.Breed_Name, 
-        SUM(Import_Amount) AS Import_Amount, 
-        Import_Date 
-        FROM import 
-        INNER JOIN breed ON import.Breed_ID = breed.Breed_ID 
-        GROUP BY breed.Breed_Name, Import_Date 
-        ORDER BY Import_Date DESC"; // คิวรีข้อมูลจากตาราง import และ breed
-$result_import = $conn->query($sql_import); // รันคิวรีและเก็บผลลัพธ์
+// กำหนดวันที่เริ่มต้น
+$current_date_php = date('Y-m-d'); // วันที่ปัจจุบันในรูปแบบ YYYY-MM-DD
+$selected_date_chart = $current_date_php; // ตั้งค่าเริ่มต้นเป็นวันที่ปัจจุบัน
 
-$data = [
-    "Import_Date" => [], // เก็บรายการวันที่
-    "Import_Amount" => [], // เก็บจำนวนไก่แยกตามสายพันธุ์
-];
-
-// 2. จัดรูปแบบข้อมูล โดยกำหนดวันที่และสายพันธุ์ไม่ให้ซ้ำ
-$temp_data = []; // ตัวแปรเก็บข้อมูลชั่วคราว
-while ($row = $result_import->fetch_assoc()) { // วนลูปดึงข้อมูลแต่ละแถวจากผลลัพธ์คิวรี
-    $date = date_create_from_format("Y-m-d H:i:s", $row["Import_Date"])->format("d/m/Y"); // แปลงวันที่เป็นรูปแบบ d/m/Y
-    $breed = $row["Breed_Name"]; // ชื่อสายพันธุ์
-    $temp_data[$date][$breed] = (int)$row["Import_Amount"]; // เก็บจำนวนไก่ของแต่ละสายพันธุ์ในวันที่กำหนด
+if (isset($_GET['date']) && !empty($_GET['date'])) {
+    $selected_date_chart = mysqli_real_escape_string($conn, $_GET['date']);
 }
 
-// 3. สร้างรายการสายพันธุ์ไม่ให้ซ้ำ
-$all_breeds = []; // ตัวแปรสำหรับเก็บชื่อสายพันธุ์ทั้งหมด
-foreach ($temp_data as $breeds_data) { // วนลูปข้อมูลใน $temp_data
-    foreach (array_keys($breeds_data) as $breed) { // วนลูปชื่อสายพันธุ์
-        if (!in_array($breed, $all_breeds)) { // ถ้าสายพันธุ์ยังไม่ถูกเพิ่ม
-            $all_breeds[] = $breed; // เพิ่มชื่อสายพันธุ์ในรายการ
+// SQL Query เพื่อดึงข้อมูลการนำเข้าไก่ แยกตามเวลา (ชั่วโมง) และสายพันธุ์ สำหรับวันที่เลือก
+// ใช้ DATE_FORMAT เพื่อจัดกลุ่มตามชั่วโมง
+$sql_import = "SELECT
+                    DATE_FORMAT(import.Import_Date, '%H:00') AS Import_Hour,
+                    breed.Breed_Name,
+                    SUM(import.Import_Amount) AS Total_Import_Amount
+                FROM
+                    import
+                INNER JOIN
+                    breed ON import.Breed_ID = breed.Breed_ID
+                WHERE
+                    DATE(import.Import_Date) = '$selected_date_chart'
+                GROUP BY
+                    Import_Hour, breed.Breed_Name
+                ORDER BY
+                    Import_Hour ASC, breed.Breed_Name ASC"; // เรียงตามชั่วโมงและสายพันธุ์
+
+$result_import = $conn->query($sql_import);
+
+$labels = []; // แกน X: ชั่วโมงของวัน
+$datasets = []; // ข้อมูลสำหรับแต่ละสายพันธุ์
+$all_breeds = []; // เก็บรายการสายพันธุ์ทั้งหมดที่พบในข้อมูลของวันนี้
+
+// ดึงข้อมูลและจัดโครงสร้างเบื้องต้น
+$hourly_data = []; // เก็บข้อมูลในรูปแบบ [ชั่วโมง][สายพันธุ์] = จำนวน
+
+if ($result_import->num_rows > 0) {
+    while ($row = $result_import->fetch_assoc()) {
+        $hour = $row['Import_Hour'];
+        $breed = $row['Breed_Name'];
+        $amount = (int)$row['Total_Import_Amount'];
+
+        if (!in_array($hour, $labels)) {
+            $labels[] = $hour; // เก็บชั่วโมงเป็น label
         }
+        if (!in_array($breed, $all_breeds)) {
+            $all_breeds[] = $breed; // เก็บสายพันธุ์
+        }
+
+        // เก็บข้อมูลในโครงสร้าง [ชั่วโมง][สายพันธุ์] = จำนวน
+        $hourly_data[$hour][$breed] = $amount;
     }
 }
 
-// 4, 5. จัดข้อมูลให้อยู่ในรูปแบบที่ต้องการ
-foreach ($temp_data as $date => $breeds_data) { // วนลูปข้อมูลใน $temp_data
-    $data["Import_Date"][] = $date; // เพิ่มวันที่ใน $data["Import_Date"]
-    foreach ($all_breeds as $breed) { // วนลูปชื่อสายพันธุ์ทั้งหมด
-        // เพิ่มจำนวนไก่ของสายพันธุ์ในวันนั้น ถ้าไม่มีให้ใส่ 0
-        $data["Import_Amount"][$breed][] = $breeds_data[$breed] ?? 0;
+// เรียง labels (ชั่วโมง) เพื่อให้แน่ใจว่าเรียงถูกต้อง (00:00, 01:00, ...)
+sort($labels);
+
+// สร้าง datasets สำหรับแต่ละสายพันธุ์
+foreach ($all_breeds as $breed) {
+    $data_for_breed = [];
+    foreach ($labels as $hour) {
+        // ถ้ามีข้อมูลสำหรับชั่วโมงนั้นและสายพันธุ์นั้น ให้ใช้ค่าจริง ถ้าไม่ ให้เป็น 0
+        $data_for_breed[] = $hourly_data[$hour][$breed] ?? 0;
+    }
+    $datasets[] = [
+        'label' => $breed,
+        'data' => $data_for_breed,
+        'borderColor' => getRandomColor(), // ฟังก์ชันสุ่มสี (จะสร้างด้านล่าง)
+        'fill' => false,
+        'tension' => 0.1
+    ];
+}
+
+// ถ้าไม่มีข้อมูลเลยในวันที่เลือก ให้ส่งโครงสร้างเปล่ากลับไป
+if (empty($labels) && empty($datasets)) {
+    // สร้าง labels สำหรับ 24 ชั่วโมง ถ้าไม่มีข้อมูล เพื่อให้กราฟว่างแต่มีแกนเวลา
+    for ($i = 0; $i < 24; $i++) {
+        $labels[] = sprintf('%02d:00', $i);
     }
 }
 
-// 6. ส่งข้อมูลเป็น JSON รองรับภาษาไทย
-header('Content-Type: application/json; charset=utf-8'); // กำหนด header สำหรับ JSON ภาษาไทย
-echo json_encode($data, JSON_UNESCAPED_UNICODE); // ส่งข้อมูล JSON ออกไป
+
+// ฟังก์ชันสำหรับสุ่มสี (เพื่อความสวยงามของกราฟหลายเส้น)
+function getRandomColor() {
+    return 'rgba(' . rand(0, 255) . ', ' . rand(0, 255) . ', ' . rand(0, 255) . ', 1)';
+}
+
+// ส่งข้อมูลเป็น JSON รองรับภาษาไทย
+header('Content-Type: application/json; charset=utf-8');
+echo json_encode(['labels' => $labels, 'datasets' => $datasets], JSON_UNESCAPED_UNICODE);
+
+$conn->close(); // ปิดการเชื่อมต่อฐานข้อมูล
 ?>

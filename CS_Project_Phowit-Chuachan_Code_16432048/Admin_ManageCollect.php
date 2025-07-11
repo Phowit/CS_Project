@@ -101,6 +101,9 @@ if (!isset($_SESSION['User_ID'])) {
 
     <!-- chart -->
     <script src="chart.js"></script>
+
+    <!-- Total chart -->
+    <script src="chart_Total.js"></script>
 </body>
 
 </html>
