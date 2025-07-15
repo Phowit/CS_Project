@@ -28,7 +28,6 @@ function loadAllChartsByDate(selectedDate) {
     loadFoodTrayChart(selectedDate);
     loadFoodSChart(selectedDate);
     loadCollectChart(selectedDate);
-    loadImportChart(selectedDate);
     loadExportChart(selectedDate);
     loadRemainChart(selectedDate);
     loadTotalChart(selectedDate);
@@ -286,91 +285,6 @@ function loadCollectChart(selectedDate = null) {
         });
     }
 }
-
-// ใน chart.js ของคุณ
-let importChart; // กำหนดตัวแปรสำหรับเก็บ instance ของ Chart
-
-function loadImportChart(selectedDate) {
-    fetch(`Chart_Import.php?date=${selectedDate}`)
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-        })
-        .then(data => {
-            const ctx = document.getElementById('Import_Chart').getContext('2d');
-
-            // ทำลายกราฟเก่าถ้ามีอยู่
-            if (importChart) {
-                importChart.destroy();
-            }
-
-            importChart = new Chart(ctx, {
-                type: 'line', // หรือ 'bar' ถ้าคุณต้องการ Bar Chart
-                data: {
-                    labels: data.labels, // ชั่วโมง
-                    datasets: data.datasets // แต่ละสายพันธุ์เป็น dataset
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        title: {
-                            display: true,
-                            text: 'กราฟจำนวนไก่ที่นำเข้า แยกตามสายพันธุ์'
-                        }
-                    },
-                    scales: {
-                        x: {
-                            title: {
-                                display: true,
-                                text: 'เวลา (ชั่วโมง)'
-                            }
-                        },
-                        y: {
-                            title: {
-                                display: true,
-                                text: 'จำนวนไก่ (ตัว)'
-                            },
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-        })
-        .catch(error => {
-            console.error('Error fetching import data:', error);
-        });
-}
-
-// เรียกใช้เมื่อโหลดหน้าเว็บครั้งแรก หรือเมื่อมีการเปลี่ยนวันที่
-// (สมมติว่าคุณมีฟังก์ชัน loadAllChartsByDate() ที่เรียกใช้ loadImportChart)
-// ในไฟล์หลักของคุณ:
-// document.addEventListener('DOMContentLoaded', function() {
-//     const chartDatePicker = document.getElementById('chartDatePicker');
-//     const searchChartDataBtn = document.getElementById('searchChartData');
-//
-//     // ตั้งค่าวันที่เริ่มต้นบน displaySelectedDate
-//     const initialDate = chartDatePicker.value;
-//     const formattedDate = new Date(initialDate).toLocaleDateString('th-TH', {
-//         year: 'numeric', month: 'long', day: 'numeric'
-//     });
-//     document.getElementById('displaySelectedDate').textContent = formattedDate;
-//
-//     loadImportChart(initialDate); // โหลดกราฟ Import ในครั้งแรก
-//
-//     searchChartDataBtn.addEventListener('click', function() {
-//         const selectedDate = chartDatePicker.value;
-//         const formattedDate = new Date(selectedDate).toLocaleDateString('th-TH', {
-//             year: 'numeric', month: 'long', day: 'numeric'
-//         });
-//         document.getElementById('displaySelectedDate').textContent = formattedDate;
-//
-//         loadImportChart(selectedDate); // โหลดกราฟ Import เมื่อกดค้นหา
-//         // คุณจะต้องเรียก loadChart สำหรับกราฟอื่นๆ ด้วย
-//     });
-// });
 
 // โหลดกราฟ Chicken Export Level
 function loadExportChart(selectedDate = null) {

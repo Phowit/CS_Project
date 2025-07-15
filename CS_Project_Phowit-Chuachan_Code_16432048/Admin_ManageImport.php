@@ -48,6 +48,7 @@ if (!isset($_SESSION['User_ID'])) {
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
 </head>
 
 <body>
@@ -100,11 +101,11 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- chart -->
-    <script src="chart.js"></script>
-
     <!-- Total chart -->
     <script src="chart_Total.js"></script>
+
+    <!-- chart -->
+    <script src="Import_SelectBreed.js"></script>
 </body>
 
 </html>
