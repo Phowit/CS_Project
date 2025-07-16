@@ -74,15 +74,6 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            <div class="container-fluid pt-4 px-4">
-                <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0 text-dark">จำนวนไก่ที่นำออก</h6>
-                    </div>
-                    <canvas id="Export_Chart" style="max-width:100%; max-height:200px;"></canvas>
-                </div>
-            </div>
-
             <!-- Start table Export-->
             <?php
             require_once("Admin_TableExport.php");
@@ -108,7 +99,10 @@ if (!isset($_SESSION['User_ID'])) {
     <script src="js/main.js"></script>
 
     <!-- chart -->
-    <script src="chart.js"></script>
+    <script src="Export_SelectBreed.js"></script>
+
+    <!-- Total chart -->
+    <script src="chart_Total.js"></script>
 </body>
 
 </html>

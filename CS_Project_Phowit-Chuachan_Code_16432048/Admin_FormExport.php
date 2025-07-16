@@ -10,37 +10,53 @@
             <div class="modal-body">
 
                 <!--Start Form for Insert Export-->
-                <form id="addRequestForm" action="Insert_Import.php" method="post">
+                <form id="addRequestForm" action="Insert_Export.php" method="post">
                     <input type="hidden" class="form-control" name="Export_ID" id="Export_ID" value="<?php echo $Export_ID ?>" readonly>
 
-                    <div class="form-floating mb-3">
-                        <?php
-                        // For Show Time Now In Input                        
-                        date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า timezone (เปลี่ยนตามพื้น)
-
-                        // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
-                        $currentDateTime = date('Y-m-d\TH:i');
-                        ?>
-                        <input type="DateTime-local" class="form-control" name="Export_Date" id="Import_Date" value="<?php echo $currentDateTime; ?>" placeholder required>
-                        <label for="Export_Date" class="form-label">วัน เวลา ที่ส่งออก</label>
-                    </div>
-
                     <div class="row">
-                        <div class="col-8">
-                            <div class="form-floating">
-                                <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
-                                    <?php
-                                    require_once("connect_db.php");
-                                    $sql = "select * from breed";
-                                    $result = mysqli_query($conn, $sql);
+                        <div class="form-floating mb-3">
+                            <select class="form-select" name="import_ID" id="import_ID" aria-label="Floating label select example" required>
+                                <?php
+                                require_once("connect_db.php");
+                                $sql = "SELECT 
+                                                `import_ID`,
+                                                `Import_Date`,
+                                                `Import_Amount`,
+                                                `Import_Details`,
+                                                breed.Breed_Name
+                                            FROM `import` 
+                                            INNER JOIN breed
+                                            ON import.Breed_ID = breed.Breed_ID";
+                                $result = mysqli_query($conn, $sql);
 
-                                    while ($row = $result->fetch_assoc()) {
-                                    ?>
-                                        <option value="<?= $row['Breed_ID']; ?>">
-                                            <?= $row['Breed_Name']; ?></option>
-                                    <?php   } ?>
-                                </select>
-                                <label for="Breed_ID" class="form-label" placeholder>สายพันธุ์ไก่</label>
+                                while ($row = $result->fetch_assoc()) {
+                                    $import_ID = $row['import_ID'];
+                                    $Import_Date = $row['Import_Date'];
+                                    $Import_Date_Format = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row['Import_Date'])->format(format: "d/m/Y H:i");
+                                    $Import_Amount = $row['Import_Amount'];
+                                    $Import_Details = $row['Import_Details'];
+                                    $Breed_Name = $row['Breed_Name'];
+                                    $Option = "รหัส : $import_ID , เวลา : $Import_Date_Format , สายพันธุ์ : $Breed_Name , จำนวน $Import_Amount ตัว";
+                                ?>
+
+                                    <option value="<?= $row['import_ID']; ?>">
+                                        <?= $Option; ?></option>
+                                <?php   } ?>
+                            </select>
+                            <label for="Breed_ID" class="form-label" placeholder>ข้อมูลการนำเข้าไก่ที่เกี่ยวข้อง</label>
+                        </div>
+
+                        <div class="col-8">
+                            <div class="form-floating mb-3">
+                                <?php
+                                // For Show Time Now In Input                        
+                                date_default_timezone_set('Asia/Bangkok'); // ตั้งค่า timezone (เปลี่ยนตามพื้น)
+
+                                // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
+                                $currentDateTime = date('Y-m-d\TH:i');
+                                ?>
+                                <input type="DateTime-local" class="form-control" name="Export_Date" id="Import_Date" value="<?php echo $currentDateTime; ?>" placeholder required>
+                                <label for="Export_Date" class="form-label">วัน เวลา ที่ส่งออก</label>
                             </div>
                         </div>
 
