@@ -4,8 +4,8 @@
             <h6 class="mb-0 text-dark">จำนวนไก่ที่นำเข้า</h6>
 
             <div class="d-flex align-items-center">
-                <label for="breedSelect" class="form-label mb-0 me-2 col-3">เลือกสายพันธุ์:</label>
-                <select class="form-select" name="breedSelect" id="breedSelect" aria-label="Floating label select example" required>
+                <label for="breedSelectImport" class="form-label mb-0 me-2 col-3">เลือกสายพันธุ์:</label>
+                <select class="form-select" name="breedSelectImport" id="breedSelectImport" aria-label="Floating label select example" required>
                     <?php
                     // PHP for dropdown options (same as before, but only for initial load)
                     require_once("connect_db.php");
@@ -35,8 +35,9 @@
 
                     ?>
                 </select>
-                <button type="button" class="btn btn-primary ms-2" id="searchBreed">ค้นหา</button>
+                <button type="button" class="btn btn-primary ms-2" id="searchBreedImport">ค้นหา</button>
             </div>
+            
             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
                 data-bs-target="#addRecordModal" style="height: 35px; width: 95px;">เพิ่มข้อมูล
             </button>
@@ -48,11 +49,11 @@
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-dark" style="font-size:14px">
-                        <th scope="col" class="col-0.5">รหัส</th>
+                        <th scope="col" class="col-1">ลำดับ</th>
                         <th scope="col" class="col-2">วัน เวลา ที่นำเข้า</th>
                         <th scope="col" class="col-2">สายพันธุ์</th>
-                        <th scope="col" class="col-0.5">จำนวน</th>
-                        <th scope="col" class="col-6">รายละเอียด</th>
+                        <th scope="col" class="col-2">จำนวน (ตัว)</th>
+                        <th scope="col" class="col-4">รายละเอียด</th>
                         <th scope="col" class="col-1">เครื่องมือ</th>
                     </tr>
                 </thead>
@@ -137,19 +138,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                 <button type="button" class="btn btn-danger" id="confirmDeleteBtn">ยืนยัน</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid pt-4 px-4">
-    <div class="row">
-        <div class="col-sm-12 col-xl-12">
-            <div class="h-100 bg-light rounded p-4">
-                <div class="mb-4">
-                    <h6 class="mb-0 text-dark">จำนวนไก่ที่นำเข้าทั้งหมด</h6>
-                    <canvas id="Total_Import_Chart" style="max-width:100%; max-height:300px;"></canvas>
-                </div>
             </div>
         </div>
     </div>

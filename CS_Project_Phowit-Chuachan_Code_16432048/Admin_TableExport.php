@@ -48,11 +48,10 @@
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-dark" style="font-size:14px">
-                        <th scope="col" class="col-0.5">รหัส</th>
-                        <th scope="col" class="col-2">วัน เวลา ที่บันทึก</th>
+                        <th scope="col" class="col-1">ลำดับ</th>
                         <th scope="col" class="col-2">วัน เวลา ที่นำออก</th>
                         <th scope="col" class="col-2">สายพันธุ์</th>
-                        <th scope="col" class="col-0.5">จำนวน</th>
+                        <th scope="col" class="col-2">จำนวน (ตัว)</th>
                         <th scope="col" class="col-4">รายละเอียด</th>
                         <th scope="col" class="col-1">เครื่องมือ</th>
                     </tr>
@@ -78,19 +77,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                 <button type="button" class="btn btn-danger" id="confirmDeleteBtn">ยืนยัน</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid pt-4 px-4">
-    <div class="row">
-        <div class="col-sm-12 col-xl-12">
-            <div class="h-100 bg-light rounded p-4">
-                <div class="mb-4">
-                    <h6 class="mb-0 text-dark">จำนวนไก่ที่นำเข้าทั้งหมด</h6>
-                    <canvas id="Total_Import_Chart" style="max-width:100%; max-height:300px;"></canvas>
-                </div>
             </div>
         </div>
     </div>

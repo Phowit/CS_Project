@@ -157,9 +157,9 @@ require_once("connect_db.php");
                                         .catch((error) => console.error("Error fetching progress:", error)); // จัดการข้อผิดพลาดของ fetch()
                                 </script>
                             </div>
-                            <div class="col-9 p-0 m-0">
-                                <a style="margin-left:5px;">ระดับอาหารในถัง</a>
-                                <a class="text-dark" style="margin-left:5px;">สถานะ : <?php echo $Progress_Food; ?> %</a>
+                            <div class="col-9 p-1 m-0">
+                                <a style="margin-left:3px;">ระดับอาหารในถัง</a>
+                                <a class="text-dark" style="margin-left:3px;">สถานะ : <?php echo $Progress_Food; ?> %</a>
                             </div>
                         </div>
                     </div>
