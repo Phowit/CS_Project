@@ -1,8 +1,10 @@
 <?php
-    // ตรวจสอบว่ามีการส่งข้อมูลมาจากฟอร์มหรือไม่
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // เชื่อมต่อฐานข้อมูล
     require_once("connect_db.php");
+
+//เรอ่มส่วนการเพิ่มข้อมูล import --------------------------------------------
+// ตรวจสอบว่ามีการส่งข้อมูลมาจากฟอร์มหรือไม่
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // รับข้อมูลจากฟอร์ม
     $Import_Date = $_POST['Import_Date'];
@@ -18,19 +20,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     //echo"SQL = ".$sqli;
     //echo"error = " . mysqli_error($conn);
 }
-// เริ่ม ส่วนการเพิ่มค่า remain ---------------------------------------------------------
-$sql0 = "SELECT `Remain_Amount` FROM `remain` WHERE `Breed_ID` = '$Breed_ID' ORDER BY `Remain_Date` DESC LIMIT 1;" ;
-$result0 = mysqli_query($conn, $sql0);
+//จบส่วนการเพิ่มข้อมูล import --------------------------------------------
 
-while($row = $result0->fetch_assoc()){
-    $Old_Remain_Amount = $row['Remain_Amount'];
+
+
+//เริ่มส่วนการตรวจสอบและเพิ่ม remain ใหม่ --------------------------------------------
+//หลังจากเพิ่มข้อมูลการนำเข้าเสร็จ ดึงข้อมูล remain มาตรวจสอบว่ามี Breed_ID เหมือนกันหรือไม่? หากไม่มี ให้เพิ่ม remain ใหม่ เข้าไป
+$sql0 = "SELECT * FROM `remain` WHERE Breed_ID = $Breed_ID ORDER BY `Remain_Date` DESC LIMIT 1;" ;
+$result0 = $conn->query($sql0);//ดึงข้อมูลทั้งหมดจาก remain มา
+
+//ตรวจสอบว่ามีข้อมูลเก่าอยู่แล้วหรือไม่
+if($result0 && $result0 > 0) {
+    //ถ้ามี ให้นำค่าเก่าล่าสุดมา + เพิ่มกับค่าใหม่ แล้วค่อยสร้างชุดข้อมูลใหม่ เพื่อที่จะสามารถสร้างเป็นกราฟวัดได้ ว่าเพิ่มลดเท่าไร
+    while($row = $result0->fetch_assoc()){
+        $Remain_Amount = $row['Remain_Amount'];
+    }
+
+    $New_Remain_Amount = $Remain_Amount + $Import_Amount; //ข้อมูลเก่า + ใหม่
+    
+    $sql1 = " INSERT INTO `remain`(`Remain_Amount`, `total_ID`, `Breed_ID`) VALUES ($New_Remain_Amount, '1' ,$Breed_ID);";
+
+} else {
+    //ถ้าไม่มี ให้สร้างสาย remain ด้วยข้อมูลใหม่ทั้งหมดใหม่
+    $sql1 = "INSERT INTO `remain`(`Remain_Amount`, `total_ID`, `Breed_ID`) VALUES ($Import_Amount, '1' ,$Breed_ID);";
 }
-
-$New_Remain_Amount = $Old_Remain_Amount + $Import_Amount;
-
-$sql1 = "INSERT INTO `remain`(`Remain_Amount`,`total_ID`, `Breed_ID`) VALUES ('$New_Remain_Amount',1,'$Breed_ID')";
-mysqli_query($conn, $sql1);
-// จบ ส่วนการเพิ่มค่า remain ---------------------------------------------------------
+mysqli_query($conn,$sql1);
+//จบส่วนการตรวจสอบและเพิ่ม remain ใหม่ --------------------------------------------
 
 
 
