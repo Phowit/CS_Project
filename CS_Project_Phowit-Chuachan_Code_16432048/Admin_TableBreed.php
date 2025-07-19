@@ -25,10 +25,10 @@
             <table class="table text-start align-middle table-bordered table-hover mb-0">
                 <thead>
                     <tr class="text-dark">
-                        <th scope="col" class="col-0.5">รหัส</th>
-                        <th scope="col" class="col-2">รูปตัวอย่าง</th>
+                        <th scope="col" class="col-0.5">ลำดับ</th>
                         <th scope="col" class="col-2">ชื่อสายพันธุ์ไก่</th>
                         <th scope="col" class="col-6">คำอธิบายสายพันธุ์</th>
+                        <th scope="col" class="col-2">รูปตัวอย่าง</th>
                         <th scope="col" class="col-1.5">เครื่องมือ</th>
                     </tr>
                 </thead>
@@ -43,9 +43,9 @@
                     ?>
                         <tr>
                             <td><?php echo $Breed_ID; ?></td>
-                            <td><?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='Breed_Img' style='height: auto; width: 100%; border-radius: 5px;'>"; ?></td>
                             <td><?php echo $Breed_Name; ?></td>
                             <td><?php echo $Breed_Description; ?></td>
+                            <td><?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='Breed_Img' style='height: auto; width: 100%; border-radius: 5px;'>"; ?></td>
 
                             <!--แก้ไข-->
                             <td>

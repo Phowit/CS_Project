@@ -52,12 +52,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <a href="Admin_Message.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_Message.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-newspaper-o me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อความ</a>
 
-            <a href="Admin_Farm.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_Farm.php') ? 'active' : 'text-light' ?>">
-                <i class="fa fa-university me-1 icon" style="height: 35px; width: 35px;"></i>ฟาร์มเกษตร ARU.</a>
-
-            <a href="Admin_Chicken.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_Chicken.php') ? 'active' : 'text-light' ?>">
-                <i class="fas fa-building me-1 icon" style="height: 35px; width: 35px;"></i>ข้อมูลการเลี้ยงไก่</a>
-
             <a href="Admin_ConfirmLogOut.php" class="nav-item nav-link text-light p-1">
                 <i class="fa fa-sign-out me-1 icon" style="height: 35px; width: 35px;"></i>ออกจากระบบ</a>
         </div>

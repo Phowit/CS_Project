@@ -1,0 +1,38 @@
+<div class="container-fluid pt-4 px-4">
+    <div class="row">
+        <div class="col-sm-12 col-xl-12">
+            <div class="h-100 bg-light rounded p-4">
+                <div class="mb-4">
+                    <h6 class="mb-0 text-dark">จำนวนการเก็บไข่ไก่ทั้งหมด</h6>
+                    <canvas id="Total_Collect_Chart" style="max-width:100%; max-height:400px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row">
+        <div class="col-sm-12 col-xl-12">
+            <div class="h-100 bg-light rounded p-4">
+                <div class="mb-4">
+                    <h6 class="mb-0 text-dark">จำนวนไก่ที่นำเข้าทั้งหมด</h6>
+                    <canvas id="Total_Import_Chart" style="max-width:100%; max-height:300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container-fluid pt-4 px-4">
+    <div class="row">
+        <div class="col-sm-12 col-xl-12">
+            <div class="h-100 bg-light rounded p-4">
+                <div class="mb-4">
+                    <h6 class="mb-0 text-dark">จำนวนไก่ที่นำเข้าทั้งหมด</h6>
+                    <canvas id="Total_Import_Chart" style="max-width:100%; max-height:300px;"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -14,8 +14,6 @@
                     <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
 
                     <?php
-                    // ตรวจสอบว่าไฟล์ Admin_FormCollect.php มี Modal HTML ที่ใช้ id="addRecordModal" หรือไม่
-                    // ถ้ามีอยู่แล้วก็ไม่จำเป็นต้องแก้ไขอะไรในส่วนนี้
                     require_once("Admin_FormCollect.php");
                     ?>
                 </div>
@@ -163,32 +161,6 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
                 <button type="button" class="btn btn-danger" onclick="deleteCollectConfirm()">ลบ</button>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid pt-4 px-4">
-    <div class="row">
-        <div class="col-sm-12 col-xl-12">
-            <div class="h-100 bg-light rounded p-4">
-                <div class="mb-4">
-                    <h6 class="mb-0 text-dark">จำนวนการเก็บไข่ไก่</h6>
-                    <canvas id="Collect_Chart" style="max-width:100%; max-height:400px;"></canvas>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="container-fluid pt-4 px-4">
-    <div class="row">
-        <div class="col-sm-12 col-xl-12">
-            <div class="h-100 bg-light rounded p-4">
-                <div class="mb-4">
-                    <h6 class="mb-0 text-dark">จำนวนการเก็บไข่ไก่ทั้งหมด</h6>
-                    <canvas id="Total_Collect_Chart" style="max-width:100%; max-height:400px;"></canvas>
-                </div>
             </div>
         </div>
     </div>
