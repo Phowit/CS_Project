@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const breedSelectElement = document.getElementById('breedSelect');
-    const searchButton = document.getElementById('searchBreed');
+    const breedSelectElement = document.getElementById('breedSelectImport');
+    const searchButton = document.getElementById('searchBreedImport');
     const importTableBody = document.getElementById('importTableBody');
     const confirmDeleteButton = document.getElementById('confirmDeleteBtn');
     const editForm = document.getElementById('editForm'); // Form in edit modal
@@ -63,7 +63,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     <td>${rowData.Import_ID || ''}</td>
                     <td>${rowData.Import_Date || ''}</td>
                     <td>${rowData.Breed_Name || ''}</td>
-                    <td>${rowData.Import_Amount ? rowData.Import_Amount + ' ตัว' : ''}</td>
+                    <td>${rowData.Import_Amount ? rowData.Import_Amount : ''}</td>
                     <td>${rowData.Import_Details || ''}</td>
                     <td>
                         <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
@@ -94,21 +94,23 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Function to fetch data via AJAX
     function fetchTableData(breedId) {
+        console.log("เรียกใช้ fetchTableData ด้วย breedId:", breedId); // เพิ่มบรรทัดนี้
         const formData = new FormData();
-        formData.append('breedSelect', breedId);
+        formData.append('breedSelectImport', breedId);
 
-        fetch('fetch_table_data.php', { // Make sure this path is correct
+        fetch('Fetch_Table_Import.php', { // Make sure this path is correct
             method: 'POST',
             body: formData
         })
         .then(response => {
+            console.log("ได้รับ Response จาก PHP:", response); // เพิ่มบรรทัดนี้
             if (!response.ok) {
                 throw new Error(`HTTP error! Status: ${response.status}`);
             }
             return response.json(); // Parse the JSON response
         })
         .then(data => {
-            console.log("ข้อมูลตารางที่ได้รับ:", data);
+            console.log("ข้อมูล JSON ที่ได้รับ:", data); // เพิ่มบรรทัดนี้
             if (data.error) {
                 console.error("PHP Error:", data.error);
                 alert("เกิดข้อผิดพลาดจากเซิร์ฟเวอร์: " + data.error);
@@ -127,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Event listener for the "ค้นหา" button
     searchButton.addEventListener('click', () => {
         const selectedBreedId = breedSelectElement.value; // Correctly get the value from the dropdown
+        console.log("เลือกสายพันธุ์ ID:", selectedBreedId); // เพิ่มบรรทัดนี้
         fetchTableData(selectedBreedId);
     });
 
@@ -134,36 +137,6 @@ document.addEventListener('DOMContentLoaded', () => {
     confirmDeleteButton.addEventListener('click', () => {
         deleteImportData();
     });
-
-    // Optional: Handle form submission for edit modal using AJAX (if you want to avoid page reload)
-    // For now, it will submit normally as per your existing Update_Import.php setup
-    // editForm.addEventListener('submit', function(event) {
-    //     event.preventDefault(); // Prevent default form submission
-    //     const formData = new FormData(this);
-    //     fetch('Update_Import.php', {
-    //         method: 'POST',
-    //         body: formData
-    //     })
-    //     .then(response => response.json()) // Assuming Update_Import.php returns JSON
-    //     .then(data => {
-    //         if (data.success) {
-    //             alert('ข้อมูลอัปเดตสำเร็จ!');
-    //             const selectedBreedId = breedSelectElement.value;
-    //             fetchTableData(selectedBreedId); // Reload table after successful update
-    //             $('#editImportModal').modal('hide'); // Hide modal (requires jQuery)
-    //             // Or use Bootstrap 5 native JS:
-    //             // var editModal = bootstrap.Modal.getInstance(document.getElementById('editImportModal'));
-    //             // editModal.hide();
-    //         } else {
-    //             alert('เกิดข้อผิดพลาดในการอัปเดต: ' + data.message);
-    //         }
-    //     })
-    //     .catch(error => {
-    //         console.error('Error updating data:', error);
-    //         alert('ไม่สามารถอัปเดตข้อมูลได้: ' + error.message);
-    //     });
-    // });
-
 
     // Initial load of table data when the page loads
     // Use the initially selected value from the PHP-generated select box
@@ -184,18 +157,4 @@ document.addEventListener('DOMContentLoaded', () => {
             link.classList.add('active');
         }
     });
-
-    // โค้ดสำหรับ Modal "เพิ่มข้อมูล" (ถ้า Admin_FormImport.php มี Modal นี้)
-    // ถ้า Admin_FormImport.php สร้าง modal ด้วย ID "addRecordModal" 
-    // และมีการเรียกใช้ `var modal = document.getElementById("Modal");` ใน chart_breed.js 
-    // อาจจะต้องปรับปรุงให้ใช้ Bootstrap 5 JS หรือรวมเข้ามาในนี้ให้เป็นระเบียบ
-    // หาก modal "เพิ่มข้อมูล" ใช้ Bootstrap 5 data-bs-toggle="modal" data-bs-target="#addRecordModal" อยู่แล้ว
-    // โค้ดด้านล่างนี้อาจจะไม่จำเป็น
-    /*
-    var addRecordModal = document.getElementById("addRecordModal");
-    if (addRecordModal) {
-        // No specific JS needed if using data-bs-toggle and data-bs-target
-        // Bootstrap handles it automatically
-    }
-    */
 });

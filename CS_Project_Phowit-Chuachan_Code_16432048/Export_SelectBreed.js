@@ -77,10 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 // ใช้ template literals สำหรับ cleaner HTML string
                 tr.innerHTML = `
                     <td>${row.Export_ID || ''}</td>
-                    <td>${row.Export_Date_Record_Formatted || ''}</td>
                     <td>${row.Export_Date_Formatted || ''}</td>
                     <td>${row.Breed_Name || ''}</td>
-                    <td>${row.Export_Amount || ''} ตัว</td>
+                    <td>${row.Export_Amount || ''}</td>
                     <td>${row.Export_Details || ''}</td>
                     <td>
                         <button type="button" class="btn" data-bs-toggle="modal"
