@@ -68,56 +68,50 @@ if (!isset($_SESSION['User_ID'])) {
 
         <!-- Content Start -->
         <div class="content">
+            <script src="chart.js"></script>
             <!-- Navbar Start -->
             <?php
             require 'Admin_NavBar.php';
             ?>
             <!-- Navbar End -->
 
+            <!-- Start table-->
             <?php
-            require_once('Canvas_Chart_Remain.php');
+            require_once("Admin_TableRemain.php");
             ?>
+            <!-- End table-->
 
-            <div class="row" style="margin-left:5px;">
-                <div class="col-12">
-                    <!-- Start table-->
-                    <?php
-                    require_once("Admin_TableRemain.php");
-                    ?>
-                    <!-- End table-->
-                </div>
-
-                <!-- ตาราง total ที่อาจารย์ให้เอาออกจากการแสดงผล แต่ยังคงเก็บไว้ในฐาน
-                <div class="col-6">
-
-                    <?php
-                    //require_once("Admin_TableTotal.php");
-                    ?>
-
+            <!--Chart Start อาหารเสริม & อุณหภูมิ-->
+            <div class="container-fluid pt-4 px-4 mb-4">
+                <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <h6 class="mb-0 text-dark">จำนวนไข่ไก่ที่เก็บได้</h6>
+                    </div>
+                    <canvas id="Total_Chart" style="max-width:100%; max-height:300px;"></canvas>
                 </div>
             </div>
--->
-            </div>
-
-            <!-- Content End -->
         </div>
 
-        <!-- JavaScript Libraries -->
-        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-        <script src="lib/chart/chart.min.js"></script>
-        <script src="lib/easing/easing.min.js"></script>
-        <script src="lib/waypoints/waypoints.min.js"></script>
-        <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-        <script src="lib/tempusdominus/js/moment.min.js"></script>
-        <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
-        <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
+        <!-- Content End -->
+    </div>
 
-        <!-- Template Javascript -->
-        <script src="js/main.js"></script>
+    <!-- JavaScript Libraries -->
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="lib/chart/chart.min.js"></script>
+    <script src="lib/easing/easing.min.js"></script>
+    <script src="lib/waypoints/waypoints.min.js"></script>
+    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
+    <script src="lib/tempusdominus/js/moment.min.js"></script>
+    <script src="lib/tempusdominus/js/moment-timezone.min.js"></script>
+    <script src="lib/tempusdominus/js/tempusdominus-bootstrap-4.min.js"></script>
 
-        <!-- chart -->
-        <script src="chart.js"></script>
+    <!-- Template Javascript -->
+    <script src="js/main.js"></script>
+
+    <!-- chart -->
+    <script src="chart_Total.js"></script>
+
 </body>
 
 </html>

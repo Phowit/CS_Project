@@ -1,6 +1,5 @@
 <?php
-
-// Temperature_chart
+header('Content-Type: application/json');
 
 require_once("connect_db.php");
 
