@@ -179,8 +179,8 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- Total chart -->
-    <script src="chart_Total.js"></script>
+    <!-- Environment chart -->
+    <script src="chart_Environment.js"></script>
 
     <!-- Total chart -->
     <script src="chart.js"></script>

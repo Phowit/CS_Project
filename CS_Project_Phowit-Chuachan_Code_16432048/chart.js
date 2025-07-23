@@ -8,7 +8,6 @@ let collectChartInstance = null;
 let importChartInstance = null;
 let exportChartInstance = null;
 let remainChartInstance = null;
-let totalChartInstance = null;
 
 
 // ฟังก์ชันกลางสำหรับโหลดกราฟทั้งหมดตามวันที่ที่ระบุ
@@ -30,7 +29,6 @@ function loadAllChartsByDate(selectedDate) {
     loadCollectChart(selectedDate);
     loadExportChart(selectedDate);
     loadRemainChart(selectedDate);
-    loadTotalChart(selectedDate);
 }
 
 
@@ -394,48 +392,6 @@ function loadRemainChart(selectedDate = null) {
                     }
                 });
             });
-    }
-}
-
-// โหลดกราฟ Total Chart
-function loadTotalChart(selectedDate = null) {
-    if (document.getElementById("Total_Chart")) {
-        let url = 'Chart_Total.php';
-        if (selectedDate) {
-            url += `?date=${selectedDate}`;
-        }
-
-        let existingChart = Chart.getChart("Total_Chart");
-        if (existingChart) {
-            existingChart.destroy();
-        }
-
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                console.log("Total Chart Data:", data);
-                if (!data || !data.Total_Date || !data.Total) {
-                    console.error("JSON ที่ได้รับไม่สมบูรณ์:", data);
-                    return;
-                }
-
-                const ctx = document.getElementById("Total_Chart").getContext("2d");
-                totalChartInstance = new Chart(ctx, { // เก็บ instance ของกราฟลงในตัวแปร global
-                    type: 'bar',
-                    data: {
-                        labels: data.Total_Date,
-                        datasets: [{
-                            label: "Total",
-                            fill: true,
-                            backgroundColor: "rgba(232, 211, 255, 1)",
-                            borderWidth: 1 ,
-                            data: data.Total,
-                        }],
-                    },
-                    options: { responsive: true },
-                });
-            })
-            .catch(error => console.error("Error loading Total chart:", error));
     }
 }
 

@@ -101,8 +101,8 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- chart -->
     <script src="Export_SelectBreed.js"></script>
 
-    <!-- Total chart -->
-    <script src="chart_Total.js"></script>
+    <!-- Environment chart -->
+    <script src="chart_Environment.js"></script>
 </body>
 
 </html>

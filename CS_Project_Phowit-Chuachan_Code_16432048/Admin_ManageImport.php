@@ -75,8 +75,6 @@ if (!isset($_SESSION['User_ID'])) {
             ?>
             <!-- Navbar End -->
 
-            
-
             <!-- Start table-->
             <?php
             require_once("Admin_TableImport.php");
@@ -101,8 +99,8 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- Total chart -->
-    <script src="chart_Total.js"></script>
+    <!-- Environment chart -->
+    <script src="chart_Environment.js"></script>
 
     <!-- chart -->
     <script src="Import_SelectBreed.js"></script>
