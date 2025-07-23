@@ -33,16 +33,16 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <i class="fa fa-chart-bar me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อมูลผลผลิต</a>
 
             <a href="Admin_ManageBreedChicken.php" class="nav-item nav-link p-1 <?= ($currentPage == 'Admin_ManageBreedChicken.php') ? 'active' : 'text-light' ?>">
-                <i class="far fa-file-alt me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อมูลพันธุ์ไก่</a>
+                <i class="far fa-file-alt me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อมูลสายพันธุ์ไก่ไข่</a>
 
             <div class="nav-item dropdown p-1">
                 <a class="nav-link dropdown-toggle text-light p-1" data-bs-toggle="dropdown">
                     <i class="fa fa-table me-1 icon" style="height: 35px; width: 35px;"></i>จัดการข้อมูลไก่
                 </a>
                 <div class="dropdown-menu bg-transparent border-0">
-                    <a href="Admin_ManageImport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageImport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำเข้าไก่</a>
-                    <a href="Admin_ManageExport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageExport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลนำออกไก่</a>
-                    <a href="Admin_ManageTotal.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageTotal.php') ? 'active' : 'text-light' ?>">ข้อมูลรวมไก่ไข่</a>
+                    <a href="Admin_ManageImport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageImport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลการนำเข้าไก่ไข่</a>
+                    <a href="Admin_ManageExport.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageExport.php') ? 'active' : 'text-light' ?>">จัดการข้อมูลการนำออกไก่ไข่</a>
+                    <a href="Admin_ManageTotal.php" class="dropdown-item p-1 <?= ($currentPage == 'Admin_ManageTotal.php') ? 'active' : 'text-light' ?>">รายงานข้อมูลไก่ไข่</a>
                 </div>
             </div>
 

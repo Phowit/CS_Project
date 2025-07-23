@@ -197,7 +197,7 @@ require_once("connect_db.php");
                         </div>
                     </div>
                     <div class="row">
-                        <a>อุณหภูมิโรงเรือน</a>
+                        <a>ระดับอุณหภูมิโรงเรือน</a>
                         <a class="text-dark"><?php echo $T_Level; echo " " . $T_Status; ?></a>
                     </div>
                 </div>

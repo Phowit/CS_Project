@@ -51,10 +51,10 @@ require_once("connect_db.php");
         </div>
 
         <div style="width: 20%;">
-            <div class="bg-light rounded h-100 p-3">
+            <div class="bg-light rounded h-100 p-2 pt-3">
                 <div class="text-center">
                     <img src="My_img/sprinkler.png" style="width: 50px; height: 50px;">
-                    <h6 class="mb-1 text-dark">สปิงเกอร์</h6>
+                    <h6 class="mb-1 text-dark">สปิงเกอร์ลดอุณหภูมิ</h6>
                 </div>
 
                 <div class="row">
@@ -76,7 +76,7 @@ require_once("connect_db.php");
             <div class="bg-light rounded h-100 p-3">
                 <div class="text-center">
                     <img src="My_img/tank.png" style="width: 50px; height: 50px;">
-                    <h6 class="mb-1 text-dark">ระบบอาหารเสริม</h6>
+                    <h6 class="mb-1 text-dark">ระบบให้อาหารเสริม</h6>
                 </div>
 
                 <div class="row">

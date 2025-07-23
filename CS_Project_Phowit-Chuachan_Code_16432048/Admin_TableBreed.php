@@ -4,7 +4,7 @@
 <div class="container-fluid pt-4 px-4">
     <div class="h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0 text-dark">สายพันธุ์ไก่</h6>
+            <h6 class="mb-0 text-dark">ตารางจัดการข้อมูลสายพันธุ์ไก่ไข่</h6>
 
             <!--เพิ่ม-->
             <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
@@ -26,7 +26,7 @@
                 <thead>
                     <tr class="text-dark">
                         <th scope="col" class="col-0.5">ลำดับ</th>
-                        <th scope="col" class="col-2">ชื่อสายพันธุ์ไก่</th>
+                        <th scope="col" class="col-2">ชื่อสายพันธุ์ไก่ไข่</th>
                         <th scope="col" class="col-6">คำอธิบายสายพันธุ์</th>
                         <th scope="col" class="col-2">รูปตัวอย่าง</th>
                         <th scope="col" class="col-1.5">เครื่องมือ</th>
@@ -71,7 +71,7 @@
 
                                                     <div class="form-floating mb-3">
                                                         <input type="text" class="form-control" id="Breed_Name" name="Breed_Name" value="<?php echo $Breed_Name; ?>" placeholder required>
-                                                        <label class="form-label">ชื่อสายพันธุ์ไก่</label>
+                                                        <label class="form-label">ชื่อสายพันธุ์ไก่ไข่</label>
                                                     </div>
 
                                                     <div class="form-floating mb-3">

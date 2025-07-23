@@ -1,4 +1,5 @@
 <?php
+require_once("connect_db.php");
 session_start();
 
 // ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
@@ -7,6 +8,7 @@ if (!isset($_SESSION['User_ID'])) {
     exit();
 }
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -58,13 +60,11 @@ if (!isset($_SESSION['User_ID'])) {
         </div>
         <!-- Spinner End -->
 
-
         <!-- Sidebar Start -->
         <?php
         require_once("Admin_SideBar.php");
         ?>
         <!-- Sidebar End -->
-
 
         <!-- Content Start -->
         <div class="content">
@@ -80,7 +80,7 @@ if (!isset($_SESSION['User_ID'])) {
             require_once("Admin_TableCollect.php");
             ?>
             <!--Table End-->
-
+<canvas id="Total_Chart"></canvas>
         </div>
         <!-- Content End -->
     </div>

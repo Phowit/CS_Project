@@ -101,7 +101,7 @@ if (!isset($_SESSION['User_ID'])) {
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light text-center rounded p-4">
                             <div class="d-flex align-items-center justify-content-between mb-4">
-                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิ</h6>
+                                <h6 class="mb-0 text-dark">ระดับอุณหภูมิโรงเรือน</h6>
                             </div>
                             <canvas id="Temperature_Chart"></canvas>
                         </div>
@@ -179,11 +179,11 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- chart -->
-    <script src="chart.js"></script>
-
     <!-- Total chart -->
     <script src="chart_Total.js"></script>
+
+    <!-- Total chart -->
+    <script src="chart.js"></script>
 
     <script>
         document.addEventListener("DOMContentLoaded", function() {
@@ -199,35 +199,6 @@ if (!isset($_SESSION['User_ID'])) {
         });
     </script>
 
-    <!-- start Modal-->
-    <script>
-        // Get the modal
-        var modal = document.getElementById("Modal");
-
-        // Get the button that opens the modal
-        var btn = document.getElementById("myBtn");
-
-        // Get the <span> element that closes the modal
-        var span = document.getElementsByClassName("close")[0];
-
-        // When the user clicks the button, open the modal 
-        btn.onclick = function() {
-            modal.style.display = "block";
-        }
-
-        // When the user clicks on <span> (x), close the modal
-        span.onclick = function() {
-            modal.style.display = "none";
-        }
-
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
-    <!-- start Modal-->
 </body>
 
 </html>

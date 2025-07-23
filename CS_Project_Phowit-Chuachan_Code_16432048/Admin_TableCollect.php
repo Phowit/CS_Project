@@ -4,7 +4,7 @@
         <div class="col-sm-12 col-xl-12">
             <div class="h-100 bg-light rounded p-4">
                 <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-1">ข้อมูลการเก็บไข่ไก่ของวันที่ : <span id="displaySelectedDate"></span></h6>
+                    <h6 class="mb-1">ตารางข้อมูลการเก็บไข่ไก่ของวันที่ : <span id="displaySelectedDate"></span></h6>
 
                     <div class="d-flex align-items-center">
                         <label for="chartDatePicker" class="form-label mb-0 me-2 col-3">เลือกวันที่:</label>
@@ -165,29 +165,6 @@
         </div>
     </div>
 </div>
-
-<script>
-    // โค้ด Modal เพิ่มข้อมูล (ที่ถูกคอมเมนต์ไว้ในโค้ดเดิมของคุณ)
-    // ถ้าคุณใช้ Bootstrap 5 Modal แล้ว โค้ด JS เหล่านี้จะไม่มีความจำเป็น เพราะ data-bs-toggle และ data-bs-target จะจัดการให้เอง
-    // คุณสามารถลบส่วนนี้ออกได้เลยครับ
-    /*
-    var addModal = document.getElementById("addRecordModal");
-    if(addModal) {
-        var addBtn = document.querySelector('[data-bs-target="#addRecordModal"]');
-        var addSpan = addModal.querySelector(".btn-close");
-
-        if (addBtn) {
-            addBtn.onclick = function() { addModal.style.display = "block"; }
-        }
-        if (addSpan) {
-            addSpan.onclick = function() { addModal.style.display = "none"; }
-        }
-        window.onclick = function(event) {
-            if (event.target == addModal) { addModal.style.display = "none"; }
-        }
-    }
-    */
-</script>
 
 <script>
     var collectIDToDelete;
