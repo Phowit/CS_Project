@@ -92,6 +92,8 @@
     <!-- chart -->
     <script src="chart.js"></script>
 
+    <!-- Environment-->
+    <script src="Table_CollectSelect.js"></script>
 </body>
 
 </html>

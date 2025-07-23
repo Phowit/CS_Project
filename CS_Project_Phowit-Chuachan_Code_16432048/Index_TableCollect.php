@@ -1,93 +1,148 @@
+<?php
+// Admin_TableCollect.php
+
+// ตรวจสอบให้แน่ใจว่าได้เรียกใช้ connect_db.php แล้ว
+// ในกรณีที่คุณ include ไฟล์นี้ในไฟล์หลักอีกที ก็อาจจะไม่ต้อง require_once ที่นี่ซ้ำ
+// แต่ถ้าไฟล์นี้สามารถรันเดี่ยวๆ ได้ ควรมีไว้
+require_once("connect_db.php");
+
+// กำหนดเดือนและปีเริ่มต้น
+$current_month = date('n'); // เดือนปัจจุบัน (1-12)
+$current_year = date('Y'); // ปีปัจจุบัน (YYYY)
+
+$selected_month = $current_month;
+$selected_year = $current_year;
+
+// ตรวจสอบว่ามีการส่งค่า 'month' และ 'year' มาหรือไม่ (จาก JS ที่ส่งมาใน URL)
+if (isset($_GET['month']) && !empty($_GET['month'])) {
+    // ใช้ intval เพื่อแปลงเป็นตัวเลขเพื่อความปลอดภัยอีกชั้นก่อน mysqli_real_escape_string
+    $selected_month = intval($_GET['month']);
+}
+if (isset($_GET['year']) && !empty($_GET['year'])) {
+    // ใช้ intval เพื่อแปลงเป็นตัวเลขเพื่อความปลอดภัยอีกชั้นก่อน mysqli_real_escape_string
+    $selected_year = intval($_GET['year']);
+}
+
+// ลิสต์ชื่อเดือนภาษาไทยสำหรับแสดงผลใน dropdown และในหัวตาราง
+$thaiMonths = [
+    1 => 'มกราคม',
+    2 => 'กุมภาพันธ์',
+    3 => 'มีนาคม',
+    4 => 'เมษายน',
+    5 => 'พฤษภาคม',
+    6 => 'มิถุนายน',
+    7 => 'กรกฎาคม',
+    8 => 'สิงหาคม',
+    9 => 'กันยายน',
+    10 => 'ตุลาคม',
+    11 => 'พฤศจิกายน',
+    12 => 'ธันวาคม'
+];
+$displayMonthName = $thaiMonths[$selected_month];
+$displayYearBE = $selected_year + 543; // ปีพุทธศักราช
+
+?>
 <div class="container-fluid pt-4 px-4">
     <div class="row">
-
         <div class="col-sm-12 col-xl-12">
             <div class="h-100 bg-light rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-1">ตารางข้อมูลการเก็บไข่ไก่ของวันที่ : <span id="displaySelectedDate"></span></h6>
+                <div class="d-flex align-items-center mb-4">
 
-                    <div class="d-flex align-items-center">
-                        <label for="chartDatePicker" class="form-label mb-0 me-2 col-3">เลือกวันที่:</label>
-                        <input type="date" class="form-control me-2" id="chartDatePicker" name="date" value="<?php echo date('Y-m-d'); ?>">
-                        <button type="button" class="btn btn-primary" id="searchChartData">ค้นหา</button>
+                    <div class="col-6">
+                        <h6 class="mb-1">ตารางข้อมูลการเก็บไข่ไก่ : <span id="displaySelectedMonthYear"><?php echo $displayMonthName . ' ' . $displayYearBE; ?></span></h6>
                     </div>
 
+                    <div class="col-1 d-flex">
+                        <label for="selectMonth" class="form-label">เลือกเดือน:</label>
+                    </div>
+
+                    <div class="col-1.5 d-flex">
+                        <select class="form-select me-2" id="selectMonth" name="month">
+                            <?php
+                            // สร้างตัวเลือกเดือน
+                            foreach ($thaiMonths as $num => $name) {
+                                $selected = ($num == $selected_month) ? 'selected' : '';
+                                echo "<option value='{$num}' {$selected}>{$name}</option>";
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="col-0.5 d-flex">
+                        <label for="selectYear" class="form-label mb-0 me-2">เลือกปี:</label>
+                    </div>
+
+                    <div class="col-1.5 d-flex">
+                        <select class="form-select me-2" id="selectYear" name="year">
+                            <?php
+                            // สร้างตัวเลือกปี (ย้อนหลังไป 5 ปี และไปข้างหน้า 1 ปี)
+                            for ($year = $current_year - 5; $year <= $current_year + 1; $year++) {
+                                $selected = ($year == $selected_year) ? 'selected' : '';
+                                echo "<option value='{$year}' {$selected}>" . ($year + 543) . "</option>"; // แสดงเป็นปีพุทธศักราช
+                            }
+                            ?>
+                        </select>
+                    </div>
+
+                    <div class="col-1.5 d-flex">
+                        <button type="button" class="btn btn-primary" id="searchTableData">ค้นหา</button>
+                    </div>
                 </div>
 
                 <div class="table-responsive">
                     <?php
-                    require_once("connect_db.php");
-
-                    // กำหนดวันที่เริ่มต้น
-                    $current_date = date('Y-m-d'); // วันที่ปัจจุบันในรูปแบบ YYYY-MM-DD
-                    $selected_date = $current_date; // ตั้งค่าเริ่มต้นเป็นวันที่ปัจจุบัน
-
-                    // *** แก้ไขส่วนนี้ ***
-                    // ตรวจสอบว่ามีการส่งค่า 'date' (จาก JavaScript) หรือ 'search_date' (ถ้ากดปุ่ม submit แบบเก่า) มาหรือไม่
-                    // เพื่อความสอดคล้องกับ chart.js และ Chart_Collect.php ที่แก้ไป แนะนำให้ใช้ 'date'
-                    if (isset($_GET['date']) && !empty($_GET['date'])) {
-                        $selected_date = mysqli_real_escape_string($conn, $_GET['date']);
-                    }
-                    // ถ้ายังต้องการรองรับแบบเก่าเผื่อไว้ (ไม่แนะนำ):
-                    // else if (isset($_GET['search_date']) && !empty($_GET['search_date'])) {
-                    //     $selected_date = mysqli_real_escape_string($conn, $_GET['search_date']);
-                    // }
-                    // *** สิ้นสุดการแก้ไขส่วนนี้ ***
-
-                    // ปรับปรุง SQL Query ให้กรองตามวันที่
+                    // ส่วนของ PHP ที่ Query ข้อมูลจากฐานข้อมูล
                     $sql = "SELECT
                                 collect.`Collect_ID`,
                                 collect.`Collect_Date`,
                                 collect.`EggAmount`
                                 FROM collect
-                                WHERE DATE(collect.`Collect_Date`) = '$selected_date'
+                                WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
+                                AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
                                 ORDER BY collect.`Collect_Date` DESC;
                             ";
 
                     $result = mysqli_query($conn, $sql);
 
-                    // ตรวจสอบข้อผิดพลาดในการ query
                     if (!$result) {
                         echo "Error: " . mysqli_error($conn);
                     }
-
                     ?>
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
                             <tr class="text-dark p-1" style="font-size: 14px;">
                                 <th scope="col" class="col-1">ลำดับ</th>
-                                <th scope="col" class="col-7">วันที่เก็บ</th>
+                                <th scope="col" class="col-8">วันที่เก็บ</th>
                                 <th scope="col" class="col-3">จำนวน (ฟอง)</th>
                             </tr>
                         </thead>
                         <tbody style="font-size: 13px;" class="p-1">
                             <?php
                             if ($result && mysqli_num_rows($result) > 0) {
+                                $counter = 1; // สำหรับลำดับ
                                 while ($row = $result->fetch_assoc()) {
                                     $Collect_ID = $row['Collect_ID'];
                                     $Collect_Date_Raw = $row["Collect_Date"];
                                     $Collect_Date_Obj = date_create_from_format("Y-m-d H:i:s", $Collect_Date_Raw);
                                     if ($Collect_Date_Obj) {
-                                        // ตรวจสอบรูปแบบ datetime-local ใน input ว่าต้องการแบบไหน
-                                        // สำหรับ input type="datetime-local" format ต้องเป็น YYYY-MM-DDTHH:mm
                                         $Collect_Date_For_Input = $Collect_Date_Obj->format("Y-m-d\TH:i");
-                                        $Collect_Date_Formatted = $Collect_Date_Obj->format("d/m/Y H:i:s"); // สำหรับแสดงผลในตาราง
+                                        $Collect_Date_Formatted = $Collect_Date_Obj->format("d/m/Y H:i:s");
                                     } else {
-                                        $Collect_Date_For_Input = ""; // หรือจัดการตามเหมาะสม
+                                        $Collect_Date_For_Input = "";
                                         $Collect_Date_Formatted = $Collect_Date_Raw;
                                     }
 
                                     $EggAmount = $row['EggAmount'];
                             ?>
                                     <tr>
-                                        <td><?php echo $Collect_ID; ?></td>
+                                        <td><?php echo $counter++; ?></td>
                                         <td><?php echo $Collect_Date_Formatted; ?></td>
                                         <td><?php echo $EggAmount; ?></td>
                                     </tr>
                             <?php
                                 }
                             } else {
-                                echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับวันที่นี้</td></tr>";
+                                echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
                             }
                             ?>
                         </tbody>
@@ -95,6 +150,5 @@
                 </div>
             </div>
         </div>
-
     </div>
 </div>

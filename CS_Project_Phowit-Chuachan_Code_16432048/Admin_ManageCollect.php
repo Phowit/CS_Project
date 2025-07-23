@@ -80,7 +80,6 @@ if (!isset($_SESSION['User_ID'])) {
             require_once("Admin_TableCollect.php");
             ?>
             <!--Table End-->
-<canvas id="Total_Chart"></canvas>
         </div>
         <!-- Content End -->
     </div>
@@ -102,8 +101,11 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- chart -->
     <script src="chart.js"></script>
 
-    <!-- Environment chart -->
+    <!-- Environment chart-->
     <script src="chart_Environment.js"></script>
+
+    <!-- Environment-->
+    <script src="Table_CollectSelect.js"></script>
 </body>
 
 </html>
