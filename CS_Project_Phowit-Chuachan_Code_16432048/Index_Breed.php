@@ -1,12 +1,12 @@
+<?php
+require_once("connect_db.php");
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <meta charset="utf-8">
     <title>ระบบจัดการฟาร์มไก่ไข่อัจฉริยะด้วยเทคโนโลยีอินเทอร์เน็ตของสรรพสิ่ง</title>
-
-    <link rel="icon" type="image/x-icon" href="My_img/chicken.png">
-
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
@@ -33,13 +33,11 @@
     <!-- Template Stylesheet -->
     <link href="css/style.css" rel="stylesheet">
 
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link href='https://fonts.googleapis.com/css?family=ABeeZee' rel='stylesheet'>
 </head>
 
 <body>
+
     <div class="container-fluid position-relative d-flex p-0">
         <!-- Spinner Start -->
         <div id="spinner" class="show bg-dark position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
@@ -47,35 +45,31 @@
                 <span class="sr-only">Loading...</span>
             </div>
         </div>
-        <!-- Spinner End -->
 
-
-        <!-- Sidebar Start -->
         <?php
-        require_once("User_SideBar.php");
+        require_once("Index_Sidebar.php");
         ?>
-        <!-- Sidebar End -->
 
-
-        <!-- Content Start -->
+        <!-- Blank Start -->
         <div class="content">
-            <!-- Navbar Start -->
             <?php
-            require_once("User_NavBar.php");
+            require_once("Index_Navbar.php");
             ?>
-            <!-- Navbar End -->
 
-            <!--ข้อมูลการเก็บไข่ start -->
             <?php
-            require_once("Index_TableCollect.php");
+            require_once("Index_ChickenCard.php");
             ?>
-            <!--ข้อมูลการเก็บไข่ End-->
 
         </div>
-        <!-- Content End -->
+    </div>
+    </div>
+    <!-- Blank End -->
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
     </div>
 
-    <!-- JavaScript Libraries -->
+    <!-- JavaScript Libraries 1280px 720px 2560 1440-->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
     <script src="lib/chart/chart.min.js"></script>
@@ -88,10 +82,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <!-- chart -->
-    <script src="chart.js"></script>
-
 </body>
 
 </html>

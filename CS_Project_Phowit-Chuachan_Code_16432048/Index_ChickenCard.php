@@ -1,6 +1,6 @@
 <div class="container-fluid pt-3 px-3">
     <div class="d-flex align-items-center justify-content-between mb-4">
-        <h6 class="mb-0">ข้อมูลสายพันธุ์ไก่</h6>
+        <h6 class="mb-0">ข้อมูลสายพันธุ์ไก่ไข่</h6>
     </div>
     <div class="row">
         <?php

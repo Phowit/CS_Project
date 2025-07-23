@@ -38,6 +38,9 @@
                             <dt class="col-sm-4">รหัสผู้ดูแลระบบ</dt>
                             <dd class="col-sm-8"><?php echo $User_ID; ?></dd>
 
+                            <dt class="col-sm-4">สถานะ</dt>
+                            <dd class="col-sm-8"><?php echo $User_Status; ?></dd>
+
                             <dt class="col-sm-4">เบอร์โทรศัพท์</dt>
                             <dd class="col-sm-8"><?php echo $User_Tel; ?></dd>
 

@@ -26,7 +26,10 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <i class="fa fa-chart-bar me-2 icon"></i>ข้อมูลการเก็บไข่</a>
 
             <a href="User_Chicken.php" class="nav-item nav-link <?= ($currentPage == 'User_Chicken.php') ? 'active' : 'text-light' ?>">
-                <i class="fas fa-building me-2 icon"></i>ข้อมูลการเลี้ยงไก่</a>
+                <i class="fas fa-building me-2 icon"></i>ข้อมูลการเลี้ยงไก่ไข่</a>
+
+            <a href="User_Breed.php" class="nav-item nav-link <?= ($currentPage == 'User_Breed.php') ? 'active' : 'text-light' ?>">
+                <i class="far fa-file-alt me-2 icon"></i>ข้อมูลสายพันธุ์ไก่ไข่</a>
 
             <a href="User_Data.php" class="nav-item nav-link <?= ($currentPage == 'User_Data.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-keyboard me-2 icon"></i>จัดการข้อมูลผู้ใช้</a>
@@ -35,7 +38,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
                 <i class="fa fa-sticky-note-o me-2 icon"></i>การส่งข้อความ</a>
 
             <a href="User_ConfirmLogOut.php" class="nav-item nav-link text-light">
-                <i class="fa fa-sign-out me-2 icon"></i>การส่งข้อความ</a>
+                <i class="fa fa-sign-out me-2 icon"></i>ออกจากระบบ</a>
         </div>
     </nav>
 </div>

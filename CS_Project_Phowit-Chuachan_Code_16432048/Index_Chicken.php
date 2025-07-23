@@ -118,9 +118,32 @@ require_once("connect_db.php");
             require_once("Common_Diseases.php");
             ?>
 
-            <?php
-            require_once("Index_ChickenCard.php");
-            ?>
+            <!-- Footer Start -->
+            <div class="container-fluid pt-1 px-3">
+                <div class="bg-light rounded-top p-2" style="font-size: 12px;">
+                    <div class="row">
+                        <div class="col-12 col-sm-12 text-center text-sm-start mb-2">
+                            ธนกร สุทธิธร. (2559). บทบาทของโภชนาการต่อการผลิตไก่ไข่. วารสารสัตวบาลไทย, 1(1), 1-10.
+                        </div>
+
+                        <div class="col-12 col-sm-12 text-center text-sm-start mb-2">
+                            นฤมล มนตรีกุล ณ อยุธยา, วิไลลักษณ์ กิจจาวัฒนชัย, และ ชนะพล อ่อนจันทร์. (2562).
+                            การจัดการสายพันธุ์ไก่ไข่เชิงพาณิชย์. วารสารวิจัยเกษตรและเทคโนโลยี, 7(1), 55-64.
+                        </div>
+
+                        <div class="col-12 col-sm-12 text-center text-sm-start mb-2">
+                            วิรัตน์ บัวงาม. (2552). การจัดการโรงเรือนไก่ไข่เพื่อลดความเครียดจากความร้อน.
+                            วารสารวิทยาศาสตร์และเทคโนโลยีการเกษตร, 6(2), 123-130.
+                        </div>
+
+                        <div class="col-12 col-sm-12 text-center text-sm-start">
+                            อุดมศักดิ์ มั่นหมาย, สมชาย บุตรจันทร์, และ อรุณศรี ศิริวงษ์. (2558).
+                            อิทธิพลของอุณหภูมิโรงเรือนต่อประสิทธิภาพการผลิตและคุณภาพไข่ไก่. วารสารวิชาการเกษตรศาสตร์, 34(3), 200-210.
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Footer End -->
 
         </div>
     </div>

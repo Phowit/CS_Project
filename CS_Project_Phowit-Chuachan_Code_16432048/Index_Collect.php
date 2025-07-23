@@ -63,20 +63,12 @@
             ?>
             <!-- Navbar End -->
 
-            <div class="container-fluid pt-4 px-4">
-            <div class="col-sm-12 col-xl-12 bg-light text-center rounded p-4">
-                <div class="d-flex align-items-center justify-content-between mb-4">
-                    <h6 class="mb-0 text-dark">จำนวนไข่ไก่ที่เก็บได้</h6>
-                </div>
-                <canvas id="Collect_Chart" style="max-width:100%; max-height:200px;"></canvas>
-            </div>
-            </div>
-
             <!--ข้อมูลการเก็บไข่ start -->
             <?php
             require_once("Index_TableCollect.php");
             ?>
             <!--ข้อมูลการเก็บไข่ End-->
+            
         </div>
         <!-- Content End -->
     </div>

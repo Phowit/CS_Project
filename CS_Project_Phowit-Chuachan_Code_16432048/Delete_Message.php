@@ -7,19 +7,19 @@ if (isset($_GET['id'])) {
     // SQL to delete the record
     $sql = "DELETE FROM message WHERE Message_ID = $id";
 
-    echo $sql;
+    //echo $sql;
     
     if (mysqli_query($conn, $sql)) {
-        echo "Record deleted successfully";
+        //echo "Record deleted successfully";
     } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+        //echo "Error deleting record: " . mysqli_error($conn);
     }
 }
 else {
     echo "No Gene ID provided";
 }
 
-    echo $sql;
+    //echo $sql;
 
     // ปิดการเชื่อมต่อ
     mysqli_close($conn);
