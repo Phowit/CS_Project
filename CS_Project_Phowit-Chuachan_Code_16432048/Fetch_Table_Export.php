@@ -14,17 +14,14 @@ $tableRows = []; // Initialize array to hold table data
 
 // Base SQL query
 $sql = "SELECT
-            imp.Import_ID,
             exp.Export_ID,
             exp.Export_Date,
             exp.Export_Amount,
             exp.Export_Details,
-            imp.Import_Amount,
             b.Breed_ID,
             b.Breed_Name
         FROM export AS exp
-        INNER JOIN import AS imp ON imp.Import_ID = exp.Import_ID
-        INNER JOIN breed AS b ON imp.Breed_ID = b.Breed_ID";
+        INNER JOIN breed AS b ON exp.Breed_ID = b.Breed_ID";
 
 // Add WHERE clause if a specific breed is selected
 if ($selectedBreedId !== 'all' && $selectedBreedId !== null && $selectedBreedId !== '') {
@@ -59,7 +56,6 @@ if ($stmt) {
                 'Breed_Name' => $row['Breed_Name'],
                 'Export_Amount' => $row['Export_Amount'],
                 'Export_Details' => $row['Export_Details'],
-                'Import_Amount' => $row['Import_Amount'], // Include Import_Amount for max in modal
                 'Export_Date_DateTimeLocal' => $Export_Date_DateTimeLocal // Add this for the edit modal input
             ];
         }

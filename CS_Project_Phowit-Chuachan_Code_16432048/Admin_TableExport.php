@@ -1,48 +1,112 @@
+<?php
+// Admin_TableExport.php
+
+// เชื่อมต่อฐานข้อมูล
+require_once("connect_db.php");
+
+// ดึงรายการสายพันธุ์ทั้งหมดจากฐานข้อมูลสำหรับ Dropdown
+$breeds = [];
+$sql_breeds = "SELECT Breed_ID, Breed_Name FROM breed ORDER BY Breed_Name ASC";
+$result_breeds = mysqli_query($conn, $sql_breeds);
+
+if ($result_breeds) {
+    while ($row_breed = mysqli_fetch_assoc($result_breeds)) {
+        $breeds[] = $row_breed;
+    }
+} else {
+    error_log("Error fetching breeds for dropdown: " . mysqli_error($conn));
+}
+
+// กำหนดค่าเริ่มต้นของสายพันธุ์ที่เลือก
+$selected_breed_id = 'all';
+
+// ตรวจสอบว่ามีการส่งค่า 'breed_id' มาจาก URL (จาก JS) หรือไม่
+if (isset($_GET['breed_id']) && $_GET['breed_id'] !== '') {
+    $selected_breed_id = mysqli_real_escape_string($conn, $_GET['breed_id']);
+}
+
+// กำหนดเงื่อนไข WHERE clause สำหรับ SQL Query และชื่อสายพันธุ์สำหรับแสดงผล
+$where_clause = "";
+$display_breed_name_in_title = "ทั้งหมด";
+
+if ($selected_breed_id !== 'all') {
+    $where_clause = " WHERE b.`Breed_ID` = $selected_breed_id";
+    foreach ($breeds as $breed) {
+        if ($breed['Breed_ID'] == $selected_breed_id) {
+            $display_breed_name_in_title = $breed['Breed_Name'];
+            break;
+        }
+    }
+}
+
+// SQL Query เพื่อดึงข้อมูลการนำเข้าสำหรับการแสดงผลครั้งแรก
+$sql_data_initial_load = "SELECT
+                            e.`Export_ID`,
+                            e.`Export_Date`,
+                            e.`Export_Amount`,
+                            e.`Export_Details`,
+                            b.`Breed_Name`,
+                            b.`Breed_ID`
+                        FROM `export` e
+                        JOIN `breed` b ON e.`Breed_ID` = b.`Breed_ID`
+                        $where_clause
+                        ORDER BY e.`Export_Date` DESC;";
+
+$result_data_initial_load = mysqli_query($conn, $sql_data_initial_load);
+
+// เตรียมข้อมูลสำหรับส่งไปยัง JavaScript เพื่อให้ JS สร้างตาราง (เมื่อโหลดหน้าครั้งแรก)
+$initialTableData = [];
+if ($result_data_initial_load) {
+    while ($row = $result_data_initial_load->fetch_assoc()) {
+        // จัดรูปแบบวันที่สำหรับแสดงผลและสำหรับ input type="datetime-local"
+        $Export_Date_Obj = date_create_from_format("Y-m-d H:i:s", $row["Export_Date"]);
+        $Export_Date_For_Input = $Export_Date_Obj ? $Export_Date_Obj->format("Y-m-d\TH:i") : "";
+        $Export_Date_Formatted = $Export_Date_Obj ? $Export_Date_Obj->format("d/m/Y H:i:s") : $row["Export_Date"];
+
+        $initialTableData[] = [
+            'Export_ID' => $row['Export_ID'],
+            'Export_Date' => $Export_Date_Formatted, // สำหรับแสดงในตาราง
+            'Export_Date_For_Input' => $Export_Date_For_Input, // สำหรับใส่ใน input datetime-local
+            'Breed_Name' => $row['Breed_Name'],
+            'Breed_ID' => $row['Breed_ID'], // สำหรับเลือกใน dropdown แก้ไข
+            'Export_Amount' => $row['Export_Amount'],
+            'Export_Details' => $row['Export_Details']
+        ];
+    }
+} else {
+    error_log("Error fetching initial export data: " . mysqli_error($conn));
+}
+?>
+
+
+
 <div class="container-fluid pt-4 px-4 rounded bg-primary">
     <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="mb-0 text-dark">จำนวนไก่ที่นำออก</h6>
+            <h6 class="mb-0 text-dark col-3">ตารางข้อมูลการนำออกไก่ไข่</h6>
 
-            <div class="d-flex align-items-center">
-                <label for="breedSelectExport" class="form-label mb-0 me-2 col-3">เลือกสายพันธุ์:</label>
+            <div class="d-flex align-items-center col-7">
+                <label for="breedSelectExport" class="form-label mb-0 me-2 col-3">เลือกสายพันธุ์ไก่ไข่:</label>
                 <select class="form-select" name="breedSelectExport" id="breedSelectExport" aria-label="Floating label select example" required>
+                    <option value="all" <?php echo ($selected_breed_id == 'all') ? 'selected' : ''; ?>>-- แสดงทั้งหมด --</option>
                     <?php
-                    // PHP for dropdown options
-                    require_once("connect_db.php");
-
-                    $sql_Picker = "SELECT Breed_ID , Breed_Name FROM breed ORDER BY Breed_Name ASC";
-                    $result_Picker = mysqli_query($conn, $sql_Picker);
-
-                    $initial_selected_breed_id = '';
-                    if ($result_Picker && $result_Picker->num_rows > 0) {
-                        $breed_options = [];
-                        while ($row_breedPicker = $result_Picker->fetch_assoc()) {
-                            $breed_options[] = $row_breedPicker;
-                        }
-                        
-                        // Set the first breed as default selected if no GET param
-                        $initial_selected_breed_id = $breed_options[0]['Breed_ID'];
-                        
-                        foreach ($breed_options as $option) {
-                            $selected = ($initial_selected_breed_id == $option['Breed_ID']) ? 'selected' : '';
-                            echo '<option value="' . htmlspecialchars($option['Breed_ID']) . '" ' . $selected . '>';
-                            echo htmlspecialchars($option['Breed_Name']);
-                            echo '</option>';
-                        }
-                    } else {
-                        echo '<option value="">ไม่พบสายพันธุ์</option>';
+                    foreach ($breeds as $option) {
+                        $selected = ($option['Breed_ID'] == $selected_breed_id) ? 'selected' : '';
+                        echo '<option value="' . htmlspecialchars($option['Breed_ID']) . '" ' . $selected . '>';
+                        echo htmlspecialchars($option['Breed_Name']);
+                        echo '</option>';
                     }
                     ?>
                 </select>
-                <button type="button" class="btn btn-primary ms-2" id="searchBreedExport">ค้นหา</button>
+                <button type="button" class="btn btn-primary ms-2 col-2" id="searchBreedExport">ค้นหา</button>
             </div>
 
             <button type="button" class="btn btn-warning" data-bs-toggle="modal"
-                data-bs-target="#addRecordModal" style="height: 35px; width: 95px; margin-right: 10px;">เพิ่มข้อมูล
+                data-bs-target="#addExportModal" style="height: 35px; width: 95px; margin-right: 10px;">เพิ่มข้อมูล
             </button>
 
-            <?php require_once("Admin_FormExport.php");?>
-            </div>
+            <?php require_once("Admin_FormExport.php");?> 
+        </div>
 
         <div class="table-responsive">
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -57,11 +121,71 @@
                     </tr>
                 </thead>
                 <tbody id="exportTableBody">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
 </div>
+
+
+
+<div class="modal fade" id="editExportModal" tabindex="-1" aria-labelledby="editExportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editExportModalLabel">แก้ไขข้อมูลการนำออก</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editForm" action="Update_Export.php" method="post">
+                    <input type="hidden" name="Export_ID" id="edit_Export_ID">
+
+                    <div class="form-floating mb-3">
+                        <input type="datetime-local" class="form-control" name="Export_Date" id="edit_Export_Date" required>
+                        <label for="edit_Export_Date">วัน เวลา ที่นำเข้ามาเลี้ยง</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-8">
+                            <div class="form-floating">
+                                <select class="form-select" name="Breed_ID" id="edit_Breed_ID" aria-label="Floating label select example" required>
+                                    <?php
+                                    // Populate breed options for edit modal using $breeds array
+                                    foreach ($breeds as $option) {
+                                        echo '<option value="' . htmlspecialchars($option['Breed_ID']) . '">' . htmlspecialchars($option['Breed_Name']) . '</option>';
+                                    }
+                                    ?>
+                                </select>
+                                <label for="edit_Breed_ID">สายพันธุ์ไก่</label>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <div class="form-floating">
+                                <input type="number" class="form-control" name="Export_Amount" id="edit_Export_Amount" min="1" required>
+                                <label for="edit_Export_Amount">จำนวนไก่ทั้งหมด (ตัว)</label>
+                            </div>
+                        </div>
+                    </div><br>
+
+                    <div class="form-floating">
+                        <textarea class="form-control" name="Export_Details" id="edit_Export_Details" style="height: 100px;" required></textarea>
+                        <label for="edit_Export_Details">รายละเอียด</label>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-12" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                            <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 
 <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -81,3 +205,8 @@
         </div>
     </div>
 </div>
+
+<script>
+    // Embed initial data for JavaScript
+    const initialExportTableData = <?php echo json_encode($initialTableData, JSON_UNESCAPED_UNICODE); ?>;
+</script>

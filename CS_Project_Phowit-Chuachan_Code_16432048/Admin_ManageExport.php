@@ -98,11 +98,8 @@ if (!isset($_SESSION['User_ID'])) {
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
 
-    <!-- chart -->
+    <!-- Export_SelectBreed chart -->
     <script src="Export_SelectBreed.js"></script>
-
-    <!-- Environment chart -->
-    <script src="chart_Environment.js"></script>
 </body>
 
 </html>
