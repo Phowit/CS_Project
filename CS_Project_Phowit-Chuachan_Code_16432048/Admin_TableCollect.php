@@ -165,7 +165,6 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                         <tbody style="font-size: 13px;" class="p-1">
                             <?php
                             if ($result0 && mysqli_num_rows($result0) > 0) {
-                                $counter = 1; // สำหรับลำดับ
                                 $end_Page = +1;
                                 while ($row = $result0->fetch_assoc()) {
                                     $Collect_ID = $row['Collect_ID'];
@@ -182,7 +181,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                     $EggAmount = $row['EggAmount'];
                             ?>
                                     <tr>
-                                        <td><?php echo $counter++; ?></td>
+                                        <td><?php echo $Collect_ID; ?></td>
                                         <td><?php echo $Collect_Date_Formatted; ?></td>
                                         <td><?php echo $EggAmount; ?></td>
                                         <td>
