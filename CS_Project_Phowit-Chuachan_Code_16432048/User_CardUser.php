@@ -162,7 +162,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <!-- Form for Editing Record -->
-                                        <form id="EditBreedForm" action="Update_UserPass.php" method="post">
+                                        <form id="EditUserDataForm" action="Update_UserPass.php" method="post">
                                             <!-- Add your form fields here for additional request details -->
 
                                             <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
@@ -187,7 +187,7 @@
                                     </div>
                                 </div>
                             </div>
-                        </div><br><br>
+                        </div>
                         <!--End Edit-->
                         <!--END Warning For Delete-->
                     </div>

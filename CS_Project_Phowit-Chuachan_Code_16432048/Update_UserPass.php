@@ -7,27 +7,54 @@
     $Old_User_Password = $_POST['Old_User_Password'];
     $New_User_Password = $_POST['New_User_Password'];
 
-    $sql = "SELECT `User_Password` FROM `user` WHERE `User_ID` = ?";
+    $sql = "SELECT `User_Password` FROM `user` WHERE `User_ID` = $User_ID";
 
-    $stmt = $conn->prepare($sql); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
-    $stmt->bind_param("i", $User_ID); // ผูกค่าพารามิเตอร์
-    $stmt->execute(); // รันคำสั่ง
-    $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
+    $result = mysqli_query($conn, $sql); // รับผลลัพธ์จากฐานข้อมูล
 
     while ($row = $result->fetch_assoc()) {
         $User_Password = $row['User_Password'];
     }
-    if($User_Password == $Old_User_Password) {
+    if($User_Password === $Old_User_Password) {
         $sqli = "UPDATE user SET User_Password = '$New_User_Password' WHERE `User_ID` = $User_ID";
-        echo "<h1 style='margin-top:20%; margin-left:40%;'>เปลี่ยนรหัสผ่านแล้ว</h1>";
         mysqli_query($conn, $sqli);
+
+        echo"
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let modal = document.getElementById('successModal');
+                modal.style.display = 'block';
+            });
+            </script>
+        ";
     }else {
-        echo "<h1 style='margin-top:20%; margin-left:40%;'>รหัสผ่านไม่ถูกต้อง</h1>";
+        echo"
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let modal = document.getElementById('errorModal');
+                modal.style.display = 'block';
+            });
+            </script>
+        ";
     }
 
     // ปิดการเชื่อมต่อ
     mysqli_close($conn);
 
     // เปลี่ยนหน้า
-    echo '<meta http-equiv="refresh" content="1; url=User_Data.php">';
+    echo '<meta http-equiv="refresh" content="2; url=User_Data.php">';
 ?>
+<!-- Modal error-->
+<div id="errorModal" style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -50%);
+                             background-color:white; padding:20px; border:1px solid #ccc; z-index:1000; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <p style="color:red;">❌ รหัสผ่านเดิมไม่ถูกต้อง</p>
+    <a>โปรดลองใหม่อีกครั้งภายหลัง</a>
+</div>
+
+<!-- Modal success-->
+<div id="successModal" style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -50%);
+                             background-color:white; padding:20px; border:1px solid #ccc; z-index:1000; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <p style="color:green;">✅ รหัสผ่านเดิมถูกต้อง</p>
+    <a>ทำการเปลี่ยนรหัสผ่านสำเร็จ</a>
+</div>

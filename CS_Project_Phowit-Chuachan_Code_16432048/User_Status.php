@@ -1,6 +1,12 @@
 <?php
 require_once("connect_db.php");
 session_start();
+
+// ตรวจสอบว่าผู้ใช้เข้าสู่ระบบหรือไม่
+if (!isset($_SESSION['User_ID'])) {
+    header("Location: Login.php"); // หากยังไม่ได้ล็อกอิน ย้ายไปหน้า Login.php
+    exit();
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">

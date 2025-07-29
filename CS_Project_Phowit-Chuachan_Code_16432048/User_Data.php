@@ -79,7 +79,6 @@ if (!isset($_SESSION['User_ID'])) {
             require_once("User_CardUser.php");
             ?>
             <!-- Navbar End -->
-
         </div>
         <!-- Content End -->
     </div>
