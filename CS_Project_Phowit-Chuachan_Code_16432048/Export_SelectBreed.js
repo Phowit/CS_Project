@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
     // Function to prepare data for the edit modal
-    window.prepareEditModal = function(ExportID, ExportDateForInput, BreedID, ExportAmount, ExportDetails) {
+    window.prepareEditModal = function(ExportID, ExportDateForInput, ExportAmount, ExportDetails) {
         editExportIdInput.value = ExportID;
         editExportDateInput.value = ExportDateForInput;
         editExportAmountInput.value = ExportAmount;
@@ -65,7 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 tr.style.fontSize = '12px';
                 // Use template literals for cleaner HTML string
                 tr.innerHTML = `
-                    <td>${index + 1}</td> <td>${row.Export_Date_Formatted || ''}</td>
+                    <td>${index + 1}</td>
+                    <td>${row.Export_Date_Formatted || ''}</td>
                     <td>${row.Breed_Name || ''}</td>
                     <td>${row.Export_Amount || ''}</td>
                     <td>${row.Export_Details || ''}</td>

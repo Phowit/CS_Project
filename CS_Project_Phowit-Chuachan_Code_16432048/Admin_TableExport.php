@@ -61,11 +61,11 @@ if ($result_data_initial_load) {
         // จัดรูปแบบวันที่สำหรับแสดงผลและสำหรับ input type="datetime-local"
         $Export_Date_Obj = date_create_from_format("Y-m-d H:i:s", $row["Export_Date"]);
         $Export_Date_For_Input = $Export_Date_Obj ? $Export_Date_Obj->format("Y-m-d\TH:i") : "";
-        $Export_Date_Formatted = $Export_Date_Obj ? $Export_Date_Obj->format("d/m/Y H:i:s") : $row["Export_Date"];
+        $Export_Date_Formatted = $Export_Date_Obj ? $Export_Date_Obj->format("d/m/Y H:i:s") : "";
 
         $initialTableData[] = [
             'Export_ID' => $row['Export_ID'],
-            'Export_Date' => $Export_Date_Formatted, // สำหรับแสดงในตาราง
+            'Export_Date_Formatted' => $Export_Date_Formatted, // สำหรับแสดงในตาราง
             'Export_Date_For_Input' => $Export_Date_For_Input, // สำหรับใส่ใน input datetime-local
             'Breed_Name' => $row['Breed_Name'],
             'Breed_ID' => $row['Breed_ID'], // สำหรับเลือกใน dropdown แก้ไข
@@ -114,8 +114,8 @@ if ($result_data_initial_load) {
                     <tr class="text-dark" style="font-size:14px">
                         <th scope="col" class="col-1">ลำดับ</th>
                         <th scope="col" class="col-2">วัน เวลา ที่นำออก</th>
-                        <th scope="col" class="col-2">สายพันธุ์</th>
-                        <th scope="col" class="col-2">จำนวน (ตัว)</th>
+                        <th scope="col" class="col-3">สายพันธุ์</th>
+                        <th scope="col" class="col-1">จำนวน(ตัว)</th>
                         <th scope="col" class="col-4">รายละเอียด</th>
                         <th scope="col" class="col-1">เครื่องมือ</th>
                     </tr>

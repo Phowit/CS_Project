@@ -43,7 +43,7 @@ if ($stmt) {
     if ($result->num_rows > 0) {
         while ($row = $result->fetch_assoc()) {
             // Format dates for display
-            $Export_Date_Formatted = date_create_from_format("Y-m-d H:i:s", $row["Export_Date"])->format("d/m/Y H:i:s");
+            $Export_Date_Formatted = date_create_from_format("Y-m-d H:i:s", $row['Export_Date'])->format("d/m/Y H:i:s");
             
             // Format date for datetime-local input in modal (YYYY-MM-DDTHH:mm)
             $Export_Date_DateTimeLocal = date_create_from_format("Y-m-d H:i:s", $row["Export_Date"])->format("Y-m-d\TH:i");
@@ -51,7 +51,7 @@ if ($stmt) {
             // Add row data to the array
             $tableRows[] = [
                 'Export_ID' => $row['Export_ID'],
-                'Export_Date_Formatted' => $Export_Date_Formatted,
+                'Export_Date_Formatted' => $Export_Date_Formatted ,
                 'Breed_ID' => $row['Breed_ID'], // Include Breed_ID
                 'Breed_Name' => $row['Breed_Name'],
                 'Export_Amount' => $row['Export_Amount'],
