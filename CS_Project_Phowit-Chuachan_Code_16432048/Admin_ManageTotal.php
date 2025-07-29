@@ -91,6 +91,7 @@ if (!isset($_SESSION['User_ID'])) {
                 </div>
             </div>
         </div>
+        <a href="#" class="btn btn-lg btn-primary btn-lg-square back-to-top"><i class="bi bi-arrow-up"></i></a>
 
         <!-- Content End -->
     </div>

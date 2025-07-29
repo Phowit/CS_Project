@@ -1,5 +1,3 @@
-// Table_ImportSelect.js
-
 document.addEventListener('DOMContentLoaded', () => {
     // อ้างอิงถึง Element ต่างๆ
     const breedSelectElement = document.getElementById('breedSelectImport'); // ต้องตรงกับ ID ใน PHP
@@ -153,23 +151,4 @@ document.addEventListener('DOMContentLoaded', () => {
         // กรณีไม่มีข้อมูล หรือ PHP ไม่ได้ส่งข้อมูลมา
         renderTableRows([]);
     }
-
-    // --- Other scripts from chart_breed.js that are not table related ---
-    // (ส่วนนี้คุณสามารถคงไว้ตามเดิม หรือย้ายไปที่ไฟล์ JS ที่เหมาะสม)
-    // โค้ดสำหรับเมนู Active (ยังคงเดิม)
-    // ส่วนนี้ควรอยู่ในไฟล์ JS หลักของ template หรือในไฟล์ JS เฉพาะสำหรับการจัดการ Navbar
-    // ไม่แนะนำให้เอา basename($_SERVER["PHP_SELF"]) มาใส่ใน JS โดยตรง
-    // เนื่องจาก JS ไม่สามารถเข้าถึงตัวแปร PHP ได้โดยตรง (ยกเว้นผ่านการ echo ลงไปใน HTML/JS)
-    // ถ้าคุณ include JS แบบนี้ในทุกหน้า, basename($_SERVER["PHP_SELF"]) จะต้องถูกส่งมาจาก PHP
-    // ตัวอย่าง: var currentPage = '<?php echo basename($_SERVER["PHP_SELF"]); ?>';
-    // หากต้องการใช้โค้ดนี้จริง ควรตรวจสอบว่าตัวแปร `currentPage` ถูกกำหนดค่ามาอย่างถูกต้อง
-    /*
-    var currentPage = '<?php //echo basename($_SERVER["PHP_SELF"]); ?>'; // ต้อง uncomment และส่งค่ามาจาก PHP
-    var navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    navLinks.forEach(function(link) {
-        if (link.getAttribute('href') === currentPage) {
-            link.classList.add('active');
-        }
-    });
-    */
 });
