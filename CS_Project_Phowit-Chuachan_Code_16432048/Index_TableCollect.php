@@ -91,11 +91,26 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
 
                 <div class="table-responsive">
                     <?php
+                    $end_Page = 0;
+                    // ----------------- ส่วน Pagination Logic -----------------
+                    $records_per_page = 7; // จำนวนข้อมูลที่จะแสดงต่อหน้า
+
+                    // ตรวจสอบหน้าปัจจุบันจาก URL
+                    if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                        $current_page = $_GET['page'];
+                    } else {
+                        $current_page = 1; // ถ้าไม่มีการระบุหน้า ให้ถือว่าเป็นหน้าแรก
+                    }
+
+                    // คำนวณจุดเริ่มต้น (OFFSET) สำหรับการดึงข้อมูล
+                    $offset = ($current_page - 1) * $records_per_page;
+
                     // ส่วนของ PHP ที่ Query ข้อมูลจากฐานข้อมูล
                     $sql = "SELECT
                                 collect.`Collect_ID`,
                                 collect.`Collect_Date`,
                                 collect.`EggAmount`
+                                AS total
                                 FROM collect
                                 WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
                                 AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
@@ -107,6 +122,29 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                     if (!$result) {
                         echo "Error: " . mysqli_error($conn);
                     }
+
+                    // ดึงจำนวนข้อมูลทั้งหมดในตาราง เพื่อคำนวณจำนวนหน้าทั้งหมด
+                    $row_total = $result->fetch_assoc();
+
+                    if ($row_total > 0) {
+                        $total_records = $row_total['total'];
+                        // คำนวณจำนวนหน้าทั้งหมด
+                        $total_pages = ceil($total_records / $records_per_page);
+                    }
+
+                    // ----------------- ดึงข้อมูลสำหรับหน้าปัจจุบัน -----------------
+                    $sql0 = "SELECT
+                                collect.`Collect_ID`,
+                                collect.`Collect_Date`,
+                                collect.`EggAmount`
+                                FROM collect
+                                WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
+                                AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
+                                ORDER BY collect.`Collect_Date`
+                                LIMIT $records_per_page OFFSET $offset";
+
+                    $result0 = $conn->query($sql0);
+
                     ?>
                     <table class="table text-start align-middle table-bordered table-hover mb-0">
                         <thead>
@@ -118,9 +156,9 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                         </thead>
                         <tbody style="font-size: 13px;" class="p-1">
                             <?php
-                            if ($result && mysqli_num_rows($result) > 0) {
-                                $counter = 1; // สำหรับลำดับ
-                                while ($row = $result->fetch_assoc()) {
+                            if ($result0 && mysqli_num_rows($result0) > 0) {
+                                $end_Page = +1;
+                                while ($row = $result0->fetch_assoc()) {
                                     $Collect_ID = $row['Collect_ID'];
                                     $Collect_Date_Raw = $row["Collect_Date"];
                                     $Collect_Date_Obj = date_create_from_format("Y-m-d H:i:s", $Collect_Date_Raw);
@@ -135,18 +173,52 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                     $EggAmount = $row['EggAmount'];
                             ?>
                                     <tr>
-                                        <td><?php echo $counter++; ?></td>
+                                        <td><?php echo $Collect_ID; ?></td>
                                         <td><?php echo $Collect_Date_Formatted; ?></td>
                                         <td><?php echo $EggAmount; ?></td>
                                     </tr>
                             <?php
                                 }
                             } else {
+                                $end_Page = -$end_Page;
                                 echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
                             }
                             ?>
                         </tbody>
                     </table>
+
+                    <?php
+                    // ----------------- ส่วนแสดง Pagination Links -----------------
+                    echo "<div class='pagination'>";
+
+                    // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์เดือน
+                    $month_param = '';
+                    if (!empty($selected_month)) {
+                        $month_param = '&month=' . urlencode($selected_month); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+                    }
+
+                    // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์ปี
+                    $year_param = '';
+                    if (!empty($selected_year)) {
+                        $year_param = '&year=' . urlencode($selected_year); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+                    }
+
+                    // ปุ่ม Previous
+                    if ($current_page > 1) {
+                        echo "<a href='?page=" . ($current_page - 1) . $month_param . $year_param . "' class='page-link'>&laquo; ก่อนหน้า</a>";
+                    } else {
+                        echo "<a class = 'p-2'>หน้าแรก</a>";
+                    }
+
+                    // ปุ่ม Next
+                    if ($end_Page > 0) {
+                        echo "<a href='?page=" . ($current_page + 1) . $month_param . $year_param . "' class='page-link'>ถัดไป &raquo;</a>";
+                    } else {
+                        echo "<a class = 'p-2'>หน้าสุดท้าย</a>";
+                    }
+                    echo "</div>";
+                    ?>
+
                 </div>
             </div>
         </div>

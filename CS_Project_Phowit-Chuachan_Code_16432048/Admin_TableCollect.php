@@ -134,10 +134,12 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
 
                     // ดึงจำนวนข้อมูลทั้งหมดในตาราง เพื่อคำนวณจำนวนหน้าทั้งหมด
                     $row_total = $result->fetch_assoc();
-                    $total_records = $row_total['total'];
 
-                    // คำนวณจำนวนหน้าทั้งหมด
-                    $total_pages = ceil($total_records / $records_per_page);
+                    if ($row_total > 0) {
+                        $total_records = $row_total['total'];
+                        // คำนวณจำนวนหน้าทั้งหมด
+                        $total_pages = ceil($total_records / $records_per_page);
+                    }
 
                     // ----------------- ดึงข้อมูลสำหรับหน้าปัจจุบัน -----------------
                     $sql0 = "SELECT
@@ -229,7 +231,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                             <?php
                                 }
                             } else {
-                                $end_Page = - $end_Page;
+                                $end_Page = -$end_Page;
                                 echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
                             }
                             ?>
@@ -238,18 +240,30 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                     <?php
                     // ----------------- ส่วนแสดง Pagination Links -----------------
                     echo "<div class='pagination'>";
+
+                    // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์เดือน
+                    $month_param = '';
+                    if (!empty($selected_month)) {
+                        $month_param = '&month=' . urlencode($selected_month); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+                    }
+
+                    // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์ปี
+                    $year_param = '';
+                    if (!empty($selected_year)) {
+                        $year_param = '&year=' . urlencode($selected_year); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+                    }
+
                     // ปุ่ม Previous
                     if ($current_page > 1) {
-                        echo "<a href='?page=" . ($current_page - 1) . "' class='page-link'>&laquo; ก่อนหน้า</a>";
+                        echo "<a href='?page=" . ($current_page - 1) . $month_param . $year_param . "' class='page-link'>&laquo; ก่อนหน้า</a>";
                     } else {
                         echo "<a class = 'p-2'>หน้าแรก</a>";
                     }
 
                     // ปุ่ม Next
-                    if ($end_Page > 0 ) {
-                        echo "<a href='?page=" . ($current_page + 1) . "' class='page-link'>ถัดไป &raquo;</a>";
-                    } 
-                    else {
+                    if ($end_Page > 0) {
+                        echo "<a href='?page=" . ($current_page + 1) . $month_param . $year_param . "' class='page-link'>ถัดไป &raquo;</a>";
+                    } else {
                         echo "<a class = 'p-2'>หน้าสุดท้าย</a>";
                     }
                     echo "</div>";
