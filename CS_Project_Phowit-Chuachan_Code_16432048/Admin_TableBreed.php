@@ -19,7 +19,7 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql_Table_Breed = "select * from breed ";
+            $sql_Table_Breed = "select * from breed WHERE `Breed_Deleted` = 0";
             $result_Table_Breed = mysqli_query($conn, $sql_Table_Breed);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -49,7 +49,7 @@
 
                             <!--แก้ไข-->
                             <td>
-                                <button type="button" class="btn" data-bs-toggle="modal" 
+                                <button type="button" class="btn" data-bs-toggle="modal"
                                     data-bs-target="#EditBreedModal<?= $Breed_ID; ?>" style="height:30px; width:46%; padding: 5px;">
                                     <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
                                 </button>
@@ -97,30 +97,36 @@
                                 </div>
                                 <!--End Edit-->
 
-                                <button type="button" class="btn" data-bs-toggle="modal" onclick="BreedID(<?= $Breed_ID; ?>)"
-                                    data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px; margin-top:5px;">
+
+
+                                <button type="button" class="btn" data-bs-toggle="modal"
+                                    data-bs-target="#confirmDeleteModal<?= $Breed_ID; ?>" style="height:30px; width:46%; padding: 5px; margin-top:5px;">
                                     <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
                                 </button>
 
                                 <!--Start Waring For Delete-->
-                                <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal fade" id="confirmDeleteModal<?= $Breed_ID; ?>" tabindex="-1" aria-labelledby="confirmDeleteModalLabel<?= $Breed_ID; ?>" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
-
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                                                <h5 class="modal-title" id="confirmDeleteModalLabel<?= $Breed_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-
                                             <div class="modal-body">
-                                                <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                            </div>
+                                                <!-- Form for Editing Record -->
+                                                <form id="DeleteBreedForm" action="Delete_Breed.php" method="post">
+                                                    <!-- Add your form fields here for additional request details -->
 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                                <button type="button" class="btn btn-danger" onclick="deleteBreed()">ยืนยัน</button>
+                                                    <input type="hidden" name="Breed_ID" class="form-control" id="Breed_ID" value="<?php echo $Breed_ID; ?>" readonly>
+                                                    <p><?php echo $Breed_Name; ?></p>
+                                                    <div class="row">
+                                                        <div class="col-12" style="margin-top: 20px;">
+                                                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                            <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
                                             </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -159,21 +165,5 @@
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }
-</script>
-
-<script>
-    var BreedID;
-
-    // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
-    function BreedID(Breed_ID) {
-        BreedID = Breed_ID;
-    }
-
-    function deleteBreed() {
-
-        // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_Breed.php?id=" + BreedID;
-
     }
 </script>

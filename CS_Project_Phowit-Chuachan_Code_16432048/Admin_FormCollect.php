@@ -11,6 +11,7 @@
 
                 <!-- Form for Insert Collect -->
                 <form id="addRequestForm" action="Insert_collect.php" method="post">
+                    <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
                     <div class="form-floating mb-3">
                         <?php

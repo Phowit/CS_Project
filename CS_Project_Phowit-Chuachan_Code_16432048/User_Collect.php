@@ -77,7 +77,7 @@ if (!isset($_SESSION['User_ID'])) {
 
             <!--ข้อมูลการเก็บไข่ start -->
             <?php
-            require_once("Index_TableCollect.php");
+            require_once("User_TableCollect.php");
             ?>
             <!--ข้อมูลการเก็บไข่ End-->
 

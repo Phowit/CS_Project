@@ -19,9 +19,6 @@ $currentPage = basename($_SERVER['PHP_SELF']);
             <a href="User_Index.php" class="nav-item nav-link <?= ($currentPage == 'User_Index.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-laptop me-2 icon"></i>หน้าหลักผู้ใช้ทั่วไป</a>
 
-            <a href="User_Farm.php" class="nav-item nav-link <?= ($currentPage == 'User_Farm.php') ? 'active' : 'text-light' ?>">
-                <i class="fa fa-university me-2 icon"></i>ฟาร์มเกษตร ARU.</a>
-
             <a href="User_Collect.php" class="nav-item nav-link <?= ($currentPage == 'User_Collect.php') ? 'active' : 'text-light' ?>">
                 <i class="fa fa-chart-bar me-2 icon"></i>ข้อมูลการเก็บไข่</a>
 

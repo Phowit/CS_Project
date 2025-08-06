@@ -1,16 +1,30 @@
 <?php
 require_once("connect_db.php");
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+$Breed_ID = $_POST['Breed_ID'];
 
+if($Breed_ID >0 ){
     // เริ่ม ลบ remain ที่มี Breed_ID = id ที่ต้องการลบ ------------------------------------
-    $sql = "DELETE FROM `remain` WHERE `Breed_ID` = $id";
+    $sql = "UPDATE `remain` SET`Remain_Deleted`= 1 WHERE `Breed_ID` = $Breed_ID";
 
     mysqli_query($conn, $sql);
     // จบ ลบ remain ที่มี Breed_ID = id ที่ต้องการลบ ------------------------------------
 
 
+    
+    // เริ่ม ลบสายพันธุ์ออกจากตาราง -----------------------------------------------------
+    $sql3 = "UPDATE `breed` SET `Breed_Deleted`= 1 WHERE `Breed_ID` = $Breed_ID";
+
+    if (mysqli_query($conn, $sql3)) {
+        //echo "Record deleted successfully";
+        //echo $Breed_ID;
+    } else {
+        //echo "Error deleting record: " . mysqli_error($conn);
+    }
+    // จบ ลบสายพันธุ์ออกจากตาราง -----------------------------------------------------
+} else {
+    echo "No Breed ID provided";
+}
 
     // เริ่ม การหักลบค่าออกจากฐาน ในตาราง total ------------------------------------
     $sql1 = "   SELECT r1.*
@@ -36,18 +50,15 @@ if (isset($_GET['id'])) {
 
 
     // เริ่ม ลบสายพันธุ์ออกจากตาราง -----------------------------------------------------
-    $sql3 = "DELETE FROM breed WHERE Breed_ID = $id";
+    $sql3 = "UPDATE `breed` SET `Data_Deleted`= 1 WHERE `Breed_ID` = $id";
 
     if (mysqli_query($conn, $sql3)) {
         //echo "Record deleted successfully";
+        echo $id;
     } else {
         //echo "Error deleting record: " . mysqli_error($conn);
     }
     // จบ ลบสายพันธุ์ออกจากตาราง -----------------------------------------------------
-}
-else {
-    echo "No Gene ID provided";
-}
 
 ?>
 <meta http-equiv="refresh" content = "0; url = Admin_ManageBreedChicken.php ">
