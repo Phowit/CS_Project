@@ -5,7 +5,7 @@
     <div class="row">
         <?php
         require_once("connect_db.php");
-        $sql = "SELECT * FROM breed;";
+        $sql = "SELECT * FROM breed WHERE `Breed_Deleted` = 0; ";
         $result = mysqli_query($conn, $sql);
 
         while ($row = $result->fetch_assoc()) {

@@ -136,8 +136,10 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                     $sql0 = "SELECT
                                 collect.`Collect_ID`,
                                 collect.`Collect_Date`,
-                                collect.`EggAmount`
+                                collect.`EggAmount`,
+                                user.`User_Name`
                                 FROM collect
+                                INNER JOIN user ON collect.User_ID = user.User_ID
                                 WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
                                 AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
                                 ORDER BY collect.`Collect_Date`
@@ -150,7 +152,8 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                         <thead>
                             <tr class="text-dark p-1" style="font-size: 14px;">
                                 <th scope="col" class="col-1">ลำดับ</th>
-                                <th scope="col" class="col-8">วันที่เก็บ</th>
+                                <th scope="col" class="col-2">ผู้บันทึก</th>
+                                <th scope="col" class="col-6">วันที่เก็บ</th>
                                 <th scope="col" class="col-3">จำนวน (ฟอง)</th>
                             </tr>
                         </thead>
@@ -160,6 +163,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                 $end_Page = +1;
                                 while ($row = $result0->fetch_assoc()) {
                                     $Collect_ID = $row['Collect_ID'];
+                                    $User_Name = $row['User_Name'];
                                     $Collect_Date_Raw = $row["Collect_Date"];
                                     $Collect_Date_Obj = date_create_from_format("Y-m-d H:i:s", $Collect_Date_Raw);
                                     if ($Collect_Date_Obj) {
@@ -169,11 +173,11 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                         $Collect_Date_For_Input = "";
                                         $Collect_Date_Formatted = $Collect_Date_Raw;
                                     }
-
                                     $EggAmount = $row['EggAmount'];
                             ?>
                                     <tr>
                                         <td><?php echo $Collect_ID; ?></td>
+                                        <td><?php echo $User_Name; ?></td>
                                         <td><?php echo $Collect_Date_Formatted; ?></td>
                                         <td><?php echo $EggAmount; ?></td>
                                     </tr>

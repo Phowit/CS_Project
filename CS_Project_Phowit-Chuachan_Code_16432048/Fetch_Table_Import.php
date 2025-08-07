@@ -1,6 +1,8 @@
 <?php
 // fetch_table_Import.php
 
+header('Content-Type: text/html; charset=utf-8');
+
 // Set header to indicate JSON content
 header('Content-Type: application/json; charset=utf-8');
 
@@ -60,7 +62,7 @@ if ($stmt) {
             // Add row data to the array
             $tableRows[] = [
                 'Import_ID' => $row['Import_ID'],
-                'Import_Date' => $Import_Date_Formatted,
+                'Import_Date' => $Import_Date_Formatted ,
                 'Breed_ID' => $row['Breed_ID'], // Include Breed_ID for modal pre-population
                 'Breed_Name' => $row['Breed_Name'],
                 'Import_Amount' => $row['Import_Amount'], // ใช้ New_Import_Amount

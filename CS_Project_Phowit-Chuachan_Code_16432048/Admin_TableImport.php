@@ -39,6 +39,7 @@ if ($selected_breed_id !== 'all') {
     }
 }
 
+
 // SQL Query เพื่อดึงข้อมูลการนำเข้าสำหรับการแสดงผลครั้งแรก
 $sql_data_initial_load = "SELECT
                             i.`Import_ID`,
@@ -61,7 +62,7 @@ if ($result_data_initial_load) {
         // จัดรูปแบบวันที่สำหรับแสดงผลและสำหรับ input type="datetime-local"
         $Import_Date_Obj = date_create_from_format("Y-m-d H:i:s", $row["Import_Date"]);
         $Import_Date_For_Input = $Import_Date_Obj ? $Import_Date_Obj->format("Y-m-d\TH:i") : "";
-        $Import_Date_Formatted = $Import_Date_Obj ? $Import_Date_Obj->format("d/m/Y H:i:s") : $row["Import_Date"];
+        $Import_Date_Formatted = $Import_Date_Obj ? $Import_Date_Obj->format("d/m/Y H:i:s") : "";
 
         $initial_table_data[] = [
             'Import_ID' => $row['Import_ID'],
@@ -119,7 +120,7 @@ if ($result_data_initial_load) {
                     </tr>
                 </thead>
                 <tbody id="importTableBody">
-                    </tbody>
+                </tbody>
             </table>
         </div>
     </div>
@@ -201,5 +202,5 @@ if ($result_data_initial_load) {
 <script type="text/javascript">
     // ส่งข้อมูลที่ PHP ดึงมาตอนแรกไปยัง JavaScript
     // ใช้ JSON.parse(decodeURIComponent(...)) เพื่อความปลอดภัยในการส่งข้อมูลที่มีอักขระพิเศษ
-    const initialImportTableData = JSON.parse(decodeURIComponent(<?php echo json_encode(urlencode(json_encode($initial_table_data))); ?>));
+const initialImportTableData = JSON.parse('<?php echo json_encode($initial_table_data); ?>');
 </script>
