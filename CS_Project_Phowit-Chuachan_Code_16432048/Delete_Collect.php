@@ -1,21 +1,23 @@
 <?php
 require_once("connect_db.php");
 
-if (isset($_GET['id'])) {
-    $id = $_GET['id'];
+$Collect_ID = $_POST['Collect_ID'];
 
-    // SQL to delete the record
-    $sql = "DELETE FROM Collect WHERE Collect_ID = $id";
+if($Collect_ID >0 ){
+    // เริ่ม ลบการเก็บไข่ ออกจากตาราง -----------------------------------------------------
+    $sql = "UPDATE `collect` SET `Collect_Delete`= 1 WHERE `Collect_ID` = $Collect_ID";
 
     if (mysqli_query($conn, $sql)) {
-        //echo "Record deleted successfully";
+        echo "Record deleted successfully";
+        echo $Collect_ID;
     } else {
-        //echo "Error deleting record: " . mysqli_error($conn);
+        echo "Error deleting record: " . mysqli_error($conn);
     }
+    // จบ ลบการเก็บไข่ ออกจากตาราง -----------------------------------------------------
+} else {
+    echo "No Breed ID provided";
 }
-else {
-    echo "No Gene ID provided";
-}
+
     // ปิดการเชื่อมต่อ
     mysqli_close($conn);
 

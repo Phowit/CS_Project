@@ -1,17 +1,5 @@
 // Table_CollectSelect.js
 
-// สำหรับการยืนยันการลบ (ยังคงใช้เหมือนเดิม)
-var collectIDToDelete;
-
-function setCollectIdToDelete(id) {
-    collectIDToDelete = id;
-}
-
-function deleteCollectConfirm() {
-    // จะส่งไปยัง Delete_Collect.php เพื่อลบข้อมูล
-    window.location.href = "Delete_Collect.php?id=" + collectIDToDelete;
-}
-
 // เมื่อ DOM โหลดเสร็จแล้ว ให้ทำงาน
 document.addEventListener('DOMContentLoaded', function() {
     // อ้างอิงถึง element ที่เกี่ยวข้อง

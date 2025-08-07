@@ -151,6 +151,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                 INNER JOIN user ON collect.User_ID = user.User_ID
                                 WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
                                 AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
+                                AND `Collect_Delete`= 0
                                 ORDER BY collect.`Collect_Date`
                                 LIMIT $records_per_page OFFSET $offset";
 
@@ -227,9 +228,35 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn" style="height:30px; width:46%; padding: 1px;" data-bs-toggle="modal" data-bs-target="#deleteCollectModal" onclick="setCollectIdToDelete(<?php echo $Collect_ID; ?>)">
-                                                <i class='far fa-trash-alt' style='color:red; font-size:16px;'></i>
+
+                                            <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;" data-bs-target="#DeleteCollectModal<?= $Collect_ID; ?>">
+                                                <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
                                             </button>
+
+                                            <div class="modal fade" id="DeleteCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="DeleteCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="DeleteCollectModalLabel<?= $Collect_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="EditCollectForm" action="Delete_Collect.php" method="post">
+                                                                <input type="hidden" name="Collect_ID" class="form-control" id="Collect_ID_Edit" value="<?php echo $Collect_ID; ?>" readonly>
+
+                                                                <p>ข้อมูลวันที่ : <?php echo $Collect_Date_Formatted; ?> </p>
+                                                                <p>จำนวน : <?php echo $EggAmount; ?> ฟอง</p>
+                                                                <div class="row">
+                                                                    <div class="col-12" style="margin-top: 20px;">
+                                                                        <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
                                         </td>
                                     </tr>
                             <?php
@@ -273,24 +300,6 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                     echo "</div>";
                     ?>
                 </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="modal fade" id="deleteCollectModal" tabindex="-1" aria-labelledby="deleteCollectModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="deleteCollectModalLabel">ยืนยันการลบข้อมูล</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                คุณแน่ใจหรือไม่ว่าต้องการลบข้อมูลการเก็บไข่นี้?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                <button type="button" class="btn btn-danger" onclick="deleteCollectConfirm()">ลบ</button>
             </div>
         </div>
     </div>
