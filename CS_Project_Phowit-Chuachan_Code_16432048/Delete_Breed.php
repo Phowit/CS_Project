@@ -46,19 +46,5 @@ if($Breed_ID >0 ){
     $sql2 = "INSERT INTO `total`(`Total`) VALUES ('$total_amount');";   // เพิ่มค่าใหม่เข้าไปในฐาน
     mysqli_query($conn, $sql2);
     // จบ การหักลบค่าออกจากฐาน ในตาราง total ------------------------------------
-
-
-
-    // เริ่ม ลบสายพันธุ์ออกจากตาราง -----------------------------------------------------
-    $sql3 = "UPDATE `breed` SET `Data_Deleted`= 1 WHERE `Breed_ID` = $id";
-
-    if (mysqli_query($conn, $sql3)) {
-        //echo "Record deleted successfully";
-        echo $id;
-    } else {
-        //echo "Error deleting record: " . mysqli_error($conn);
-    }
-    // จบ ลบสายพันธุ์ออกจากตาราง -----------------------------------------------------
-
 ?>
 <meta http-equiv="refresh" content = "0; url = Admin_ManageBreedChicken.php ">

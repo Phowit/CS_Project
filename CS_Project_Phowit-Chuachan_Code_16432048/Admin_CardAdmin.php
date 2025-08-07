@@ -149,7 +149,7 @@
 
     <?php
     require_once("connect_db.php");
-    $sqli = "select * from user WHERE user.`User_ID` != ?";
+    $sqli = "SELECT * from user WHERE user.`User_ID` != ? AND `User_Delete` = 0";
 
     $stmt = $conn->prepare($sqli); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
     $stmt->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
@@ -217,7 +217,7 @@
                                     </div>
                                     <div class="modal-body">
                                         <!-- Form for Editing Record -->
-                                        <form id="EditBreedForm" action="Update_Admin.php" method="post" enctype="multipart/form-data">
+                                        <form id="EditAdminForm" action="Update_Admin.php" method="post" enctype="multipart/form-data">
                                             <!-- Add your form fields here for additional request details -->
 
                                             <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
@@ -266,28 +266,46 @@
                         <!--End Edit-->
 
                         <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="UserID(<?= $User_ID; ?>)" data-bs-target="#confirmDeleteModal" style="height:auto; width: 100%;">ลบ</button>
+                            <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#DeleteAdminModal<?= $User_ID; ?>" style="height:auto; width: 100%;">ลบ</button>
                         </td>
 
                         <!--Start Waring For Delete-->
-                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal fade" id="DeleteAdminModal<?= $User_ID; ?>" tabindex="-1" aria-labelledby="DeleteAdminModal<?= $User_ID; ?>" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered modal-lg">
                                 <div class="modal-content">
-
                                     <div class="modal-header">
-                                        <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                                        <h5 class="modal-title" id="DeleteAdminModal<?= $User_ID; ?>">ยืนยันที่จะลบข้อมูลผู้ใช้หรือไม่?</h5>
                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                     </div>
-
                                     <div class="modal-body">
-                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                    </div>
+                                        <!-- Form for Editing Record -->
+                                        <form id="DeleteAdminForm" action="Delete_AdminData.php" method="post">
+                                            <!-- Add your form fields here for additional request details -->
+                                            <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                        <button type="button" class="btn btn-danger" onclick="deleteAdmin()">ยืนยัน</button>
-                                    </div>
+                                            <div class="row">
+                                            <div class="col-sm-8">
+                                                <p>รหัสประจำตัว : <?php echo $User_ID; ?> </p>
 
+                                                <p>ชื่อผู้ใช้งาน : <?php echo $User_Name; ?> </p>
+
+                                                <p>สถานะ : <?php echo $User_Status; ?> </p>
+
+                                                <p>สาขา : <?php echo $Program; ?> </p>
+                                            </div>
+
+                                            <div class="col-sm-4 col-xl-4">
+                                                <?php echo "<img src='data:image/jpeg;base64,$base64Image' alt='User_Image' style='width: 80%; height: auto; border-radius: 5px;'>"; ?>
+                                            </div>
+                                            </div>
+                                            <div class="row">
+                                                <div class="col-12" style="margin-top: 20px;">
+                                                    <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                    <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -324,21 +342,5 @@
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }
-</script>
-
-<script>
-    var UserID;
-
-    // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
-    function UserID(User_ID) {
-        UserID = User_ID;
-    }
-
-    function deleteAdmin() {
-
-        // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_AdminData.php?id=" + UserID;
-
     }
 </script>
