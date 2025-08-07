@@ -15,6 +15,7 @@
                     user.User_Name
                     FROM `message`
                     INNER JOIN user ON user.User_ID = message.User_ID
+                    WHERE `Message_Delete` = 0
                     ORDER BY `Message_Record` DESC;
                     ";
 
@@ -93,30 +94,37 @@
                                 </div>
                                 <!--End Edit-->
 
-                                <button type="button" class="btn" data-bs-toggle="modal" onclick="MessageID(<?= $Message_ID; ?>)"
-                                    data-bs-target="#confirmDeleteMessage" style="height:30px; width:46%; padding: 5px;">
+                                <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                                    data-bs-target="#DeleteMessageModal<?= $Message_ID; ?>">
                                     <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
                                 </button>
 
                                 <!--Start Waring For Delete-->
-                                <div class="modal fade" id="confirmDeleteMessage" tabindex="-1" aria-labelledby="confirmDeleteMessageLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal fade" id="DeleteMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="DeleteMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
+                                    <div class="modal-dialog modal-dialog-centered modal-lg">
                                         <div class="modal-content">
-
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="confirmDeleteMessageLabel">ยืนยันการลบข้อมูล</h5>
+                                                <h5 class="modal-title" id="DeleteMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-
                                             <div class="modal-body">
-                                                <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                                            </div>
+                                                <!-- Form for Editing Record -->
+                                                <form id="DeleteMessageForm" action="Delete_Message.php" method="post">
+                                                    <!-- Add your form fields here for additional request details-->
+                                                    <input type="hidden" name="Message_ID" class="form-control" id="Message_ID" value="<?php echo $Message_ID; ?>" readonly>
+                                                    <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                                <button type="button" class="btn btn-danger" onclick="deleteMessage()">ยืนยัน</button>
-                                            </div>
+                                                    <p>หัวข้อ : <?php echo $Message_Title; ?> </p>
+                                                    <p>วันที่ส่ง : <?php echo $Message_Record; ?> </p>
 
+                                                    <div class="row">
+                                                        <div class="col-12" style="margin-top: 20px;">
+                                                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                            <button type="submit" class="btn btn-danger float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                        </div>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -155,21 +163,5 @@
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }
-</script>
-
-<script>
-    var MessageID;
-
-    // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
-    function MessageID(Message_ID) {
-        MessageID = Message_ID;
-    }
-
-    function deleteMessage() {
-
-        // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Admin_Delete_Message.php?id=" + MessageID;
-
     }
 </script>

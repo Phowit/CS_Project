@@ -19,7 +19,7 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
-            $sql_Table_Breed = "select * from breed WHERE `Breed_Deleted` = 0";
+            $sql_Table_Breed = "SELECT * from breed WHERE `Breed_Deleted` = 0";
             $result_Table_Breed = mysqli_query($conn, $sql_Table_Breed);
             ?>
             <table class="table text-start align-middle table-bordered table-hover mb-0">
