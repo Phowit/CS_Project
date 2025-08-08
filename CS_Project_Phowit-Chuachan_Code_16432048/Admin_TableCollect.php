@@ -206,6 +206,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                         <div class="modal-body">
                                                             <form id="EditCollectForm" action="Update_Collect.php" method="post">
                                                                 <input type="hidden" name="Collect_ID" class="form-control" id="Collect_ID_Edit" value="<?php echo $Collect_ID; ?>" readonly>
+                                                                <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
                                                                 <div class="form-floating mb-3">
                                                                     <input type="datetime-local" class="form-control" id="Collect_Date_Edit" name="Collect_Date" value="<?php echo $Collect_Date_For_Input; ?>" required>
@@ -213,7 +214,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                                 </div>
 
                                                                 <div class="form-floating mb-3">
-                                                                    <input type="number" class="form-control" id="EggAmount_Edit" name="EggAmount" value="<?php echo $EggAmount; ?>" required>
+                                                                    <input type="number" class="form-control" id="EggAmount_Edit" name="EggAmount" value="<?php echo $EggAmount; ?>" min="1" required>
                                                                     <label for="form-label">จำนวน (ฟอง)</label>
                                                                 </div>
 
@@ -243,6 +244,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                         <div class="modal-body">
                                                             <form id="EditCollectForm" action="Delete_Collect.php" method="post">
                                                                 <input type="hidden" name="Collect_ID" class="form-control" id="Collect_ID_Edit" value="<?php echo $Collect_ID; ?>" readonly>
+                                                                <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
                                                                 <p>ข้อมูลวันที่ : <?php echo $Collect_Date_Formatted; ?> </p>
                                                                 <p>จำนวน : <?php echo $EggAmount; ?> ฟอง</p>
