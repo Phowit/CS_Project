@@ -39,3 +39,4 @@ if ($User_Status == "Admin") {
 mysqli_close($conn);
 
 echo '<meta http-equiv="refresh" content = "0; url = ' . $Goto_page . ' ">';
+?>

@@ -154,6 +154,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                 WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
                                 AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
                                 AND `User_ID` = $User_ID_Login
+                                AND `Collect_Delete` = 0
                                 ORDER BY collect.`Collect_Date`
                                 LIMIT $records_per_page OFFSET $offset";
 
@@ -165,7 +166,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                             <tr class="text-dark p-1" style="font-size: 14px;">
                                 <th scope="col" class="col-1">ลำดับ</th>
                                 <th scope="col" class="col-7">วันที่เก็บ</th>
-                                <th scope="col" class="col-3">จำนวน (ฟอง)</th>
+                                <th scope="col" class="col-3">จำนวน ฟอง</th>
                                 <th scope="col" class="col-1">เครื่องมือ</th>
                             </tr>
                         </thead>
@@ -192,7 +193,8 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                         <td><?php echo $Collect_Date_Formatted; ?></td>
                                         <td><?php echo $EggAmount; ?></td>
                                         <td>
-                                            <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;" data-bs-target="#EditCollectModal<?= $Collect_ID; ?>">
+                                            <button type="button" class="btn" style="height:30px; width:46%; padding: 1px;"
+                                                data-bs-target="#EditCollectModal<?= $Collect_ID; ?>" data-bs-toggle="modal">
                                                 <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
                                             </button>
 
@@ -206,6 +208,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                         <div class="modal-body">
                                                             <form id="EditCollectForm" action="Update_Collect.php" method="post">
                                                                 <input type="hidden" name="Collect_ID" class="form-control" id="Collect_ID_Edit" value="<?php echo $Collect_ID; ?>" readonly>
+                                                                <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
                                                                 <div class="form-floating mb-3">
                                                                     <input type="datetime-local" class="form-control" id="Collect_Date_Edit" name="Collect_Date" value="<?php echo $Collect_Date_For_Input; ?>" required>
@@ -213,8 +216,8 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                                 </div>
 
                                                                 <div class="form-floating mb-3">
-                                                                    <input type="number" class="form-control" id="EggAmount_Edit" name="EggAmount" value="<?php echo $EggAmount; ?>" required>
-                                                                    <label for="form-label">จำนวน (ฟอง)</label>
+                                                                    <input type="number" class="form-control" id="EggAmount_Edit" name="EggAmount" value="<?php echo $EggAmount; ?>" min="1" required>
+                                                                    <label for="form-label">จำนวน ฟอง</label>
                                                                 </div>
 
                                                                 <div class="row">
@@ -228,9 +231,39 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                     </div>
                                                 </div>
                                             </div>
-                                            <button type="button" class="btn" style="height:30px; width:46%; padding: 1px;" data-bs-toggle="modal" data-bs-target="#deleteCollectModal" onclick="setCollectIdToDelete(<?php echo $Collect_ID; ?>)">
+
+                                            <button type="button" class="btn" style="height:30px; width:46%; padding: 1px;"
+                                                data-bs-target="#deleteCollectModal<?= $Collect_ID; ?>" data-bs-toggle="modal">
                                                 <i class='far fa-trash-alt' style='color:red; font-size:16px;'></i>
                                             </button>
+
+                                            <div class="modal fade" id="deleteCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="deleteCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
+                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="deleteCollectModalLabel<?= $Collect_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <form id="deleteCollectForm" action="Delete_Collect.php" method="post">
+                                                                <input type="hidden" name="Collect_ID" class="form-control" id="Collect_ID_Edit" value="<?php echo $Collect_ID; ?>" readonly>
+                                                                <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
+
+                                                                <p>วันที่เก็บเกี่ยว : <?php echo $Collect_Date_Formatted; ?> </p>
+                                                                <p>จำนวน : <?php echo $EggAmount; ?> ฟอง</p>
+
+                                                                <div class="row">
+                                                                    <div class="col-12" style="margin-top: 20px;">
+                                                                        <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">ลบข้อมูล</button>
+                                                                    </div>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </td>
                                     </tr>
                             <?php
