@@ -15,6 +15,24 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
+
+            $end_Page = 0;
+            // ----------------- ส่วน Pagination Logic -----------------
+            $records_per_page = 7; // จำนวนข้อมูลที่จะแสดงต่อหน้า
+
+            //รหัสผู้ใช้
+            $User_ID_Login = $_SESSION['User_ID'];
+
+            // ตรวจสอบหน้าปัจจุบันจาก URL
+            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                $current_page = $_GET['page'];
+            } else {
+                $current_page = 1; // ถ้าไม่มีการระบุหน้า ให้ถือว่าเป็นหน้าแรก
+            }
+
+            // คำนวณจุดเริ่มต้น (OFFSET) สำหรับการดึงข้อมูล
+            $offset = ($current_page - 1) * $records_per_page;
+
             $sql = "SELECT * FROM `message` WHERE `User_ID` = ? AND `Message_Delete` =  0;";
 
             $stmt = $conn->prepare($sql); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
@@ -22,29 +40,45 @@
             $stmt->execute(); // รันคำสั่ง
             $result = $stmt->get_result(); // รับผลลัพธ์จากฐานข้อมูล
 
-            if ($result->num_rows == 0) {
-                echo "ไม่พบข้อความที่ส่ง";
-            } else {
+            if (!$result) {
+                echo "Error: " . mysqli_error($conn);
+            }
+
+            if ($result != "") {
+                $total_records = mysqli_num_rows($result);
+                // คำนวณจำนวนหน้าทั้งหมด
+                $total_pages = ceil($total_records / $records_per_page);
+            }
+
+            $sql0 = "SELECT * FROM `message` WHERE `User_ID` = ? AND `Message_Delete` =  0 LIMIT $records_per_page OFFSET $offset; ";
+
+            $stmt0 = $conn->prepare($sql0); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
+            $stmt0->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
+            $stmt0->execute(); // รันคำสั่ง
+            $result0 = $stmt0->get_result(); // รับผลลัพธ์จากฐานข้อมูล
+
             ?>
 
-                <table class="table text-start align-middle table-bordered table-hover mb-0">
-                    <thead>
-                        <tr class="text-dark" style="font-size: 14px;">
-                            <th scope="col" class="col-1.5">วันที่ส่ง</th>
-                            <th scope="col" class="col-2">หัวข้อ</th>
-                            <th scope="col" class="col-7">รายละเอียด</th>
-                            <th scope="col" class="col-1.5">เครื่องมือ</th>
-                        </tr>
-                    </thead>
-                    <tbody style="font-size: 13px;">
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
+            <table class="table text-start align-middle table-bordered table-hover mb-0">
+                <thead>
+                    <tr class="text-dark" style="font-size: 14px;">
+                        <th scope="col" class="col-1.5">วันที่ส่ง</th>
+                        <th scope="col" class="col-2">หัวข้อ</th>
+                        <th scope="col" class="col-7">รายละเอียด</th>
+                        <th scope="col" class="col-1.5">เครื่องมือ</th>
+                    </tr>
+                </thead>
+                <tbody style="font-size: 13px;">
+                    <?php
+                    if ($result0 && mysqli_num_rows($result0) > 0) {
+                        $end_Page = +1;
+                        while ($row = $result0->fetch_assoc()) {
                             $Message_ID = $row['Message_ID'];
                             $Message_Title = $row['Message_Title'];
                             $Message_Record = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Message_Record"])->format(format: "d/m/Y H:i");
                             $Message_Detail = $row['Message_Detail'];
                             $User_ID = $row['User_ID'];
-                        ?>
+                    ?>
                             <tr>
                                 <td><?php echo $Message_Record; ?></td>
                                 <td><?php echo $Message_Title; ?></td>
@@ -133,9 +167,43 @@
                                 </td>
                             </tr>
                     <?php }
+                    } else {
+                        $end_Page = -$end_Page;
+                        echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
                     } ?>
-                    </tbody>
-                </table>
+                </tbody>
+            </table>
+            <?php
+            // ----------------- ส่วนแสดง Pagination Links -----------------
+            echo "<div class='pagination'>";
+
+            // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์เดือน
+            $month_param = '';
+            if (!empty($selected_month)) {
+                $month_param = '&month=' . urlencode($selected_month); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+            }
+
+            // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์ปี
+            $year_param = '';
+            if (!empty($selected_year)) {
+                $year_param = '&year=' . urlencode($selected_year); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+            }
+
+            // ปุ่ม Previous
+            if ($current_page > 1) {
+                echo "<a href='?page=" . ($current_page - 1) . $month_param . $year_param . "' class='page-link'>&laquo; ก่อนหน้า</a>";
+            } else {
+                echo "<a class = 'p-2'>หน้าแรก</a>";
+            }
+
+            // ปุ่ม Next
+            if ($end_Page > 0) {
+                echo "<a href='?page=" . ($current_page + 1) . $month_param . $year_param . "' class='page-link'>ถัดไป &raquo;</a>";
+            } else {
+                echo "<a class = 'p-2'>หน้าสุดท้าย</a>";
+            }
+            echo "</div>";
+            ?>
         </div>
     </div>
 </div>
