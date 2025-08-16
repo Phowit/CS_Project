@@ -30,7 +30,7 @@
                                 <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
                                     <?php
                                     require_once("connect_db.php");
-                                    $sql = "select * from breed";
+                                    $sql = "SELECT * from breed";
                                     $result = mysqli_query($conn, $sql);
 
                                     while ($row = $result->fetch_assoc()) {

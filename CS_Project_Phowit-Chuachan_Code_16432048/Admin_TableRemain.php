@@ -99,7 +99,7 @@
                     <?php }
                     } else {
                         $end_Page = -$end_Page;
-                        echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
+                        echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูล</td></tr>";
                     }
                     ?> <!-- close php-->
                 </tbody>

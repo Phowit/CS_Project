@@ -149,7 +149,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                 WHERE MONTH(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_month) . "'
                                 AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
                                 AND `Collect_Delete`= 0
-                                ORDER BY collect.`Collect_Date`
+                                ORDER BY collect.`Collect_Date` DESC
                                 LIMIT $records_per_page OFFSET $offset";
 
                     $result0 = $conn->query($sql0);
@@ -248,7 +248,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                                 <div class="row">
                                                                     <div class="col-12" style="margin-top: 20px;">
                                                                         <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
-                                                                        <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                                        <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">ยืนยัน</button>
                                                                     </div>
                                                                 </div>
                                                             </form>

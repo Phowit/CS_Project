@@ -155,7 +155,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                 AND YEAR(collect.`Collect_Date`) = '" . mysqli_real_escape_string($conn, $selected_year) . "'
                                 AND `User_ID` = $User_ID_Login
                                 AND `Collect_Delete` = 0
-                                ORDER BY collect.`Collect_Date`
+                                ORDER BY collect.`Collect_Date` DESC
                                 LIMIT $records_per_page OFFSET $offset";
 
                     $result0 = $conn->query($sql0);
@@ -270,7 +270,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                 }
                             } else {
                                 $end_Page = -$end_Page;
-                                echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
+                                echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่ของคุณสำหรับเดือน/ปีนี้</td></tr>";
                             }
                             ?>
                         </tbody>

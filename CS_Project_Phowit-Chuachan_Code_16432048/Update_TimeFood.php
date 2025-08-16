@@ -21,5 +21,5 @@
     mysqli_close($conn);
 
     // เปลี่ยนหน้า
-    echo '<meta http-equiv="refresh" content="0; url=Admin_Status.php">';
+    echo '<meta http-equiv="refresh" content="0; url = Admin_ManageEnvironment.php">';
 ?>

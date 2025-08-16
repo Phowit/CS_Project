@@ -173,7 +173,7 @@
                                                         <div class="row">
                                                             <div class="col-12" style="margin-top: 20px;">
                                                                 <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
-                                                                <button type="submit" class="btn btn-danger float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                                <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
                                                             </div>
                                                         </div>
                                                     </form>

@@ -60,7 +60,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const escapedDetails = rowData.Import_Details ? rowData.Import_Details.replace(/'/g, "\\'").replace(/"/g, '\\"') : '';
 
                 tr.innerHTML = `
-                    <td>${counter++}</td>
+                    <td>${rowData.Import_ID}</td>
                     <td>${rowData.Import_Date || ''}</td>
                     <td>${rowData.Breed_Name || ''}</td>
                     <td>${rowData.Import_Amount ? rowData.Import_Amount : ''}</td>
