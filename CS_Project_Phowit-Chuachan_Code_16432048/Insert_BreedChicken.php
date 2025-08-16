@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ดำเนินการคำสั่ง SQL
     if (mysqli_query($conn, $sqli)) {
-        echo "Record added successfully!";
+        //echo "Record added successfully!";
     } else {
         echo "Error adding record: " . mysqli_error($conn);
     }

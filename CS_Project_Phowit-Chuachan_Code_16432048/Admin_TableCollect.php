@@ -132,11 +132,8 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                         echo "Error: " . mysqli_error($conn);
                     }
 
-                    // ดึงจำนวนข้อมูลทั้งหมดในตาราง เพื่อคำนวณจำนวนหน้าทั้งหมด
-                    $row_total = $result->fetch_assoc();
-
-                    if ($row_total > 0) {
-                        $total_records = $row_total['total'];
+                    if ($result != "") {
+                        $total_records = mysqli_num_rows($result);
                         // คำนวณจำนวนหน้าทั้งหมด
                         $total_pages = ceil($total_records / $records_per_page);
                     }

@@ -50,7 +50,7 @@
                 $total_pages = ceil($total_records / $records_per_page);
             }
 
-            $sql0 = "SELECT * FROM `message` WHERE `User_ID` = ? AND `Message_Delete` =  0 LIMIT $records_per_page OFFSET $offset; ";
+            $sql0 = "SELECT * FROM `message` WHERE `User_ID` = ? AND `Message_Delete` =  0 ORDER BY `Message_Record` DESC LIMIT $records_per_page OFFSET $offset ; ";
 
             $stmt0 = $conn->prepare($sql0); // เตรียมคำสั่ง SQL เพื่อป้องกัน SQL Injection
             $stmt0->bind_param("i", $_SESSION['User_ID']); // ผูกค่าพารามิเตอร์
@@ -169,7 +169,7 @@
                     <?php }
                     } else {
                         $end_Page = -$end_Page;
-                        echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการเก็บไข่สำหรับเดือน/ปีนี้</td></tr>";
+                        echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการส่งข้อความของคุณ</td></tr>";
                     } ?>
                 </tbody>
             </table>

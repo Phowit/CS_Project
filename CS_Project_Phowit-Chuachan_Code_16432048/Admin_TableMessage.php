@@ -6,6 +6,21 @@
         <div class="table-responsive">
             <?php
             require_once("connect_db.php");
+
+            $end_Page = 0;
+            // ----------------- ส่วน Pagination Logic -----------------
+            $records_per_page = 7; // จำนวนข้อมูลที่จะแสดงต่อหน้า
+
+            // ตรวจสอบหน้าปัจจุบันจาก URL
+            if (isset($_GET['page']) && is_numeric($_GET['page'])) {
+                $current_page = $_GET['page'];
+            } else {
+                $current_page = 1; // ถ้าไม่มีการระบุหน้า ให้ถือว่าเป็นหน้าแรก
+            }
+
+            // คำนวณจุดเริ่มต้น (OFFSET) สำหรับการดึงข้อมูล
+            $offset = ($current_page - 1) * $records_per_page;
+
             $sql = "SELECT
                     `Message_ID`,
                     `Message_Record`,
@@ -20,6 +35,32 @@
                     ";
 
             $result = mysqli_query($conn, $sql);
+
+            if (!$result) {
+                echo "Error: " . mysqli_error($conn);
+            }
+
+            if ($result != "") {
+                $total_records = mysqli_num_rows($result);
+                // คำนวณจำนวนหน้าทั้งหมด
+                $total_pages = ceil($total_records / $records_per_page);
+            }
+
+            // ----------------- ดึงข้อมูลสำหรับหน้าปัจจุบัน -----------------
+            $sql0 = "SELECT
+                    `Message_ID`,
+                    `Message_Record`,
+                    `Message_Title`,
+                    `Message_Detail`,
+                    message.`User_ID`,
+                    user.User_Name
+                    FROM `message`
+                    INNER JOIN user ON user.User_ID = message.User_ID
+                    WHERE `Message_Delete` = 0
+                    ORDER BY `Message_Record` DESC
+                    LIMIT $records_per_page OFFSET $offset";
+
+            $result0 = $conn->query($sql0);
             ?>
 
             <table class="table text-start align-middle table-bordered table-hover mb-0">
@@ -35,105 +76,153 @@
                 </thead>
                 <tbody style="font-size: 13px;">
                     <?php
-                    while ($row = $result->fetch_assoc()) {
-                        $Message_ID = $row['Message_ID'];
-                        $Message_Record = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Message_Record"])->format(format: "d/m/Y H:i");
-                        $Message_Title = $row['Message_Title'];
-                        $Message_Detail = $row['Message_Detail'];
-                        $User_ID = $row['User_ID'];
-                        $User_Name = $row['User_Name'];
+                    if ($result0 && mysqli_num_rows($result0) > 0) {
+                        $end_Page = +1;
+                        while ($row = $result0->fetch_assoc()) {
+                            $Message_ID = $row['Message_ID'];
+                            $Message_Record = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["Message_Record"])->format(format: "d/m/Y H:i");
+                            $Message_Title = $row['Message_Title'];
+                            $Message_Detail = $row['Message_Detail'];
+                            $User_ID = $row['User_ID'];
+                            $User_Name = $row['User_Name'];
                     ?>
-                        <tr>
-                            <td><?php echo $Message_Record; ?></td>
-                            <td><?php echo $Message_Title; ?></td>
-                            <td><?php echo $Message_Detail; ?></td>
-                            <td><?php echo $User_Name; ?></td>
+                            <tr>
+                                <td><?php echo $Message_Record; ?></td>
+                                <td><?php echo $Message_Title; ?></td>
+                                <td><?php echo $Message_Detail; ?></td>
+                                <td><?php echo $User_Name; ?></td>
 
-                            <!--แก้ไข-->
-                            <td>
-                                <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
-                                    data-bs-target="#EditMessageModal<?= $Message_ID; ?>">
-                                    <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
-                                </button>
+                                <!--แก้ไข-->
+                                <td>
+                                    <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                                        data-bs-target="#EditMessageModal<?= $Message_ID; ?>">
+                                        <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
+                                    </button>
 
-                                <!--Start Edit-->
-                                <div class="modal fade" id="EditMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="EditMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="EditMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Form for Editing Record -->
-                                                <form id="EditCollectForm" action="Admin_Update_Message.php" method="post">
-                                                    <!-- Add your form fields here for additional request details -->
+                                    <!--Start Edit-->
+                                    <div class="modal fade" id="EditMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="EditMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="EditMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Form for Editing Record -->
+                                                    <form id="EditCollectForm" action="Admin_Update_Message.php" method="post">
+                                                        <!-- Add your form fields here for additional request details -->
 
-                                                    <input type="hidden" name="Message_ID" class="form-control" id="Message_ID" value="<?php echo $Message_ID; ?>" readonly>
+                                                        <input type="hidden" name="Message_ID" class="form-control" id="Message_ID" value="<?php echo $Message_ID; ?>" readonly>
 
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text" class="form-control" id="Message_Title" name="Message_Title" value="<?php echo $Message_Title; ?>" placeholder required>
-                                                        <label class="form-label">หัวข้อ</label>
-                                                    </div>
-
-                                                    <div class="form-floating mb-3">
-                                                        <input type="text" class="form-control" id="Message_Detail" name="Message_Detail" value="<?php echo $Message_Detail; ?>" placeholder required>
-                                                        <label for="form-label">รายละเอียด</label>
-                                                    </div>
-
-                                                    <div class="row">
-                                                        <div class="col-12" style="margin-top: 20px;">
-                                                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
-                                                            <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text" class="form-control" id="Message_Title" name="Message_Title" value="<?php echo $Message_Title; ?>" placeholder required>
+                                                            <label class="form-label">หัวข้อ</label>
                                                         </div>
-                                                    </div>
-                                                </form>
+
+                                                        <div class="form-floating mb-3">
+                                                            <input type="text" class="form-control" id="Message_Detail" name="Message_Detail" value="<?php echo $Message_Detail; ?>" placeholder required>
+                                                            <label for="form-label">รายละเอียด</label>
+                                                        </div>
+
+                                                        <div class="row">
+                                                            <div class="col-12" style="margin-top: 20px;">
+                                                                <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                                <button type="submit" class="btn btn-primary float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!--End Edit-->
+                                    <!--End Edit-->
 
-                                <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
-                                    data-bs-target="#DeleteMessageModal<?= $Message_ID; ?>">
-                                    <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
-                                </button>
+                                    <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                                        data-bs-target="#DeleteMessageModal<?= $Message_ID; ?>">
+                                        <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
+                                    </button>
 
-                                <!--Start Waring For Delete-->
-                                <div class="modal fade" id="DeleteMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="DeleteMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="DeleteMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <!-- Form for Editing Record -->
-                                                <form id="DeleteMessageForm" action="Delete_Message.php" method="post">
-                                                    <!-- Add your form fields here for additional request details-->
-                                                    <input type="hidden" name="Message_ID" class="form-control" id="Message_ID" value="<?php echo $Message_ID; ?>" readonly>
-                                                    <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
+                                    <!--Start Waring For Delete-->
+                                    <div class="modal fade" id="DeleteMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="DeleteMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="DeleteMessageModalLabel<?= $Message_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <!-- Form for Editing Record -->
+                                                    <form id="DeleteMessageForm" action="Delete_Message.php" method="post">
+                                                        <!-- Add your form fields here for additional request details-->
+                                                        <input type="hidden" name="Message_ID" class="form-control" id="Message_ID" value="<?php echo $Message_ID; ?>" readonly>
+                                                        <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
-                                                    <p>หัวข้อ : <?php echo $Message_Title; ?> </p>
-                                                    <p>วันที่ส่ง : <?php echo $Message_Record; ?> </p>
+                                                        <div class="row">
+                                                            <div class="col-4">
+                                                                <p>ผู้ส่ง : <?php echo $User_Name; ?> </p>
+                                                                <p>หัวข้อ : <?php echo $Message_Title; ?> </p>
+                                                            </div>
 
-                                                    <div class="row">
-                                                        <div class="col-12" style="margin-top: 20px;">
-                                                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
-                                                            <button type="submit" class="btn btn-danger float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                            <div class="col-8">
+                                                                <p>วันที่ส่ง : <?php echo $Message_Record; ?> </p>
+                                                                <p>เนื้อหา : <?php echo $Message_Detail; ?> </p>
+
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                </form>
+
+                                                        <div class="row">
+                                                            <div class="col-12" style="margin-top: 20px;">
+                                                                <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                                                                <button type="submit" class="btn btn-danger float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                            </div>
+                                                        </div>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!--END Warning For Delete-->
-                            </td>
-                        </tr>
-                    <?php } ?>
+                                    <!--END Warning For Delete-->
+                                </td>
+                            </tr>
+                    <?php }
+                    } else {
+                        $end_Page = -$end_Page;
+                        echo "<tr><td colspan='4' class='text-center'>ไม่พบข้อมูลการส่งข้อความ</td></tr>";
+                    }
+                    ?>
                 </tbody>
             </table>
+            <?php
+            // ----------------- ส่วนแสดง Pagination Links -----------------
+            echo "<div class='pagination'>";
+
+            // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์เดือน
+            $month_param = '';
+            if (!empty($selected_month)) {
+                $month_param = '&month=' . urlencode($selected_month); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+            }
+
+            // เราจะสร้างตัวแปรเพื่อเก็บพารามิเตอร์ปี
+            $year_param = '';
+            if (!empty($selected_year)) {
+                $year_param = '&year=' . urlencode($selected_year); // ใช้ urlencode เพื่อให้ปลอดภัยถ้ามีอักขระพิเศษ
+            }
+
+            // ปุ่ม Previous
+            if ($current_page > 1) {
+                echo "<a href='?page=" . ($current_page - 1) . $month_param . $year_param . "' class='page-link'>&laquo; ก่อนหน้า</a>";
+            } else {
+                echo "<a class = 'p-2'>หน้าแรก</a>";
+            }
+
+            // ปุ่ม Next
+            if ($end_Page > 0) {
+                echo "<a href='?page=" . ($current_page + 1) . $month_param . $year_param . "' class='page-link'>ถัดไป &raquo;</a>";
+            } else {
+                echo "<a class = 'p-2'>หน้าสุดท้าย</a>";
+            }
+            echo "</div>";
+            ?>
         </div>
     </div>
 </div>

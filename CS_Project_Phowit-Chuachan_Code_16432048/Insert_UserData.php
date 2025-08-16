@@ -49,7 +49,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // ดำเนินการคำสั่ง
     if ($stmt->execute()) {
-        echo "<h1 style='margin-top: 20%; margin-left: 37%;'>Record added successfully!</h1>";
+        echo"
+
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                let modal = document.getElementById('successModal');
+                modal.style.display = 'block';
+            });
+            </script>
+        ";
     } else {
         echo "Error adding record: " . $stmt->error;
     }
@@ -59,8 +67,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $conn->close();
 
     // เปลี่ยนหน้า
-    echo '<meta http-equiv="refresh" content="0; url=Index.php">';
+    echo '<meta http-equiv="refresh" content="2; url=Index.php">';
 }
 
-
 ?>
+
+<!-- Modal success-->
+<div id="successModal" style="display:none; position:fixed; top:30%; left:50%; transform:translate(-50%, -50%);
+                             background-color:white; padding:20px; border:1px solid #ccc; z-index:1000; box-shadow: 0 0 10px rgba(0,0,0,0.5);">
+    <p style="color:green;">✅ สมัครสมาชิกสำเร็จ</p>
+    <a>โปรดเข้าสู่ระบบอีกครั้ง</a>
+</div>
