@@ -2,10 +2,11 @@
     // เชื่อมต่อกับฐานข้อมูล
     require_once("connect_db.php");
 
-    // รับข้อมูลจากฟอร์ม
+    // รับข้อมูลจากฟอร์ม 
+    $TimeWater_ID = $_POST['TimeWater_ID'];
     $TimeWater = $_POST['TimeWater'];
 
-    $sql = "UPDATE datacontrol SET TimeWater = '$TimeWater'";
+    $sql = "UPDATE `timewater` SET `TimeWater`='$TimeWater' WHERE `TimeWater_ID` = $TimeWater_ID";
 
     // ดำเนินการคำสั่ง SQL
     if (mysqli_query($conn, $sql)) {
@@ -15,8 +16,8 @@
     }
 
     // ปิดการเชื่อมต่อ
-    //mysqli_close($conn);
+    mysqli_close($conn);
 
     // เปลี่ยนหน้า
-    echo '<meta http-equiv="refresh" content="0; url=Admin_Status.php">';
+    echo '<meta http-equiv="refresh" content="0; url = Admin_ManageEnvironment.php">';
 ?>
