@@ -174,17 +174,23 @@ require_once("connect_db.php");
                         </div>
                     </div>
                     <div class="row">
-                    <?php
-                    $sql = "SELECT `Total` FROM `total` ORDER BY `Total_Date` DESC LIMIT 1";
+                        <?php
+                        $Total = " ไม่พบข้อมูล ";
 
-                    $result = mysqli_query($conn, $sql);
+                        $sql2 = "SELECT `Total` FROM `total` ORDER BY `Total_Date` DESC LIMIT 1";
 
-                    while ($row = $result->fetch_assoc()) {
-                        $Total = $row['Total'];
-                    }
-                    ?>
+                        $result2 = mysqli_query($conn, $sql2);
+
+                        if ($result2) {
+                            if ($result2->num_rows > 0) { // เพิ่มการตรวจสอบว่ามีข้อมูลในตารางหรือไม่
+                                while ($row = $result2->fetch_assoc()) {
+                                    $Total = $row['Total'] . "ตัว";
+                                }
+                            }
+                        }
+                        ?>
                         <a>จำนวนไก่ในโรงเรือน</a>
-                        <a class="text-dark"><?php echo$Total ?> ตัว</a>
+                        <a class="text-dark"><?php echo $Total; ?></a>
                     </div>
                 </div>
             </div>
@@ -198,7 +204,8 @@ require_once("connect_db.php");
                     </div>
                     <div class="row">
                         <a>ระดับอุณหภูมิโรงเรือน</a>
-                        <a class="text-dark"><?php echo $T_Level; echo " " . $T_Status; ?></a>
+                        <a class="text-dark"><?php echo $T_Level;
+                                                echo " " . $T_Status; ?></a>
                     </div>
                 </div>
             </div>

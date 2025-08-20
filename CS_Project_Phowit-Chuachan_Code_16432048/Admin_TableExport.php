@@ -48,7 +48,9 @@ $sql_data_initial_load = "SELECT
                             b.`Breed_Name`,
                             b.`Breed_ID`
                         FROM `export` e
-                        JOIN `breed` b ON e.`Breed_ID` = b.`Breed_ID`
+                        JOIN `remain` r ON e.`Export_ID` = r.`Export_ID`
+                        JOIN `import` i ON r.`Import_ID` = i.`import_ID`
+                        JOIN `breed` b ON i.`Breed_ID` = b.`Breed_ID`
                         $where_clause
                         ORDER BY e.`Export_Date` DESC;";
 

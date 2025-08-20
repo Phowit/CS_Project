@@ -14,14 +14,16 @@ $tableRows = []; // Initialize array to hold table data
 
 // Base SQL query
 $sql = "SELECT
-            exp.Export_ID,
-            exp.Export_Date,
-            exp.Export_Amount,
-            exp.Export_Details,
-            b.Breed_ID,
-            b.Breed_Name
+            exp.`Export_ID`,
+            exp.`Export_Date`,
+            exp.`Export_Amount`,
+            exp.`Export_Details`,
+            b.`Breed_ID`,
+            b.`Breed_Name`
         FROM export AS exp
-        INNER JOIN breed AS b ON exp.Breed_ID = b.Breed_ID";
+        JOIN remain AS r ON exp.`Export_ID` = r.`Export_ID`
+        JOIN import AS i ON r.`Import_ID` = i.`import_ID`
+        JOIN breed AS b ON i.`Breed_ID` = b.`Breed_ID`";
 
 // Add WHERE clause if a specific breed is selected
 if ($selectedBreedId !== 'all' && $selectedBreedId !== null && $selectedBreedId !== '') {

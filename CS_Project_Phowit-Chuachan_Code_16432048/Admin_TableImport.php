@@ -77,9 +77,10 @@ if ($result_data_initial_load) {
 } else {
     error_log("Error fetching initial import data: " . mysqli_error($conn));
 }
+
 ?>
 
-<div class="container-fluid pt-4 px-4 rounded bg-primary">
+<div class="container-fluid pt-4 px-4 rounded bg-primary mb-5">
     <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
             <h6 class="m-0 text-dark col-4">ตารางจัดการข้อมูลการนำเข้าไก่ไข่</h6>
@@ -135,7 +136,7 @@ if ($result_data_initial_load) {
             </div>
             <div class="modal-body">
                 <form id="editForm" action="Update_Import.php" method="post">
-                    <input type="hidden" name="Import_ID" id="edit_Import_ID">
+                    <input type="hidden" name="Import_ID" class="form-control" id="edit_Import_ID" value="" readonly>
 
                     <div class="form-floating mb-3">
                         <input type="datetime-local" class="form-control" name="Import_Date" id="edit_Import_Date" required>
@@ -158,14 +159,14 @@ if ($result_data_initial_load) {
                         </div>
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="number" class="form-control" name="Import_Amount" id="edit_Import_Amount" min="1" required>
-                                <label for="edit_Import_Amount">จำนวนไก่ทั้งหมด (ตัว)</label>
+                                <input type="number" class="form-control" name="New_Import_Amount" id="edit_Import_Amount" value="" min="1" required>
+                                <label for="New_Import_Amount">จำนวนไก่ที่นำเข้า (ตัว)</label>
                             </div>
                         </div>
                     </div><br>
 
                     <div class="form-floating">
-                        <textarea class="form-control" name="Import_Details" id="edit_Import_Details" style="height: 100px;" required></textarea>
+                        <textarea class="form-control" name="Import_Details" id="edit_Import_Details" value="" style="height: 100px;" required></textarea>
                         <label for="edit_Import_Details">รายละเอียด</label>
                     </div>
 

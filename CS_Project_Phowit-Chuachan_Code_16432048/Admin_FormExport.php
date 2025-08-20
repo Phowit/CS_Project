@@ -1,9 +1,9 @@
 <!--Start add-->
-<div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
+<div class="modal fade" id="addExportModal" tabindex="-1" aria-labelledby="addExportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addRecordModalLabel<">เพิ่มข้อมูลการส่งออกไก่ไข่</h5>
+                <h5 class="modal-title" id="addExportModalLabel<">เพิ่มข้อมูลการส่งออกไก่ไข่</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
@@ -36,7 +36,7 @@
                                     $Import_Amount = $row['Import_Amount'];
                                     $Import_Details = $row['Import_Details'];
                                     $Breed_Name = $row['Breed_Name'];
-                                    $Option = "รหัส : $import_ID , เวลา : $Import_Date_Format , สายพันธุ์ : $Breed_Name , จำนวน $Import_Amount ตัว";
+                                    $Option = "ลำดับ : $import_ID , เวลา : $Import_Date_Format , สายพันธุ์ : $Breed_Name , จำนวน $Import_Amount ตัว";
                                 ?>
 
                                     <option value="<?= $row['import_ID']; ?>">
@@ -55,21 +55,21 @@
                                 // ดึงวันที่และเวลาปัจจุบันในรูปแบบที่เหมาะกับ input[type="datetime-local"]
                                 $currentDateTime = date('Y-m-d\TH:i');
                                 ?>
-                                <input type="DateTime-local" class="form-control" name="Export_Date" id="Import_Date" value="<?php echo $currentDateTime; ?>" placeholder required>
+                                <input type="DateTime-local" class="form-control" name="Export_Date" id="Export_Date" value="<?php echo $currentDateTime; ?>" placeholder required>
                                 <label for="Export_Date" class="form-label">วัน เวลา ที่ส่งออก</label>
                             </div>
                         </div>
 
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="number" class="form-control" name="Import_Amount" id="Import_Amount" min="1" placeholder required>
-                                <label for="Import_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
+                                <input type="number" class="form-control" name="Export_Amount" id="Export_Amount" min="1" placeholder required>
+                                <label for="Export_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
                             </div>
                         </div>
                     </div><br>
 
                     <div class="form-floating mb-3">
-                        <textarea class="form-control" id="Import_Details" name="Import_Details" style="height: 150px;" placeholder></textarea>
+                        <textarea class="form-control" id="Export_Details" name="Export_Details" style="height: 150px;" placeholder></textarea>
                         <label for="floatingTextarea">รายละเอียด</label>
                     </div>
 

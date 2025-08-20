@@ -6,6 +6,7 @@
             <div class="col-2"></div>
             <?php
             require_once("connect_db.php");
+            $Total = '';
 
             $sql = "SELECT Total FROM `total` ORDER BY `Total_Date` DESC LIMIT 1;";
 
@@ -14,8 +15,14 @@
             while ($row = $result->fetch_assoc()) {
                 $Total = $row['Total'];
             }
+
+            if ($Total) {
+                $Total = $Total . "ตัว";
+            } else {
+                $Total = "ไม่พบข้อมูล";
+            }
             ?>
-            <p class="col-5">จำนวนไก่ไข่ในโรงเรือนทั้งหมด <?php echo $Total ?> ตัว</p>
+            <p class="col-5">จำนวนไก่ไข่ในโรงเรือนทั้งหมด <?php echo $Total ?></p>
 
         </div>
 
@@ -37,13 +44,19 @@
             $offset = ($current_page - 1) * $records_per_page;
 
             $sql0 = "WITH Ranked AS (
-                    SELECT *, ROW_NUMBER() 
-                    OVER (PARTITION BY Breed_ID ORDER BY Remain_Date DESC) AS rn FROM remain)
-                    SELECT Ranked.*, breed.Breed_Name
-                    AS total
-                    FROM Ranked 
-                    INNER JOIN breed ON breed.Breed_ID = Ranked.Breed_ID
-                    WHERE rn = 1;
+                        SELECT
+                            r.*,
+                            i.Breed_ID,
+                            ROW_NUMBER() OVER (PARTITION BY i.Breed_ID ORDER BY r.Remain_Date DESC) AS rn
+                        FROM remain r
+                        INNER JOIN import i ON r.import_ID = i.import_ID
+                    )
+                    SELECT
+                        Ranked.*,
+                        b.Breed_Name
+                    FROM Ranked
+                    INNER JOIN breed AS b ON b.Breed_ID = Ranked.Breed_ID
+                    WHERE Ranked.rn = 1;
                     ";
 
             $result0 = mysqli_query($conn, $sql0);
@@ -62,12 +75,19 @@
             }
 
             $sql1 = "WITH Ranked AS (
-                    SELECT *, ROW_NUMBER() 
-                    OVER (PARTITION BY Breed_ID ORDER BY Remain_Date DESC) AS rn FROM remain)
-                    SELECT Ranked.*, breed.Breed_Name 
-                    FROM Ranked 
-                    INNER JOIN breed ON breed.Breed_ID = Ranked.Breed_ID
-                    WHERE rn = 1
+                        SELECT
+                            r.*,
+                            i.Breed_ID,
+                            ROW_NUMBER() OVER (PARTITION BY i.Breed_ID ORDER BY r.Remain_Date DESC) AS rn
+                        FROM remain r
+                        INNER JOIN import i ON r.import_ID = i.import_ID
+                    )
+                    SELECT
+                        Ranked.*,
+                        b.Breed_Name
+                    FROM Ranked
+                    INNER JOIN breed AS b ON b.Breed_ID = Ranked.Breed_ID
+                    WHERE Ranked.rn = 1
                     LIMIT $records_per_page OFFSET $offset";
 
             $result1 = $conn->query($sql1);
