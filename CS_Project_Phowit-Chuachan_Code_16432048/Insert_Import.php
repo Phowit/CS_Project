@@ -34,6 +34,13 @@ $sql0 = "   SELECT * FROM `remain` AS r
         " ;
 $result0 = mysqli_query($conn, $sql0);//ดึงข้อมูลทั้งหมดจาก remain มา
 
+// import id ส่วนกลาง
+$sql2 = "SELECT `import_ID` FROM `import` ORDER BY `Import_Date_Record` DESC LIMIT 1";
+$result2 = $conn->query($sql2);//ดึงข้อมูล id ล่าสุดจาก import ที่พึ่งเพิ่มไปด้านบน
+while($row = $result2->fetch_assoc()){
+    $import_ID = $row['import_ID'];
+}
+
 //ตรวจสอบว่ามีข้อมูลเก่าอยู่แล้วหรือไม่
 if($result0 && $result0->num_rows > 0) {
     //ถ้ามี ให้นำค่าเก่าล่าสุดมา + เพิ่มกับค่าใหม่ แล้วค่อยสร้างชุดข้อมูลใหม่ เพื่อที่จะสามารถสร้างเป็นกราฟวัดได้ ว่าเพิ่มลดเท่าไร
@@ -45,16 +52,10 @@ if($result0 && $result0->num_rows > 0) {
 
     $New_Remain_Amount = $Remain_Amount + $Import_Amount; //ข้อมูลเก่า + ใหม่
     //echo $Remain_Amount . "," . $Remain_Import_ID  . "," . $Remain_Export_ID . "<br>";
-    $sql1 = " INSERT INTO `remain`(`Remain_Amount`, `Import_ID` , `Export_ID`) VALUES ($New_Remain_Amount , $Remain_Import_ID , $Remain_Export_ID);";
+    $sql1 = " INSERT INTO `remain`(`Remain_Amount`, `Import_ID` , `Export_ID`) VALUES ($New_Remain_Amount , $import_ID , $Remain_Export_ID);";
     //echo "พบค่าเก่า =" . $Remain_Amount . "<br>";
 } else {
     //ถ้าไม่มี ให้สร้างสาย remain ด้วยข้อมูลใหม่ทั้งหมดใหม่
-
-    $sql2 = "SELECT `import_ID` FROM `import` ORDER BY `Import_Date_Record` DESC LIMIT 1";
-    $result2 = $conn->query($sql2);//ดึงข้อมูล id ล่าสุดจาก import ที่พึ่งเพิ่มไปด้านบน
-    while($row = $result2->fetch_assoc()){
-        $import_ID = $row['import_ID'];
-    }
 
     $sql1 = "INSERT INTO `remain`(`Remain_Amount`, `Import_ID`) VALUES ($Import_Amount, $import_ID);";
     //echo "ไม่พบค่าเก่า <br>";

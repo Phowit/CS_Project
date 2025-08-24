@@ -11,6 +11,7 @@
     $Import_Details = $_POST['Import_Details'];
 
     //echo "New_Import_Amount รับจากฟอร์ม = $New_Import_Amount <br><br>";
+
     //[เริ่ม] ส่วนการตรวจสอบข้อมูลเก่า
     $Check_Old_Import = "SELECT * FROM `import` WHERE `import_ID` = '$Import_ID'; ";
 
@@ -28,7 +29,6 @@
 
 
 
-// เริ่ม แก้ไขข้อมูลการนำเข้า -----------------------------------------------------intval(
 if(!$New_Import_Amount or $New_Import_Amount == ''){
     // ถ้าค่าจำนวนใหม่ว่าง ให้จำนวนเท่าเดิม
     $New_Import_Amount = $Old_Import_Amount;
@@ -36,6 +36,119 @@ if(!$New_Import_Amount or $New_Import_Amount == ''){
 $New_Import_Amount = intval($New_Import_Amount);
 //echo "New_Import_Amount หลังจากตรวจสอบ+แก้ประเภทแล้ว = $New_Import_Amount <br><br>";
 
+
+
+// เริ่ม แก้ไขค่า remain เก่า -----------------------------------------------------
+
+// [เริ่ม] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
+$sqli = "   SELECT * FROM `remain` AS r
+            JOIN import AS i ON i.`import_ID` = r.`Import_ID`
+            WHERE i.`Breed_ID` = $Old_Breed_ID ORDER BY r.`Remain_Date` DESC LIMIT 1";
+
+$resulti = mysqli_query($conn , $sqli);
+
+while($row = $resulti->fetch_assoc()) {
+    $Old_Remain_Amount = $row['Remain_Amount'];
+    $Remain_ID = $row['Remain_ID'];
+    $Old_Export_ID = $row['Export_ID'];
+}   //นี่คือค่า Remain_Amount เก่า และ ID ที่ต้องการแก้เก่า
+// [จบ] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
+
+
+if($Breed_ID != $Old_Breed_ID){
+    // 1. หากแก้ไขที่สายพันธุ์อย่างเดียว จะทำการ - remain ด้วยค่าเดิม แล้วไปเพิ่ม remain ด้วยค่าใหม่
+    $New_Breed_ID = $Breed_ID;
+
+    $New_Remain_Amount = $Old_Remain_Amount - $Old_Import_Amount;
+
+    //เพิ่มค่า remain ของสายพันธุ์เดิม
+    $Old_remain_result = " INSERT INTO `remain`(`Remain_Amount`,`Import_ID`, `Export_ID`) VALUES ('$New_Remain_Amount','$Import_ID','$Old_Export_ID') ";
+    mysqli_query($conn, $Old_remain_result);
+
+    //เลือกค่า remain ล่าสุด ของสายพันธุ์ใหม่มาเพิ่มค่า
+    $sql0 = "   SELECT * FROM `remain` AS r 
+                JOIN import AS i ON r.`Import_ID` = i.`import_ID`
+                WHERE i.`Breed_ID` = $New_Breed_ID ORDER BY r.`Remain_Date` DESC LIMIT 1; ";
+    $result0 = mysqli_query($conn , $sql0);
+
+    while($row = $result0->fetch_assoc()) {
+        $Latest_Remain_Amount = $row['Remain_Amount']; //นี่คือค่า Remain_Amount ล่าสุดของสายพันธุ์ใหม่
+        $Latest_Remain_Import = $row['Import_ID'];  //นี่คือค่า Export_ID ล่าสุดของสายพันธุ์ใหม่
+        $Latest_Remain_Export = $row['Export_ID'];  //นี่คือค่า Export_ID ล่าสุดของสายพันธุ์ใหม่
+    }   
+    $New_Latest_Remain_Amount = $Latest_Remain_Amount + $New_Import_Amount;
+
+    //เพิ่มค่า remain ของสายพันธุ์ใหม่
+    //หากไม่มีค่าเก่าเลย Remain_Amount จะ = New_Import_Amount ส่วน Export_ID จะว่างเปล่า
+    $New_remain_result = "  INSERT INTO `remain`(`Remain_Amount`, `Import_ID`, `Export_ID`) 
+                            VALUES ('$New_Latest_Remain_Amount','$Latest_Remain_Import' , '$Latest_Remain_Export' )";
+    mysqli_query($conn, $New_remain_result);
+
+    //echo "New_Import_Amount ในแก้ไขที่สายพันธุ์อย่างเดียว $New_Import_Amount <br><br>";
+    
+} elseif ( $New_Import_Amount != $Old_Import_Amount AND $Breed_ID === $Old_Breed_ID) {
+    //2. แต่ถ้าไม่ได้เปลี่ยนสายพันธุ์ แต่เปลี่ยนแค่จำนวน ให้คำนวนค่าใหม่ของ remain
+    echo "เข้าขั้นตอนการเปลี่ยนจำนวน" ;
+    //ถ้า ค่าใหม่ มากกว่า ค่าเก่า ให้เอาค่าใหม่ ลบเก่า จะได้ค่าที่ต้อง + เพิ่มใน Remain_Amount
+    if ($New_Import_Amount > $Old_Import_Amount) {
+        $Difference = $New_Import_Amount - $Old_Import_Amount;
+        $New_Remain_Amount = $Old_Remain_Amount + $Difference;
+        //echo "New_Import_Amount ในค่าใหม่ มากกว่า ค่าเก่า $New_Import_Amount <br><br>";
+    }
+    
+    //ถ้า ค่าใหม่ น้อยกว่า ค่าเก่า ให้เอาค่าเก่า ลบใหม่ จะได้ค่าที่ต้อง - ออกจาก Remain_Amount
+    else if ($New_Import_Amount < $Old_Import_Amount) {
+        $Difference = $Old_Import_Amount - $New_Import_Amount;
+        $New_Remain_Amount = $Old_Remain_Amount - $Difference;
+        //echo "New_Import_Amount ในค่าใหม่ น้อยกว่า ค่าเก่า $New_Import_Amount <br><br>";
+    }
+
+    //เพิ่มเพียงค่า remain amount เพราะสายพันธุ์ไม่เปลี่ยน
+    $New_remain_result = " INSERT INTO `remain`(`Remain_Amount`,`Import_ID`, `Export_ID`) VALUES ('$New_Remain_Amount','$Import_ID','$Old_Export_ID') ";
+    mysqli_query($conn, $New_remain_result);
+}
+
+// จบ แก้ไขค่า remain เก่า -----------------------------------------------------
+
+
+
+// เริ่ม คำนวนค่า total ในตาราง total ใหม่--------------------------------------------------
+if(($Breed_ID != $Old_Breed_ID) or ($New_Import_Amount != $Old_Import_Amount)) {
+    $sql1 = "   SELECT
+                    r1.*,
+                    b.Breed_Name
+                FROM remain r1
+                INNER JOIN import i ON r1.import_ID = i.import_ID
+                INNER JOIN breed b ON i.Breed_ID = b.Breed_ID
+                JOIN (
+                    SELECT
+                        i.Breed_ID,
+                        MAX(r2.Remain_Date) AS max_date
+                    FROM remain r2
+                    INNER JOIN import i ON r2.import_ID = i.import_ID
+                    GROUP BY i.Breed_ID
+                ) AS subquery ON i.Breed_ID = subquery.Breed_ID AND r1.Remain_Date = subquery.max_date;
+                ";  //เลือกค่า remain ทั้งหมดมา โดยที่ สายพันธุ์ไม่ซ้ำ และเป็นค่าล่าสุดของแต่ละสายพันธุ์เท่านั้น
+                    //เพื่อนำมาคำนวนค่า total ใหม่ทุกๆครั้ง แทนการตรวจสอบว่าค่าเพิ่มหรือลด เพื่อความเสถียร์ของข้อมูล
+
+    $result1 = $conn->query($sql1); // นำค่ามาเก็บไว้
+
+    $total_amount = 0; // ตัวแปรเก็บผลรวม
+
+    if ($result1->num_rows > 0) {
+        while ($row = $result1->fetch_assoc()) {
+            $total_amount += $row['Remain_Amount']; // รวมค่า
+        }
+    }
+
+    $sql2 = "INSERT INTO `total`(`Total`) VALUES ('$total_amount');";   // เพิ่มค่าใหม่เข้าไปในฐาน
+    mysqli_query($conn, $sql2);
+}
+// จบ คำนวนค่า total ในตาราง total ใหม่ --------------------------------------------------
+
+
+
+// เริ่ม แก้ไขข้อมูลการนำเข้า -----------------------------------------------------
 $sql = "UPDATE import SET 
         Import_Date = '$Import_Date',
         Breed_ID = '$Breed_ID',
@@ -53,98 +166,9 @@ if (mysqli_query($conn, $sql)) {
 // จบ แก้ไขข้อมูลการนำเข้า -----------------------------------------------------
 
 
-
-// เริ่ม แก้ไขค่า remain เก่า -----------------------------------------------------
-
-// [เริ่ม] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
-$sqli = "SELECT * FROM `remain` WHERE `Breed_ID` = $Old_Breed_ID ORDER BY `Remain_Date` DESC LIMIT 1";
-
-$resulti = mysqli_query($conn , $sqli);
-
-while($row = $resulti->fetch_assoc()) {
-    $Old_Remain_Amount = $row['Remain_Amount'];
-    $remain_ID = $row['remain_ID'];
-}   //นี่คือค่า Remain_Amount เก่า และ ID ที่ต้องการแก้เก่า
-// [จบ] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
-
-
-if($Breed_ID != $Old_Breed_ID){
-    // 1. หากแก้ไขที่สายพันธุ์อย่างเดียว จะทำการ - remain ด้วยค่าเดิม แล้วไปเพิ่ม remain ด้วยค่าใหม่
-    $New_Breed_ID = $Breed_ID;
-
-    $New_Remain_Amount = $Old_Remain_Amount - $Old_Import_Amount;
-
-    //อัพเดทค่า remain ของสายพันธุ์เดิม
-    $Old_remain_result = " UPDATE `remain` SET `Remain_Amount` = '$New_Remain_Amount' WHERE  `remain_ID` = '$remain_ID'; ";
-    mysqli_query($conn, $Old_remain_result);
-
-    //เลือกค่า remain ล่าสุด ของสายพันธุ์ใหม่มาเพิ่มค่า
-    $sql0 = "SELECT * FROM `remain` WHERE `Breed_ID` = $New_Breed_ID ORDER BY `Remain_Date` DESC LIMIT 1; ";
-    $result0 = mysqli_query($conn , $sql0);
-
-    while($row = $result0->fetch_assoc()) {
-        $Latest_Remain_Amount = $row['Remain_Amount'];
-    }   //นี่คือค่า Remain_Amount ล่าสุดของสายพันธุ์ใหม่
-    $New_Latest_Remain_Amount = $Latest_Remain_Amount + $New_Import_Amount;
-
-    //เพิ่มค่า remain ของสายพันธุ์ใหม่
-    $New_remain_result = "INSERT INTO `remain`(`Remain_Amount`, `total_ID`, `Breed_ID`) VALUES ('$New_Latest_Remain_Amount','1','$New_Breed_ID')";
-    mysqli_query($conn, $New_remain_result);
-
-    //echo "New_Import_Amount ในแก้ไขที่สายพันธุ์อย่างเดียว $New_Import_Amount <br><br>";
-    
-} elseif ( $New_Import_Amount != $Old_Import_Amount AND $Breed_ID === $Old_Breed_ID) {
-    //2. แต่ถ้าไม่ได้เปลี่ยนสายพันธุ์ แต่เปลี่ยนแค่จำนวน ให้คำนวนค่าใหม่ของ remain
-
-    //ถ้า ค่าใหม่ มากกว่า ค่าเก่า ให้เอาค่าใหม่ ลบเก่า จะได้ค่าที่ต้อง + เพิ่มใน Remain_Amount
-    if ($New_Import_Amount > $Old_Import_Amount) {
-        $Difference = $New_Import_Amount - $Old_Import_Amount;
-        $New_Remain_Amount = $Old_Remain_Amount + $Difference;
-        //echo "New_Import_Amount ในค่าใหม่ มากกว่า ค่าเก่า $New_Import_Amount <br><br>";
-    }
-    
-    //ถ้า ค่าใหม่ น้อยกว่า ค่าเก่า ให้เอาค่าเก่า ลบใหม่ จะได้ค่าที่ต้อง - ออกจาก Remain_Amount
-    else if ($New_Import_Amount < $Old_Import_Amount) {
-        $Difference = $Old_Import_Amount - $New_Import_Amount;
-        $New_Remain_Amount = $Old_Remain_Amount - $Difference;
-        //echo "New_Import_Amount ในค่าใหม่ น้อยกว่า ค่าเก่า $New_Import_Amount <br><br>";
-    }
-
-    //อัพเดทเพียงค่า remain amount เพราะสายพันธุ์ไม่เปลี่ยน
-    $New_remain_result = " UPDATE `remain` SET `Remain_Amount` = '$New_Remain_Amount' WHERE  `remain_ID` = '$remain_ID'; ";
-    mysqli_query($conn, $New_remain_result);
-}
-
-// จบ แก้ไขค่า remain เก่า -----------------------------------------------------
-
-
-
-// เริ่ม คำนวนค่า total ในตาราง total ใหม่--------------------------------------------------
-    $sql1 = "   SELECT r1.*
-                FROM remain r1
-                JOIN (SELECT Breed_ID, MAX(Remain_Date) AS max_date FROM remain GROUP BY Breed_ID)
-                r2 ON r1.Breed_ID = r2.Breed_ID AND r1.Remain_Date = r2.max_date;
-                ";  //เลือกค่า remain ทั้งหมดมา โดยที่ สายพันธุ์ไม่ซ้ำ และเป็นค่าล่าสุดของแต่ละสายพันธุ์เท่านั้น
-                    //เพื่อนำมาคำนวนค่า total ใหม่ทุกๆครั้ง แทนการตรวจสอบว่าค่าเพิ่มหรือลด เพื่อความเสถียร์ของข้อมูล
-
-    $result1 = $conn->query($sql1); // นำค่ามาเก็บไว้
-
-    $total_amount = 0; // ตัวแปรเก็บผลรวม
-
-    if ($result1->num_rows > 0) {
-        while ($row = $result1->fetch_assoc()) {
-            $total_amount += $row['Remain_Amount']; // รวมค่า
-        }
-    }
-
-    $sql2 = "INSERT INTO `total`(`Total`) VALUES ('$total_amount');";   // เพิ่มค่าใหม่เข้าไปในฐาน
-    mysqli_query($conn, $sql2);
-// จบ คำนวนค่า total ในตาราง total ใหม่ --------------------------------------------------
-
-
-
+/*
     //ส่วนการตรวจสอบข้อมูล
-    /*
+    
     echo "[เริ่ม] ค่าจากฟอร์มที่ได้รับ ------- <br>";
     echo "Import_ID = $Import_ID <br>";
     echo "Import_Date = $Import_Date <br>";

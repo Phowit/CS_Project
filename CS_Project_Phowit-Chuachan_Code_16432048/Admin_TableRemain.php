@@ -78,7 +78,7 @@
                         SELECT
                             r.*,
                             i.Breed_ID,
-                            ROW_NUMBER() OVER (PARTITION BY i.Breed_ID ORDER BY r.Remain_Date DESC) AS rn
+                            ROW_NUMBER() OVER (PARTITION BY i.Breed_ID ORDER BY r.Remain_ID DESC) AS rn
                         FROM remain r
                         INNER JOIN import i ON r.import_ID = i.import_ID
                     )
