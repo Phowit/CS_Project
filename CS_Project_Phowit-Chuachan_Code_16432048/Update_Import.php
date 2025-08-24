@@ -88,7 +88,7 @@ if($Breed_ID != $Old_Breed_ID){
     
 } elseif ( $New_Import_Amount != $Old_Import_Amount AND $Breed_ID === $Old_Breed_ID) {
     //2. แต่ถ้าไม่ได้เปลี่ยนสายพันธุ์ แต่เปลี่ยนแค่จำนวน ให้คำนวนค่าใหม่ของ remain
-    echo "เข้าขั้นตอนการเปลี่ยนจำนวน" ;
+    //echo "เข้าขั้นตอนการเปลี่ยนจำนวน" ;
     //ถ้า ค่าใหม่ มากกว่า ค่าเก่า ให้เอาค่าใหม่ ลบเก่า จะได้ค่าที่ต้อง + เพิ่มใน Remain_Amount
     if ($New_Import_Amount > $Old_Import_Amount) {
         $Difference = $New_Import_Amount - $Old_Import_Amount;

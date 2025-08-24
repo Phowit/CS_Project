@@ -30,7 +30,7 @@ $where_clause = "";
 $display_breed_name_in_title = "ทั้งหมด";
 
 if ($selected_breed_id !== 'all') {
-    $where_clause = " WHERE i.`Breed_ID` = $selected_breed_id";
+    $where_clause = "AND i.`Breed_ID` = $selected_breed_id";
     foreach ($breeds as $breed) {
         if ($breed['Breed_ID'] == $selected_breed_id) {
             $display_breed_name_in_title = $breed['Breed_Name'];
@@ -50,6 +50,7 @@ $sql_data_initial_load = "SELECT
                             b.`Breed_ID`
                         FROM `import` i
                         JOIN `breed` b ON i.`Breed_ID` = b.`Breed_ID`
+                        WHERE `Import_Delete` = 0
                         $where_clause
                         ORDER BY i.`Import_Date` DESC;";
 
@@ -182,19 +183,26 @@ if ($result_data_initial_load) {
     </div>
 </div>
 
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="deleteImportModal" tabindex="-1" aria-labelledby="deleteImportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                <h5 class="modal-title" id="deleteImportModalLabel">ยืนยันการลบข้อมูลหรือไม่?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">ยืนยัน</button>
+                <form id="DeleteForm" action="Delete_Import.php" method="post">
+                    <input type="hidden" name="Delete_Import_ID" class="form-control" id="delete_Import_ID" value="" readonly>
+                    <input type="hidden" name="Delete_Import_Amount" class="form-control" id="delete_Import_Amount" value="" readonly>
+
+                    
+                    <div class="row">
+                        <div class="col-12" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                            <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">ยืนยัน</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>

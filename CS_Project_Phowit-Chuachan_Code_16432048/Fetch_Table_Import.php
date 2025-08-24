@@ -19,7 +19,7 @@ $selectedBreedId = $_POST['breed_id'] ?? 'all'; // Default to 'all' if not set
 $where_clause = "";
 if ($selectedBreedId !== 'all') {
     // ใช้ prepared statement สำหรับการกรองตาม Breed_ID
-    $where_clause = " WHERE import.`Breed_ID` = ?";
+    $where_clause = " AND import.`Breed_ID` = ?";
 }
 
 // Prepare the SQL statement
@@ -33,6 +33,7 @@ $sql = "SELECT
             breed.Breed_Name
         FROM import
         INNER JOIN breed ON import.Breed_ID = breed.Breed_ID
+        WHERE `Import_Delete` = 0
         $where_clause
         ORDER BY `Import_Date` DESC;"; // Order by date for consistency
 

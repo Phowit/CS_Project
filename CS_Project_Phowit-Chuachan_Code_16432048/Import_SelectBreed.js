@@ -6,23 +6,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmDeleteButton = document.getElementById('confirmDeleteBtn');
     const displaySelectedBreed = document.getElementById('displaySelectedBreed'); // Element สำหรับแสดงชื่อสายพันธุ์
 
-    // Global variable to store ID for deletion
-    let currentImportIDToDelete = null;
-
-    // --- Functions for Modals (to be called from table rows) ---
-
-    // Function to set the ID when delete button is clicked
-    window.setDeleteID = function(importID) {
-        currentImportIDToDelete = importID;
-    };
-
-    // Function to handle delete action (redirect to delete script)
-    window.deleteImportData = function() {
-        if (currentImportIDToDelete) {
-            window.location.href = "Delete_Import.php?id=" + currentImportIDToDelete;
-        } else {
-            alert("ไม่พบรหัสข้อมูลที่จะลบ");
-        }
+    // --- Functions for Modals (to be called from table rows) --- 
+    window.setDeleteID = function(importID , importAmount) {
+        document.getElementById('delete_Import_ID').value = importID;
+        document.getElementById('delete_Import_Amount').value = importAmount;
     };
 
     // Function to prepare data for the edit modal
@@ -77,9 +64,15 @@ document.addEventListener('DOMContentLoaded', () => {
                             )">
                             <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
                         </button>
-                        <button class="btn" data-bs-toggle="modal" onclick="setDeleteID('${rowData.Import_ID || ''}')"
-                            data-bs-target="#confirmDeleteModal" style="height:30px; width:46%; padding: 5px;">
-                            <i class='far fa-trash-alt' style='color:red; font-size:16px;'></i> </button>
+
+                        <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                            data-bs-target="#deleteImportModal"
+                            onclick="setDeleteID(
+                                '${rowData.Import_ID || ''}',
+                                '${rowData.Import_Amount || ''}'
+                            )">
+                            <i class='far fa-trash-alt' style='color:red; font-size:16px;'></i>
+                        </button>
                     </td>
                 `;
                 importTableBody.appendChild(tr);
@@ -133,13 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
         searchButton.addEventListener('click', () => {
             const selectedBreedId = breedSelectElement.value;
             fetchTableData(selectedBreedId);
-        });
-    }
-
-    // Event listener for the "ยืนยัน" button in delete modal
-    if (confirmDeleteButton) { // ตรวจสอบให้แน่ใจว่าปุ่มมีอยู่
-        confirmDeleteButton.addEventListener('click', () => {
-            deleteImportData();
         });
     }
 
