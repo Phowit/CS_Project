@@ -140,7 +140,7 @@ if ($result_data_initial_load) {
             </div>
             <div class="modal-body">
                 <form id="editForm" action="Update_Export.php" method="post">
-                    <input type="hidden" name="Export_ID" id="edit_Export_ID">
+                    <input type="hidden" name="Export_ID" id="edit_Export_ID" class="form-control" value="" readonly>
 
                     <div class="form-floating mb-3">
                         <input type="datetime-local" class="form-control" name="Export_Date" id="edit_Export_Date" required>
@@ -188,25 +188,29 @@ if ($result_data_initial_load) {
 
 
 
-
-<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+<div class="modal fade" id="deleteExportModal" tabindex="-1" aria-labelledby="deleteExportModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="confirmDeleteModalLabel">ยืนยันการลบข้อมูล</h5>
+                <h5 class="modal-title" id="deleteExportModalLabel">ยืนยันการลบข้อมูลหรือไม่?</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>ต้องการจะลบข้อมูลนี้หรือไม่ ?</p>
-                <input type="hidden" id="deleteExportId" value="">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                <button type="button" class="btn btn-danger" id="confirmDeleteBtn">ยืนยัน</button>
+                <form id="editForm" action="Delete_Export.php" method="post">
+                    <input type="hidden" name="Export_ID" id="delete_Export_ID" class="form-control" value="" readonly>
+                    <div class="row">
+                        <div class="col-12" style="margin-top: 20px;">
+                            <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
+                            <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">บันทึก</button>
+                        </div>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <script>
     // Embed initial data for JavaScript

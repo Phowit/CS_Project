@@ -14,39 +14,48 @@
                     <input type="hidden" class="form-control" name="Export_ID" id="Export_ID" value="<?php echo $Export_ID ?>" readonly>
 
                     <div class="row">
-                        <div class="form-floating mb-3">
-                            <select class="form-select" name="import_ID" id="import_ID" aria-label="Floating label select example" required>
-                                <?php
-                                require_once("connect_db.php");
-                                $sql = "SELECT 
-                                                `import_ID`,
-                                                `Import_Date`,
-                                                `Import_Amount`,
-                                                `Import_Details`,
-                                                breed.Breed_Name
-                                            FROM `import` 
-                                            INNER JOIN breed
-                                            ON import.Breed_ID = breed.Breed_ID";
-                                $result = mysqli_query($conn, $sql);
+                        <div class="col-12">
+                            <div class="form-floating mb-3">
+                                <select class="form-select" name="Breed_ID" id="Breed_ID" aria-label="Floating label select example" required>
+                                    <?php
+                                    require_once("connect_db.php");
+                                    $sql = "    WITH Ranked AS (
+                                                    SELECT
+                                                        r.*,
+                                                        i.Breed_ID,
+                                                        ROW_NUMBER() OVER (PARTITION BY i.Breed_ID ORDER BY r.Remain_ID DESC) AS rn
+                                                    FROM remain r
+                                                    INNER JOIN import i ON r.import_ID = i.import_ID
+                                                )
+                                                SELECT
+                                                    Ranked.*,
+                                                    b.Breed_Name
+                                                FROM Ranked
+                                                INNER JOIN breed AS b ON b.Breed_ID = Ranked.Breed_ID
+                                                WHERE Ranked.rn = 1 AND Remain_Amount != 0
+                                            ";
+                                    //เลือกเฉพาะสายพันธุ์ที่มีการนำเข้าเท่านั้น และให้ไม่ซ้ำกัน
+                                    // remain จะเป็นจำนวนล่าสุดเสมอ ไม่ต้องห่วงว่า import จะเป็นเท่าไร 
+                                    // เพราะ import_ID เป็นแค่ตัวบอกว่าล่าสุดคือตัวไหน 
 
-                                while ($row = $result->fetch_assoc()) {
-                                    $import_ID = $row['import_ID'];
-                                    $Import_Date = $row['Import_Date'];
-                                    $Import_Date_Format = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row['Import_Date'])->format(format: "d/m/Y H:i");
-                                    $Import_Amount = $row['Import_Amount'];
-                                    $Import_Details = $row['Import_Details'];
-                                    $Breed_Name = $row['Breed_Name'];
-                                    $Option = "ลำดับ : $import_ID , เวลา : $Import_Date_Format , สายพันธุ์ : $Breed_Name , จำนวน $Import_Amount ตัว";
-                                ?>
+                                    $result = mysqli_query($conn, $sql);
 
-                                    <option value="<?= $row['import_ID']; ?>">
-                                        <?= $Option; ?></option>
-                                <?php   } ?>
-                            </select>
-                            <label for="Breed_ID" class="form-label" placeholder>ข้อมูลการนำเข้าไก่ที่เกี่ยวข้อง</label>
+                                    while ($row = $result->fetch_assoc()) {
+                                        $Breed_ID = $row['Breed_ID'];
+                                        $Breed_Name = $row['Breed_Name'];
+                                        $Remain_Amount = $row['Remain_Amount'];
+                                    ?>
+
+                                        <option value="<?= $row['Breed_ID']; ?>">
+                                            <?= $Breed_Name; ?> มีจำนวน <?= $Remain_Amount; ?> ตัว
+                                        </option>
+                                    <?php   } ?>
+                                </select>
+                                <label for="Breed_ID" class="form-label" placeholder> เลือกสายพันธุ์ไก่ไข่</label>
+                            </div>
                         </div>
 
-                        <div class="col-8">
+                        <div class="col-6">
                             <div class="form-floating mb-3">
                                 <?php
                                 // For Show Time Now In Input                        
@@ -60,10 +69,10 @@
                             </div>
                         </div>
 
-                        <div class="col-4">
+                        <div class="col-6">
                             <div class="form-floating">
                                 <input type="number" class="form-control" name="Export_Amount" id="Export_Amount" min="1" placeholder required>
-                                <label for="Export_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว)</label>
+                                <label for="Export_Amount" class="form-label">จำนวนไก่ทั้งหมด (ตัว) โปรดระบุข้อมูลจริง</label>
                             </div>
                         </div>
                     </div><br>

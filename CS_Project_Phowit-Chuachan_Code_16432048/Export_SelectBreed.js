@@ -6,124 +6,101 @@ document.addEventListener('DOMContentLoaded', () => {
     const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
     const displaySelectedBreed = document.getElementById('displaySelectedBreed'); // Element สำหรับแสดงชื่อสายพันธุ์
 
-    // Global variable to store ID for deletion
-    let currentExportIDToDelete = null;
-
     // --- Functions for Modals (to be called from table rows) ---
+
+    // Function to prepare data for the edit modal
+    window.prepareEditModal = function(exportID, exportDateForInput, breedID, exportAmount, exportDetails) {
+        // อ้างอิง Element ที่ถูกต้องสำหรับ modal แก้ไขข้อมูลส่งออก
+        const editExportIdInput = document.getElementById('edit_Export_ID');
+        const editExportDateInput = document.getElementById('edit_Export_Date');
+        const editExportAmountInput = document.getElementById('edit_Export_Amount');
+        const editExportDetailsInput = document.getElementById('edit_Export_Details');
+        const editBreedSelect = document.getElementById('edit_Breed_ID');
+
+        // กำหนดค่าให้กับ input fields
+        if (editExportIdInput) editExportIdInput.value = exportID;
+        if (editExportDateInput) editExportDateInput.value = exportDateForInput;
+        if (editExportAmountInput) editExportAmountInput.value = exportAmount;
+        if (editExportDetailsInput) editExportDetailsInput.value = exportDetails;
+
+        // กำหนดค่าที่ถูกเลือกใน dropdown ของสายพันธุ์
+        if (editBreedSelect) {
+            for (let i = 0; i < editBreedSelect.options.length; i++) {
+                if (editBreedSelect.options[i].value == breedID) {
+                    editBreedSelect.options[i].selected = true;
+                    break;
+                }
+            }
+        }
+    };
 
     // Function to set the ID when delete button is clicked
     window.setDeleteID = function(exportID) {
-        currentExportIDToDelete = exportID;
-    };
-
-    // Function to handle delete action (redirect to delete script)
-    window.deleteExportData = function() {
-        if (currentExportIDToDelete) {
-            window.location.href = "Delete_Export.php?id=" + currentExportIDToDelete;
-        } else {
-            alert("ไม่พบรหัสข้อมูลที่จะลบ");
-        }
+        document.getElementById('delete_Export_ID').value = exportID;
     };
 
 
-
-    // Function to prepare data for the edit modal
-    window.prepareEditModal = function(ExportID, ExportDateForInput, ExportAmount, ExportDetails) {
-        editExportIdInput.value = ExportID;
-        editExportDateInput.value = ExportDateForInput;
-        editExportAmountInput.value = ExportAmount;
-        editExportDetailsInput.value = ExportDetails;
-
-        // Set max attribute for ExportAmount input
-        if (editExportAmountInput) {
-            editExportAmountInput.max = ExportAmount;
-        }
-
-        // Open the modal
-        editExportModal.show(); 
-    };
-
-
-
-    // Get the edit modal elements
-    const editExportModal = new bootstrap.Modal(document.getElementById('editExportModal')); // Initialize Bootstrap Modal object
-    const editExportIdInput = document.getElementById('edit_Export_ID');
-    const editExportDateInput = document.getElementById('edit_Export_Date');
-    const editExportAmountInput = document.getElementById('edit_Export_Amount');
-    const editExportDetailsInput = document.getElementById('edit_Export_Details');
-    // --- Functions for Modals ---
-
-    // --- AJAX for Table Data ---
+    // --- Core Table Data Rendering and Fetching ---
 
     // Function to render data into the table
     function renderExportTable(tableRows) {
-        exportTableBody.innerHTML = ''; // Clear existing rows
+        exportTableBody.innerHTML = ''; // ล้างข้อมูลแถวที่มีอยู่
 
         if (tableRows && tableRows.length > 0) {
-            tableRows.forEach((row, index) => { // Added index for serial number
+            tableRows.forEach((rowData, index) => { // เพิ่ม index สำหรับนับลำดับ
                 const tr = document.createElement('tr');
                 tr.style.fontSize = '12px';
-                // Use template literals for cleaner HTML string
+                
+                // Escape details เพื่อป้องกันปัญหาเรื่องเครื่องหมายคำพูดใน HTML attribute
+                const escapedDetails = rowData.Export_Details ? rowData.Export_Details.replace(/'/g, "\\'").replace(/"/g, '\\"') : '';
+
                 tr.innerHTML = `
                     <td>${index + 1}</td>
-                    <td>${row.Export_Date_Formatted || ''}</td>
-                    <td>${row.Breed_Name || ''}</td>
-                    <td>${row.Export_Amount || ''}</td>
-                    <td>${row.Export_Details || ''}</td>
+                    <td>${rowData.Export_Date_Formatted || ''}</td>
+                    <td>${rowData.Breed_Name || ''}</td>
+                    <td>${rowData.Export_Amount || ''}</td>
+                    <td>${rowData.Export_Details || ''}</td>
                     <td>
-                        <button type="button" class="btn btn-sm edit-btn" 
-                            data-export-id="${row.Export_ID}"
-                            data-export-date="${row.Export_Date_DateTimeLocal}"
-                            data-breed-id="${row.Breed_ID}"
-                            data-export-amount="${row.Export_Amount}"
-                            data-export-details="${row.Export_Details}"
-                            data-bs-toggle="modal" data-bs-target="#editExportModal" 
-                            style="height:30px; width:46%; padding: 1px;">
+                        <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                            data-bs-target="#editExportModal"
+                            onclick="prepareEditModal(
+                                '${rowData.Export_ID || ''}',
+                                '${rowData.Export_Date_For_Input || ''}',
+                                '${rowData.Breed_ID || ''}',
+                                '${rowData.Export_Amount || ''}',
+                                '${escapedDetails}'
+                            )">
                             <i class='far fa-edit' style='color:blue; font-size:16px;'></i>
                         </button>
-                        <button class="btn btn-sm delete-btn" 
-                            data-export-id="${row.Export_ID}" 
-                            data-bs-toggle="modal" data-bs-target="#confirmDeleteModal" 
-                            style="height:30px; width:46%; padding: 5px;">
-                            <i class='material-icons' style='color:red; font-size:20px;'>delete</i>
+                        <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
+                            data-bs-target="#deleteExportModal"
+                            onclick="setDeleteID(
+                                '${rowData.Export_ID || ''}'
+                            )">
+                            <i class='far fa-trash-alt' style='color:red; font-size:16px;'></i>
                         </button>
                     </td>
                 `;
                 exportTableBody.appendChild(tr);
             });
 
-            // Attach event listeners for edit and delete buttons after rendering
-            document.querySelectorAll('.edit-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const exportId = this.dataset.exportId;
-                    const exportDate = this.dataset.exportDate;
-                    const breedId = this.dataset.breedId;
-                    const exportAmount = this.dataset.exportAmount;
-                    const exportDetails = this.dataset.exportDetails;
-
-                    window.prepareEditModal(exportId, exportDate, breedId, exportAmount, exportDetails);
-                });
-            });
-
-            document.querySelectorAll('.delete-btn').forEach(button => {
-                button.addEventListener('click', function() {
-                    const exportIdToDelete = this.dataset.exportId;
-                    window.setDeleteID(exportIdToDelete);
-                });
-            });
-
         } else {
             const tr = document.createElement('tr');
-            tr.innerHTML = `<td colspan='6' class='text-center'>ไม่พบข้อมูลสำหรับสายพันธุ์นี้</td>`; // Updated colspan
+            tr.innerHTML = `<td colspan='6' class='text-center'>ไม่พบข้อมูลสำหรับสายพันธุ์นี้</td>`; // อัปเดต colspan เป็น 6
             exportTableBody.appendChild(tr);
         }
     }
 
     // Function to fetch data via AJAX
     function fetchTableData(breedId) {
-        console.log("Fetching Export Table Data for breedId:", breedId);
+        // อัปเดตข้อความแสดงผลในหัวตารางทันที
+        const selectedBreedText = breedSelectElement.options[breedSelectElement.selectedIndex].textContent;
+        if (displaySelectedBreed) {
+            displaySelectedBreed.textContent = selectedBreedText;
+        }
+
         const formData = new FormData();
-        formData.append('breedSelectExport', breedId); // Use the correct key for PHP
+        formData.append('breed_id', breedId); // เปลี่ยนชื่อ parameter ให้สอดคล้องกับ PHP ที่จะรับ
 
         fetch('fetch_table_Export.php', {
             method: 'POST',
@@ -154,23 +131,17 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     // Event listener for the "ค้นหา" button
-    searchBreedButton.addEventListener('click', () => {
-        const selectedBreedId = breedSelectElement.value;
-        fetchTableData(selectedBreedId);
-    });
-
-    // Event listener for the "ยืนยัน" button in delete modal
-    confirmDeleteBtn.addEventListener('click', () => {
-        window.deleteExportData();
-    });
-
+    if (searchBreedButton) {
+        searchBreedButton.addEventListener('click', () => {
+            const selectedBreedId = breedSelectElement.value;
+            fetchTableData(selectedBreedId);
+        });
+    }
+    
     // Initial load of table data when the page loads
-    // Use the embedded initialExportTableData
     if (typeof initialExportTableData !== 'undefined' && initialExportTableData.length > 0) {
         renderExportTable(initialExportTableData);
     } else {
-        // If no initial data (e.g., first load with no default breed), fetch from PHP for 'all'
         fetchTableData('all'); 
     }
-
 });

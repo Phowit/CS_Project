@@ -1,6 +1,10 @@
 <?php
-    // เชื่อมต่อกับฐานข้อมูล
-    require_once("connect_db.php");
+
+// ตรวจสอบว่ามีการส่งข้อมูลมาจากฟอร์มหรือไม่
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+// เชื่อมต่อกับฐานข้อมูล
+require_once("connect_db.php");
 
 
 // เริ่ม รับข้อมูลจากฟอร์ม -----------------------------------------------------
@@ -18,7 +22,6 @@
     $Check_result = mysqli_query($conn, $Check_Old_Import);
 
     while($row = $Check_result->fetch_assoc()) {
-        $Old_Import_Date_Record = $row['Import_Date_Record'];
         $Old_Import_Date = $row['Import_Date'];
         $Old_Breed_ID = $row['Breed_ID'];
         $Old_Import_Amount = $row['Import_Amount'];
@@ -49,7 +52,6 @@ $resulti = mysqli_query($conn , $sqli);
 
 while($row = $resulti->fetch_assoc()) {
     $Old_Remain_Amount = $row['Remain_Amount'];
-    $Remain_ID = $row['Remain_ID'];
     $Old_Export_ID = $row['Export_ID'];
 }   //นี่คือค่า Remain_Amount เก่า และ ID ที่ต้องการแก้เก่า
 // [จบ] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
@@ -73,7 +75,7 @@ if($Breed_ID != $Old_Breed_ID){
 
     while($row = $result0->fetch_assoc()) {
         $Latest_Remain_Amount = $row['Remain_Amount']; //นี่คือค่า Remain_Amount ล่าสุดของสายพันธุ์ใหม่
-        $Latest_Remain_Import = $row['Import_ID'];  //นี่คือค่า Export_ID ล่าสุดของสายพันธุ์ใหม่
+        $Latest_Remain_Import = $row['Import_ID'];  //นี่คือค่า Import_ID ล่าสุดของสายพันธุ์ใหม่
         $Latest_Remain_Export = $row['Export_ID'];  //นี่คือค่า Export_ID ล่าสุดของสายพันธุ์ใหม่
     }   
     $New_Latest_Remain_Amount = $Latest_Remain_Amount + $New_Import_Amount;
@@ -106,8 +108,8 @@ if($Breed_ID != $Old_Breed_ID){
     //เพิ่มเพียงค่า remain amount เพราะสายพันธุ์ไม่เปลี่ยน
     $New_remain_result = " INSERT INTO `remain`(`Remain_Amount`,`Import_ID`, `Export_ID`) VALUES ('$New_Remain_Amount','$Import_ID','$Old_Export_ID') ";
     mysqli_query($conn, $New_remain_result);
-}
 
+}
 // จบ แก้ไขค่า remain เก่า -----------------------------------------------------
 
 
@@ -165,6 +167,7 @@ if (mysqli_query($conn, $sql)) {
 }
 // จบ แก้ไขข้อมูลการนำเข้า -----------------------------------------------------
 
+}
 
 /*
     //ส่วนการตรวจสอบข้อมูล
@@ -197,8 +200,6 @@ if (mysqli_query($conn, $sql)) {
     echo "New_remain_result = $New_remain_result <br>";
 
     echo "เพิ่มค่า total ใหม่เข้าไปในฐาน sql2 = $sql2 <br>";
-
-    echo "aaaaaaa <br>";
 */
     // ปิดการเชื่อมต่อ
     mysqli_close($conn);

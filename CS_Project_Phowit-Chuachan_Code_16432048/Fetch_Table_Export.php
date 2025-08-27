@@ -1,7 +1,6 @@
 <?php
 // fetch_table_Export.php
 
-// Set header to indicate JSON content
 header('Content-Type: application/json; charset=utf-8');
 
 // Include database connection
