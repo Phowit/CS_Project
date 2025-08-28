@@ -65,7 +65,7 @@ if ($result_data_initial_load) {
         $Import_Date_For_Input = $Import_Date_Obj ? $Import_Date_Obj->format("Y-m-d\TH:i") : "";
         $Import_Date_Formatted = $Import_Date_Obj ? $Import_Date_Obj->format("d/m/Y H:i:s") : "";
 
-        $initial_table_data[] = [
+        $initialTableData[] = [
             'Import_ID' => $row['Import_ID'],
             'Import_Date' => $Import_Date_Formatted, // สำหรับแสดงในตาราง
             'Import_Date_For_Input' => $Import_Date_For_Input, // สำหรับใส่ใน input datetime-local
@@ -211,5 +211,5 @@ if ($result_data_initial_load) {
 <script type="text/javascript">
     // ส่งข้อมูลที่ PHP ดึงมาตอนแรกไปยัง JavaScript
     // ใช้ JSON.parse(decodeURIComponent(...)) เพื่อความปลอดภัยในการส่งข้อมูลที่มีอักขระพิเศษ
-const initialImportTableData = JSON.parse('<?php echo json_encode($initial_table_data); ?>');
+const initialImportTableData = JSON.parse('<?php echo json_encode($initialTableData); ?>');
 </script>

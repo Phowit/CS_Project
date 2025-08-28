@@ -47,15 +47,15 @@ document.addEventListener('DOMContentLoaded', () => {
         exportTableBody.innerHTML = ''; // ล้างข้อมูลแถวที่มีอยู่
 
         if (tableRows && tableRows.length > 0) {
-            tableRows.forEach((rowData, index) => { // เพิ่ม index สำหรับนับลำดับ
+            tableRows.forEach(rowData => { // เพิ่ม index สำหรับนับลำดับ
                 const tr = document.createElement('tr');
-                tr.style.fontSize = '12px';
+                tr.style.fontSize = '13px';
                 
                 // Escape details เพื่อป้องกันปัญหาเรื่องเครื่องหมายคำพูดใน HTML attribute
                 const escapedDetails = rowData.Export_Details ? rowData.Export_Details.replace(/'/g, "\\'").replace(/"/g, '\\"') : '';
 
                 tr.innerHTML = `
-                    <td>${index + 1}</td>
+                    <td>${rowData.Export_ID || ''}</td>
                     <td>${rowData.Export_Date_Formatted || ''}</td>
                     <td>${rowData.Breed_Name || ''}</td>
                     <td>${rowData.Export_Amount || ''}</td>
@@ -75,7 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
                         <button type="button" class="btn" data-bs-toggle="modal" style="height:30px; width:46%; padding: 1px;"
                             data-bs-target="#deleteExportModal"
                             onclick="setDeleteID(
-                                '${rowData.Export_ID || ''}'
+                                '${rowData.Export_ID || ''}',
+                                '${rowData.Export_Amount || ''}'
                             )">
                             <i class='far fa-trash-alt' style='color:red; font-size:16px;'></i>
                         </button>

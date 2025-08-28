@@ -38,7 +38,6 @@ document.addEventListener('DOMContentLoaded', () => {
         importTableBody.innerHTML = ''; // Clear existing rows
 
         if (tableRows && tableRows.length > 0) {
-            let counter = 1; // เริ่มนับลำดับที่ 1 ใหม่ทุกครั้งที่ render
             tableRows.forEach(rowData => {
                 const tr = document.createElement('tr');
                 tr.style.fontSize = '13px'; // ปรับขนาดฟอนต์ให้สอดคล้องกับ tbody ใน PHP

@@ -30,7 +30,7 @@ $where_clause = "";
 $display_breed_name_in_title = "ทั้งหมด";
 
 if ($selected_breed_id !== 'all') {
-    $where_clause = " WHERE b.`Breed_ID` = $selected_breed_id";
+    $where_clause = " AND b.`Breed_ID` = $selected_breed_id";
     foreach ($breeds as $breed) {
         if ($breed['Breed_ID'] == $selected_breed_id) {
             $display_breed_name_in_title = $breed['Breed_Name'];
@@ -40,19 +40,29 @@ if ($selected_breed_id !== 'all') {
 }
 
 // SQL Query เพื่อดึงข้อมูลการนำเข้าสำหรับการแสดงผลครั้งแรก
-$sql_data_initial_load = "SELECT
-                            e.`Export_ID`,
-                            e.`Export_Date`,
-                            e.`Export_Amount`,
-                            e.`Export_Details`,
-                            b.`Breed_Name`,
-                            b.`Breed_ID`
-                        FROM `export` e
-                        JOIN `remain` r ON e.`Export_ID` = r.`Export_ID`
-                        JOIN `import` i ON r.`Import_ID` = i.`import_ID`
-                        JOIN `breed` b ON i.`Breed_ID` = b.`Breed_ID`
-                        $where_clause
-                        ORDER BY e.`Export_Date` DESC;";
+$sql_data_initial_load = "  SELECT
+                                exp.`Export_ID`,
+                                exp.`Export_Date`,
+                                exp.`Export_Amount`,
+                                exp.`Export_Details`,
+                                r.`Remain_ID`,
+                                r.`Import_ID`,
+                                b.`Breed_Name`,
+                                b.`Breed_ID`
+                            FROM `export` AS exp
+                            JOIN (
+                                SELECT 
+                                    `Export_ID`, 
+                                    MAX(`Remain_ID`) AS `Max_Remain_ID`
+                                FROM `remain`
+                                GROUP BY `Export_ID`
+                            ) AS subquery ON exp.`Export_ID` = subquery.`Export_ID`
+                            JOIN `remain` AS r ON subquery.`Max_Remain_ID` = r.`Remain_ID`
+                            JOIN `import` AS i ON r.`Import_ID` = i.`import_ID`
+                            JOIN `breed` AS b ON i.`Breed_ID` = b.`Breed_ID`
+                            WHERE exp.`Export_Delete` = 0
+                            $where_clause
+                            ORDER BY r.`Remain_Date` DESC;";
 
 $result_data_initial_load = mysqli_query($conn, $sql_data_initial_load);
 
@@ -163,7 +173,7 @@ if ($result_data_initial_load) {
                         </div>
                         <div class="col-4">
                             <div class="form-floating">
-                                <input type="number" class="form-control" name="Export_Amount" id="edit_Export_Amount" min="1" required>
+                                <input type="number" class="form-control" name="New_Export_Amount" id="edit_Export_Amount" min="1" required>
                                 <label for="edit_Export_Amount">จำนวนไก่ทั้งหมด (ตัว)</label>
                             </div>
                         </div>

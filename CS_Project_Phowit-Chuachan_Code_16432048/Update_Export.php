@@ -14,7 +14,16 @@ $Breed_ID = $_POST['Breed_ID'];
 $New_Export_Amount = $_POST['New_Export_Amount'];
 $Export_Details = $_POST['Export_Details'];
 
-//[เริ่ม] ส่วนการตรวจสอบข้อมูลเก่า
+/*
+echo "ค่าที่รับมา = Export_ID : " . $Export_ID . "<br>";
+echo "Export_Date : " . $Export_Date . "<br>";
+echo "Breed_ID : " . $Breed_ID . "<br>";
+echo "New_Export_Amount : " . $New_Export_Amount . "<br>";
+echo "Export_Details : " . $Export_Details . "<br>";
+echo "จบส่วนค่าที่รับมา <br><br>";
+*/
+
+//[เริ่ม] ส่วนการตรวจสอบข้อมูลเก่าของ Export
 $Check_Old_Export = "SELECT * FROM `export` WHERE `Export_ID` = '$Export_ID'; ";
 
 $Check_result = mysqli_query($conn, $Check_Old_Export);
@@ -23,6 +32,15 @@ while ($row = $Check_result->fetch_assoc()) {
     $Old_Export_Date = $row['Export_Date'];
     $Old_Export_Amount = $row['Export_Amount'];
 }
+
+/*
+echo "ส่วนการตรวจสอบข้อมูลเก่าของ Export <br>";
+echo "Check_Old_Export : " . $Check_Old_Export . "<br>";
+echo "Old_Export_Date : " . $Old_Export_Date . "<br>";
+echo "Old_Export_Amount : " . $Old_Export_Amount . "<br>";
+echo "จบส่วนการตรวจสอบข้อมูลเก่าของ Export <br><br>";
+*/
+
 //[จบ] ส่วนการตรวจสอบข้อมูลเก่า
 
 // จบ รับข้อมูลจากฟอร์ม -----------------------------------------------------
@@ -36,6 +54,11 @@ if (!$New_Export_Amount or $New_Export_Amount == '') {
 $New_Export_Amount = intval($New_Export_Amount);
 //echo "New_Export_Amount หลังจากตรวจสอบ+แก้ประเภทแล้ว = $New_Export_Amount <br><br>";
 
+/*
+echo "ส่วนการตรวจสอบ New_Export_Amount <br>";
+echo "New_Export_Amount : " . $New_Export_Amount . "<br>";
+echo "จบ ส่วนการตรวจสอบ New_Export_Amount <br><br>";
+*/
 
 
 // เริ่ม ส่วนการคำนวนค่าและอัพเดท remain ใหม่ -----------------------------------------------------
@@ -57,7 +80,17 @@ $resulti = mysqli_query($conn, $sqli);
 while ($row = $resulti->fetch_assoc()) {
     $Old_Remain_Amount = $row['Remain_Amount'];
     $Old_Import_ID = $row['Import_ID'];
+    $Old_Breed_ID = $row['Breed_ID'];
 }   //นี่คือค่า Remain_Amount เก่า และ ID ที่ต้องการแก้เก่า
+
+/*
+echo "ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน <br>";
+echo "sqli : " . $sqli . "<br>";
+echo "Old_Remain_Amount : " . $Old_Remain_Amount . "<br>";
+echo "Old_Import_ID : " . $Old_Import_ID . "<br>";
+echo "จบ ส่วนกลาง remain <br><br>";
+*/
+
 // [จบ] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
 
 
@@ -78,24 +111,52 @@ if( $Breed_ID != $Old_Breed_ID ) {
         $Latest_Remain_Import = $row['Import_ID'];  //นี่คือค่า Import_ID ล่าสุดของสายพันธุ์ใหม่
     }
 
+    /*
+    echo "เข้าเงื่อนไข สายพันธุ์ใหม่ ไม่เท่ากับสายพันธุ์เก่า <br>";
+    echo "New_Breed_ID : " . $New_Breed_ID . "<br>";
+    echo "sql0 : " . $sql0 . "<br>";
+    echo "Latest_Remain_Amount : " . $Latest_Remain_Amount . "<br>";
+    echo "Latest_Remain_Import : " . $Latest_Remain_Import . "<br>";
+    echo "จบ เงื่อนไข สายพันธุ์ใหม่ ไม่เท่ากับสายพันธุ์เก่า <br><br>";
+    */
+
     // ถ้าค่าคงเหลือล่าสุดของสายพันธุ์ใหม่ เหลือมากกว่าค่าการนำออก ที่แก้ไขเข้ามา ก็สามารถแก้ไขต่อได้
-    if ( $Latest_Remain_Amount >= $New_Remain_Amount ) {
+    if ( $Latest_Remain_Amount >= $New_Export_Amount ) {
 
         // เริ่ม คำนวนค่าและเพิ่มค่า remain ของสายพันธุ์เดิม ....................................................
         $New_Remain_Amount = $Old_Remain_Amount + $Old_Export_Amount;
 
         $Old_remain_result = "  INSERT INTO `remain`(`Remain_Amount`,`Import_ID`, `Export_ID`) 
-                                VALUES ('$New_Remain_Amount','$Old_Import_ID','$Old_Export_ID') ";
+                                VALUES ('$New_Remain_Amount','$Old_Import_ID','$Export_ID') ";
         mysqli_query($conn, $Old_remain_result);
         // จบ คำนวนค่าและเพิ่มค่า remain ของสายพันธุ์เดิม ....................................................
 
         //คำนวนและเพิ่มค่าล่าสุดของสายพันธุ์ใหม่ [ค่าใหม่ล่าสุดของสายพันธุ์ใหม่ = ค่าของสายพันธุ์ใหม่ - ค่าที่นำออก]
         $New_Latest_Remain_Amount = $Latest_Remain_Amount - $New_Export_Amount;
 
+        $New_Import_ID = "SELECT `import_ID` FROM `import` WHERE Breed_ID = $New_Breed_ID ORDER BY `import_ID` DESC LIMIT 1";
+
+        $New_ImportID_Result = mysqli_query($conn , $New_Import_ID);
+
+        while($row = $New_ImportID_Result->fetch_assoc()) {
+            $New_Import_ID_For_New_Remain = $row['import_ID']; //นี่คือค่า Remain_Amount ล่าสุดของสายพันธุ์ใหม่
+        }
+
+
         //เพิ่มค่า remain ของสายพันธุ์ใหม่
         $New_remain_result = "  INSERT INTO `remain`(`Remain_Amount`, `Import_ID`, `Export_ID`) 
-                                VALUES ('$New_Latest_Remain_Amount','$Latest_Remain_Import' , '$Export_ID' )";
+                                VALUES ('$New_Latest_Remain_Amount','$New_Import_ID_For_New_Remain' , '$Export_ID' )";
         mysqli_query($conn, $New_remain_result);
+
+        /*
+        echo "เข้าเงื่อนไข ค่าคงเหลือล่าสุดของสายพันธุ์ใหม่ เหลือมากกว่าค่าการนำออก <br>";
+        echo "New_Remain_Amount : " . $New_Remain_Amount . "=" . $Old_Remain_Amount . "+" . $Old_Export_Amount . "<br>";
+        echo "Old_remain_result : " . $Old_remain_result . "<br>";
+        echo "New_Latest_Remain_Amount : " . $New_Latest_Remain_Amount . "=" . $Latest_Remain_Amount . "-" . $New_Export_Amount . "<br>";
+        echo "New_remain_result : " . $New_remain_result . "<br>";
+        echo "จบ เงื่อนไข ค่าคงเหลือล่าสุดของสายพันธุ์ใหม่ เหลือมากกว่าค่าการนำออก <br><br>";
+        */
+
     } else {
         //แต่ถ้าหากค่าคงเหลือล่าสุดของสายพันธุ์ใหม่ น้อยกว่าค่านำออกที่แก้ไขส่งมา ให้แจ้ง error และเปลี่ยนหน้าทันที
         echo"
@@ -136,6 +197,13 @@ if( $Breed_ID != $Old_Breed_ID ) {
                             VALUES ('$New_Remain_Amount','$Old_Import_ID','$Export_ID') ";
     mysqli_query($conn, $New_remain_result);
 
+    /*
+    echo "เข้าเงื่อนไข ไม่ได้เปลี่ยนสายพันธุ์ แต่เปลี่ยนแค่จำนวน ให้คำนวนค่าใหม่ของ remain <br>";
+    echo "Difference : " . $Difference . "<br>";
+    echo "New_Remain_Amount : " . $New_Remain_Amount . "=" . $Old_Export_Amount . "และ" . $New_Export_Amount . "<br>";
+    echo "New_remain_result : " . $New_remain_result . "<br>";
+    echo "จบ เงื่อนไข ไม่ได้เปลี่ยนสายพันธุ์ แต่เปลี่ยนแค่จำนวน ให้คำนวนค่าใหม่ของ remain <br><br>";
+    */
 }
 
 // เริ่ม คำนวนค่า total ในตาราง total ใหม่--------------------------------------------------
@@ -169,6 +237,14 @@ if(($Breed_ID != $Old_Breed_ID) or ($New_Export_Amount != $Old_Export_Amount)) {
 
     $sql2 = "INSERT INTO `total`(`Total`) VALUES ('$total_amount');";   // เพิ่มค่าใหม่เข้าไปในฐาน
     mysqli_query($conn, $sql2);
+
+    /*
+    echo "คำนวนค่า total <br>";
+    echo "sql1 : " . $sql1 . "<br>";
+    echo "total_amount : " . $total_amount . "<br>";
+    echo "sql2 : " . $sql2 . "<br>";
+    echo "จบ คำนวนค่า total <br><br>";
+    */
 }
 // จบ คำนวนค่า total ในตาราง total ใหม่ --------------------------------------------------
 
@@ -179,6 +255,12 @@ $Update_Export_SQL = "  UPDATE `export` SET
                         WHERE `Export_ID` = $Export_ID
                     ";
                     mysqli_query($conn, $Update_Export_SQL);
+
+    /*
+    echo "Update_Export_SQL <br>";
+    echo "Update_Export_SQL : " . $Update_Export_SQL . "<br>";
+    echo "จบ Update_Export_SQL <br><br>";
+    */
 }
 
     // ปิดการเชื่อมต่อ
