@@ -122,11 +122,14 @@
                         <!--End Edit-->
 
                         <td>
-                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" onclick="UserID(<?= $User_ID; ?>)" data-bs-target="#confirmDeleteModal" style="height:auto; width: 65%; font-size:12px;">ลบ</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal"
+                                data-bs-target="#confirmDeleteModal<?= $User_ID; ?>"
+                                style="height:auto; width: 65%; font-size:12px;">ลบ
+                            </button>
                         </td>
 
                         <!--Start Waring For Delete-->
-                        <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+                        <div class="modal fade" id="confirmDeleteModal<?= $User_ID; ?>" tabindex="-1" aria-labelledby="confirmDeleteModalLabel<?= $User_ID; ?>" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
 
@@ -136,14 +139,25 @@
                                     </div>
 
                                     <div class="modal-body">
-                                        <p>ต้องการจะลบข้อมูลนี้หรือไม่ ? ข้อมูลของคุณจะถูกลบ และจะออกจากระบบทันที</p>
-                                    </div>
+                                        <form id="DeleteBreedForm" action="Delete_UserLogout.php" method="post">
+                                            <input type="hidden" name="Delete_User_ID" id="Delete_User_ID" class="form-control" value="<?php echo $User_ID; ?>" readonly>
 
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ยกเลิก</button>
-                                        <button type="button" class="btn btn-danger" onclick="deleteAdmin()">ยืนยัน</button>
-                                    </div>
+                                            <p>ต้องการจะลบข้อมูลนี้หรือไม่ ? ประวัติการเข้าใช้ของคุณจะยังคงอยู่</p>
+                                            <p> แต่จะออกจากระบบทันที ข้อมูลของคุณจะถูกลบ และไม่สามารถเข้าสู่ระบบได้อีก</p>
 
+                                            <div class="form-floating mb-3">
+                                                <input type="password" class="form-control" id="Delete_User_Password" name="Delete_User_Password" required>
+                                                <label class="form-label">กรุณาใส่รหัสผ่านเพื่อยืนยันการลบข้อมูล</label>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-12" style="margin-top: 20px;">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="margin-top: 20px; margin-right:10px">ยกเลิก</button>
+                                                    <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div><br><br>
@@ -222,21 +236,5 @@
         if (event.target == modal) {
             modal.style.display = "none";
         }
-    }
-</script>
-
-<script>
-    var UserID;
-
-    // ฟังก์ชันเพื่อรับค่า member_ID เมื่อคลิกที่ปุ่ม "ลบ"
-    function UserID(User_ID) {
-        UserID = User_ID;
-    }
-
-    function deleteAdmin() {
-
-        // ถ้ายืนยันการลบ ทำการ redirect ไปยังไฟล์ planting_delete.php พร้อมส่งค่า id ของแถวที่ต้องการลบ
-        window.location.href = "Delete_UserLogout.php?id=" + UserID;
-
     }
 </script>
