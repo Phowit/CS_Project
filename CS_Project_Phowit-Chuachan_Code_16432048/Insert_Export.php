@@ -17,9 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // เริ่ม ส่วนการตรวจสอบค่า ---------------------------------------------
     $Check_Amount_SQL = "   SELECT
                             `Remain_Amount`,
-                            i.import_ID
+                            i.Import_ID
                             FROM `remain` AS r
-                            JOIN import AS i ON i.import_ID = r.Import_ID
+                            JOIN import AS i ON i.Import_ID = r.Import_ID
                             JOIN breed AS b ON b.Breed_ID = i.Breed_ID
                             WHERE b.Breed_ID = $Breed_ID
                             ORDER BY `Remain_ID` DESC LIMIT 1
@@ -29,7 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     while($row = $Check_Amount_Result->fetch_assoc()){
         $Old_Remain_Amount = $row['Remain_Amount'];
-        $Old_Import_ID = $row['import_ID'];
+        $Old_Import_ID = $row['Import_ID'];
     }
 
     //ถ้าค่านำออกน้อยกว่าหรือเท่ากันกับค่าที่เหลือทั้งหมดให้
@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                     i.Breed_ID,
                                     ROW_NUMBER() OVER (PARTITION BY i.Breed_ID ORDER BY r.Remain_ID DESC) AS rn
                                 FROM remain r
-                                INNER JOIN import i ON r.import_ID = i.import_ID
+                                INNER JOIN import i ON r.Import_ID = i.Import_ID
                             )
                             SELECT
                                 Ranked.*,

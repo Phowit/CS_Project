@@ -28,17 +28,17 @@
 //หลังจากเพิ่มข้อมูลการนำเข้าเสร็จ ดึงข้อมูล remain มาตรวจสอบว่ามี Breed_ID เหมือนกันหรือไม่? 
 //โดยดูจากข้อมูล่าสุด หากไม่มี ให้เพิ่ม remain ใหม่ เข้าไป
 $sql0 = "   SELECT * FROM `remain` AS r
-            JOIN import AS i ON i.import_ID = r.Import_ID
+            JOIN import AS i ON i.Import_ID = r.Import_ID
             JOIN breed AS b ON b.Breed_ID = i.Breed_ID
             WHERE b.Breed_ID = $Breed_ID ORDER BY `Remain_Date` DESC LIMIT 1;
         " ;
 $result0 = mysqli_query($conn, $sql0);//ดึงข้อมูลทั้งหมดจาก remain มา
 
 // import id ส่วนกลาง
-$sql2 = "SELECT `import_ID` FROM `import` ORDER BY `Import_Date_Record` DESC LIMIT 1";
+$sql2 = "SELECT `Import_ID` FROM `import` ORDER BY `Import_Date_Record` DESC LIMIT 1";
 $result2 = $conn->query($sql2);//ดึงข้อมูล id ล่าสุดจาก import ที่พึ่งเพิ่มไปด้านบน
 while($row = $result2->fetch_assoc()){
-    $import_ID = $row['import_ID'];
+    $Import_ID = $row['Import_ID'];
 }
 
 //ตรวจสอบว่ามีข้อมูลเก่าอยู่แล้วหรือไม่
@@ -52,12 +52,12 @@ if($result0 && $result0->num_rows > 0) {
 
     $New_Remain_Amount = $Remain_Amount + $Import_Amount; //ข้อมูลเก่า + ใหม่
     //echo $Remain_Amount . "," . $Remain_Import_ID  . "," . $Remain_Export_ID . "<br>";
-    $sql1 = " INSERT INTO `remain`(`Remain_Amount`, `Import_ID` , `Export_ID`) VALUES ($New_Remain_Amount , $import_ID , $Remain_Export_ID);";
+    $sql1 = " INSERT INTO `remain`(`Remain_Amount`, `Import_ID` , `Export_ID`) VALUES ($New_Remain_Amount , $Import_ID , $Remain_Export_ID);";
     //echo "พบค่าเก่า =" . $Remain_Amount . "<br>";
 } else {
     //ถ้าไม่มี ให้สร้างสาย remain ด้วยข้อมูลใหม่ทั้งหมดใหม่
 
-    $sql1 = "INSERT INTO `remain`(`Remain_Amount`, `Import_ID`) VALUES ($Import_Amount, $import_ID);";
+    $sql1 = "INSERT INTO `remain`(`Remain_Amount`, `Import_ID`) VALUES ($Import_Amount, $Import_ID);";
     //echo "ไม่พบค่าเก่า <br>";
 }
 mysqli_query($conn,$sql1);

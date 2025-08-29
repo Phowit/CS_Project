@@ -58,7 +58,7 @@ $sql_data_initial_load = "  SELECT
                                 GROUP BY `Export_ID`
                             ) AS subquery ON exp.`Export_ID` = subquery.`Export_ID`
                             JOIN `remain` AS r ON subquery.`Max_Remain_ID` = r.`Remain_ID`
-                            JOIN `import` AS i ON r.`Import_ID` = i.`import_ID`
+                            JOIN `import` AS i ON r.`Import_ID` = i.`Import_ID`
                             JOIN `breed` AS b ON i.`Breed_ID` = b.`Breed_ID`
                             WHERE exp.`Export_Delete` = 0
                             $where_clause
@@ -196,8 +196,6 @@ if ($result_data_initial_load) {
     </div>
 </div>
 
-
-
 <div class="modal fade" id="deleteExportModal" tabindex="-1" aria-labelledby="deleteExportModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
         <div class="modal-content">
@@ -206,8 +204,10 @@ if ($result_data_initial_load) {
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editForm" action="Delete_Export.php" method="post">
-                    <input type="hidden" name="Export_ID" id="delete_Export_ID" class="form-control" value="" readonly>
+                <form id="deleteForm" action="Delete_Export.php" method="post">
+                    <input type="hidden" name="Delete_Export_ID" id="delete_Export_ID" class="form-control" value="" readonly>
+                    <input type="hidden" name="Delete_Export_Amount" id="delete_Export_Amount" class="form-control" value="" readonly>
+
                     <div class="row">
                         <div class="col-12" style="margin-top: 20px;">
                             <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>

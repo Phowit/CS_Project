@@ -17,7 +17,7 @@ require_once("connect_db.php");
     //echo "New_Import_Amount รับจากฟอร์ม = $New_Import_Amount <br><br>";
 
     //[เริ่ม] ส่วนการตรวจสอบข้อมูลเก่า
-    $Check_Old_Import = "SELECT * FROM `import` WHERE `import_ID` = '$Import_ID'; ";
+    $Check_Old_Import = "SELECT * FROM `import` WHERE `Import_ID` = '$Import_ID'; ";
 
     $Check_result = mysqli_query($conn, $Check_Old_Import);
 
@@ -45,7 +45,7 @@ $New_Import_Amount = intval($New_Import_Amount);
 
 // [เริ่ม] ส่วนกลาง remain โดยดึงค่า remain เก่ามาก่อน +++++
 $sqli = "   SELECT * FROM `remain` AS r
-            JOIN import AS i ON i.`import_ID` = r.`Import_ID`
+            JOIN import AS i ON i.`Import_ID` = r.`Import_ID`
             WHERE i.`Breed_ID` = $Old_Breed_ID ORDER BY r.`Remain_Date` DESC LIMIT 1";
 
 $resulti = mysqli_query($conn , $sqli);
@@ -69,7 +69,7 @@ if($Breed_ID != $Old_Breed_ID){
 
     //เลือกค่า remain ล่าสุด ของสายพันธุ์ใหม่มาเพิ่มค่า
     $sql0 = "   SELECT * FROM `remain` AS r 
-                JOIN import AS i ON r.`Import_ID` = i.`import_ID`
+                JOIN import AS i ON r.`Import_ID` = i.`Import_ID`
                 WHERE i.`Breed_ID` = $New_Breed_ID ORDER BY r.`Remain_Date` DESC LIMIT 1; ";
     $result0 = mysqli_query($conn , $sql0);
 
@@ -120,14 +120,14 @@ if(($Breed_ID != $Old_Breed_ID) or ($New_Import_Amount != $Old_Import_Amount)) {
                     r1.*,
                     b.Breed_Name
                 FROM remain r1
-                INNER JOIN import i ON r1.import_ID = i.import_ID
+                INNER JOIN import i ON r1.Import_ID = i.Import_ID
                 INNER JOIN breed b ON i.Breed_ID = b.Breed_ID
                 JOIN (
                     SELECT
                         i.Breed_ID,
                         MAX(r2.Remain_Date) AS max_date
                     FROM remain r2
-                    INNER JOIN import i ON r2.import_ID = i.import_ID
+                    INNER JOIN import i ON r2.Import_ID = i.Import_ID
                     GROUP BY i.Breed_ID
                 ) AS subquery ON i.Breed_ID = subquery.Breed_ID AND r1.Remain_Date = subquery.max_date;
                 ";  //เลือกค่า remain ทั้งหมดมา โดยที่ สายพันธุ์ไม่ซ้ำ และเป็นค่าล่าสุดของแต่ละสายพันธุ์เท่านั้น

@@ -1,42 +1,40 @@
 <?php
+
 require_once("connect_db.php");
 
 if ($_SERVER["REQUEST_METHOD"] == "POST" ) {
 
-$Delete_Import_ID = $_POST['Delete_Import_ID'];
-$Delete_Import_Amount = $_POST['Delete_Import_Amount'];
+$Delete_Export_ID = $_POST['Delete_Export_ID'];
+$Delete_Export_Amount = $_POST['Delete_Export_Amount'];
 
-if ($Delete_Import_ID > 0 AND $Delete_Import_Amount > 0) {
+if ($Delete_Export_ID > 0 AND $Delete_Export_Amount > 0) {
+    // เริ่ม ส่วนการลบข้อมูลการนำออกไก่ไข่ -------------------------------------------------------------------------------
+    $Export_Updare_SQL = " UPDATE `export` SET `Export_Delete`='1' WHERE `Export_ID` = $Delete_Export_ID ";
 
-    // เริ่ม ลบข้อมูลการนำเข้า ออกจากตาราง -----------------------------------------------------
-    $Import_Update_SQL = "UPDATE `import` SET `Import_Delete` = '1' WHERE `Import_ID` = $Delete_Import_ID";
-
-    if (mysqli_query($conn, $Import_Update_SQL)) {
-        //echo "Record deleted successfully";
+    if (mysqli_query($conn, $Export_Updare_SQL)){
+        //echo "การลบเสร็จสิ้น" ;
     } else {
-        echo "Error deleting record: " . mysqli_error($conn);
+        echo " เกิดข้อผิดพลาดในการลบข้อมูล " . mysqli_error($conn);
     }
-    // จบ ลบข้อมูลการนำเข้า ออกจากตาราง -----------------------------------------------------
-
+    // จบ ส่วนการลบข้อมูลการนำออกไก่ไข่ -------------------------------------------------------------------------------
 
 
     // เริ่ม ส่วนการหักค่าออกจากตาราง remain -----------------------------------------------------
-    $Latest_Remain_SQL = "SELECT * FROM `remain` WHERE `Import_ID` = $Delete_Import_ID ORDER BY `Remain_ID`DESC LIMIT 1";
+    $Latest_Remain_SQL = "SELECT * FROM `remain` WHERE `Export_ID` = $Delete_Export_ID ORDER BY `Remain_ID`DESC LIMIT 1";
 
     $Latest_Remain_result = mysqli_query($conn, $Latest_Remain_SQL);
 
     while ($row = $Latest_Remain_result->fetch_assoc()) {
         $Remain_Amount = $row['Remain_Amount'];
-        $Export_ID = $row['Export_ID'];
+        $Import_ID = $row['Import_ID'];
     }
 
-    $New_Remain_Amount = $Remain_Amount - $Delete_Import_Amount;
+    $New_Remain_Amount = $Remain_Amount + $Delete_Export_Amount;
 
-    $New_Remain_SQL = "INSERT INTO `remain`(`Remain_Amount`, `Import_ID`, `Export_ID`) VALUES ('$New_Remain_Amount','$Delete_Import_ID','$Export_ID')";
+    $New_Remain_SQL = "INSERT INTO `remain`(`Remain_Amount`, `Import_ID`, `Export_ID`) VALUES ('$New_Remain_Amount','$Import_ID','$Delete_Export_ID')";
 
     mysqli_query($conn, $New_Remain_SQL);
     // จบ ส่วนการหักค่าออกจากตาราง remain -----------------------------------------------------
-
 
 
     // เริ่ม คำนวนค่า total ในตาราง total ใหม่--------------------------------------------------
@@ -70,17 +68,15 @@ if ($Delete_Import_ID > 0 AND $Delete_Import_Amount > 0) {
         $sql = "INSERT INTO `total`(`Total`) VALUES ('$total_amount');";   // เพิ่มค่าใหม่เข้าไปในฐาน
         mysqli_query($conn, $sql);
     // จบ คำนวนค่า total ในตาราง total ใหม่ --------------------------------------------------
-
+}
 } else {
-    echo "No Breed ID provided";
+    echo "No Export ID";
 }
-}
-//echo $sql;
 
 // ปิดการเชื่อมต่อ
 mysqli_close($conn);
 
 // เปลี่ยนหน้า
-echo '<meta http-equiv="refresh" content="0; url= Admin_ManageImport.php">';
+echo '<meta http-equiv="refresh" content="0; url= Admin_ManageExport.php">';
 
 ?>

@@ -35,8 +35,9 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // Function to set the ID when delete button is clicked
-    window.setDeleteID = function(exportID) {
+    window.setDeleteID = function(exportID, exportAmount) {
         document.getElementById('delete_Export_ID').value = exportID;
+        document.getElementById('delete_Export_Amount').value = exportAmount;
     };
 
 

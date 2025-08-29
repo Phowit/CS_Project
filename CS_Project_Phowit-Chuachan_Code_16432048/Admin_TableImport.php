@@ -195,7 +195,6 @@ if ($result_data_initial_load) {
                     <input type="hidden" name="Delete_Import_ID" class="form-control" id="delete_Import_ID" value="" readonly>
                     <input type="hidden" name="Delete_Import_Amount" class="form-control" id="delete_Import_Amount" value="" readonly>
 
-                    
                     <div class="row">
                         <div class="col-12" style="margin-top: 20px;">
                             <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>

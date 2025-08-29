@@ -70,7 +70,7 @@ $sqli = "   SELECT
             i.Breed_ID
             FROM `remain` AS r 
             JOIN export AS e ON r.Export_ID = e.Export_ID
-            JOIN import AS i ON i.import_ID = r.Import_ID
+            JOIN import AS i ON i.Import_ID = r.Import_ID
             WHERE e.Export_ID = $Export_ID
             ORDER BY r.`Remain_ID` DESC LIMIT 1
         ";
@@ -102,7 +102,7 @@ if( $Breed_ID != $Old_Breed_ID ) {
 
     //เลือกค่า remain ล่าสุด ของสายพันธุ์ใหม่มาเพิ่มค่า
     $sql0 = "   SELECT * FROM `remain` AS r 
-                JOIN import AS i ON r.`Import_ID` = i.`import_ID`
+                JOIN import AS i ON r.`Import_ID` = i.`Import_ID`
                 WHERE i.`Breed_ID` = $New_Breed_ID ORDER BY r.`Remain_Date` DESC LIMIT 1; ";
     $result0 = mysqli_query($conn , $sql0);
 
@@ -134,12 +134,12 @@ if( $Breed_ID != $Old_Breed_ID ) {
         //คำนวนและเพิ่มค่าล่าสุดของสายพันธุ์ใหม่ [ค่าใหม่ล่าสุดของสายพันธุ์ใหม่ = ค่าของสายพันธุ์ใหม่ - ค่าที่นำออก]
         $New_Latest_Remain_Amount = $Latest_Remain_Amount - $New_Export_Amount;
 
-        $New_Import_ID = "SELECT `import_ID` FROM `import` WHERE Breed_ID = $New_Breed_ID ORDER BY `import_ID` DESC LIMIT 1";
+        $New_Import_ID = "SELECT `Import_ID` FROM `import` WHERE Breed_ID = $New_Breed_ID ORDER BY `Import_ID` DESC LIMIT 1";
 
         $New_ImportID_Result = mysqli_query($conn , $New_Import_ID);
 
         while($row = $New_ImportID_Result->fetch_assoc()) {
-            $New_Import_ID_For_New_Remain = $row['import_ID']; //นี่คือค่า Remain_Amount ล่าสุดของสายพันธุ์ใหม่
+            $New_Import_ID_For_New_Remain = $row['Import_ID']; //นี่คือค่า Remain_Amount ล่าสุดของสายพันธุ์ใหม่
         }
 
 
@@ -212,14 +212,14 @@ if(($Breed_ID != $Old_Breed_ID) or ($New_Export_Amount != $Old_Export_Amount)) {
                     r1.*,
                     b.Breed_Name
                 FROM remain r1
-                INNER JOIN import i ON r1.import_ID = i.import_ID
+                INNER JOIN import i ON r1.Import_ID = i.Import_ID
                 INNER JOIN breed b ON i.Breed_ID = b.Breed_ID
                 JOIN (
                     SELECT
                         i.Breed_ID,
                         MAX(r2.Remain_Date) AS max_date
                     FROM remain r2
-                    INNER JOIN import i ON r2.import_ID = i.import_ID
+                    INNER JOIN import i ON r2.Import_ID = i.Import_ID
                     GROUP BY i.Breed_ID
                 ) AS subquery ON i.Breed_ID = subquery.Breed_ID AND r1.Remain_Date = subquery.max_date;
                 ";  //เลือกค่า remain ทั้งหมดมา โดยที่ สายพันธุ์ไม่ซ้ำ และเป็นค่าล่าสุดของแต่ละสายพันธุ์เท่านั้น
