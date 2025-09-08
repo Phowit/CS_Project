@@ -1,67 +1,61 @@
-#include <ESP8266WiFi.h> // ไลบรารีสำหรับเชื่อมต่อ Wi-Fi บน ESP8266
-#define LED 13
-const char* ssid = "Phowit_5g";
-const char* password = "0638967226";
-unsigned char status_led = 0;
-WiFiServer server(80);
+#include <ESP8266WiFi.h>
+#include <ESP8266HTTPClient.h>
+
+const char* ssid = "A";              // SSID Wi-Fi
+const char* password = "1234567890"; // Password Wi-Fi
+
+// Server (ต้องเป็น IP/Domain เท่านั้น ไม่ใส่ path)
+const char* host = "10.166.224.111";
+
+// Path ของไฟล์ PHP
+const String endpoint = "/CS_Project/CS_Project_Phowit-Chuachan_Code_16432048/data.php";
+
 void setup() {
-  Serial.begin(9600);
+  Serial.begin(115200);
+  delay(100);
+
+  Serial.println();
+  Serial.println("Connecting to WiFi...");
   WiFi.begin(ssid, password);
-  while (WiFi.status() != WL_CONNECTED)
-  {
+
+  // รอจนกว่า Wi-Fi จะเชื่อมต่อ
+  while (WiFi.status() != WL_CONNECTED) {
     delay(500);
+    Serial.print(".");
   }
-  server.begin();
-  Serial.println("Server started");
+
+  Serial.println();
+  Serial.println("WiFi connected!");
+  Serial.print("IP address: ");
   Serial.println(WiFi.localIP());
 }
+
 void loop() {
-  WiFiClient client = server.available();
-  if (!client) {
-    return;
+  if (WiFi.status() == WL_CONNECTED) {
+    float temperature = 1.0; // ค่าที่จะส่ง Serial.parseFloat();
+
+    WiFiClient client;
+    HTTPClient http;
+
+    // ประกอบ URL แบบถูกต้อง
+    String url = "http://" + String(host) + endpoint + "?value=" + String(temperature);
+    Serial.println("Requesting URL: " + url);
+
+    http.begin(client, url);
+    int httpCode = http.GET();
+
+    if (httpCode > 0) {
+      Serial.println("HTTP Response code: " + String(httpCode));
+      String payload = http.getString();
+      Serial.println("Response: " + payload);
+    } else {
+      Serial.println("HTTP request failed, error: " + String(http.errorToString(httpCode)));
+    }
+
+    http.end();
+  } else {
+    Serial.println("WiFi not connected!");
   }
 
-  while (!client.available())
-  {
-    delay(1);
-  }
-  String req = client.readStringUntil('\r');
-  client.flush();
-  if (req.indexOf("/ledoff") != -1)
-  {
-    status_led = 0;
-    Serial.print("0");
-  }
-  else if (req.indexOf("/ledon") != -1)
-  {
-    status_led = 1;
-    Serial.print("1");
-  }
-  String web = "HTTP/1.1 200 OK\r\nContent-Type: text/html\r \n\r\n";
-  web += "<html>\r\n";
-  web += "<body>\r\n";
-  web += "<h1>MY Arduino</h1>\r\n";
-  web += "<h2>Arduino ATmega328ESP8266</h2>\r\n";
-  web += "<p>\r\n";
-  if (status_led == 1)
-    web += "LED On\r\n";
-  else
-    web += "LED Off\r\n";
-  web += "</p>\r\n";
-  web += "<p>\r\n";
-  web += "<a href=\"/ledon\">\r\n";
-  web += "<button>LED On</button>\r\n";
-  web += "</a>\r\n";
-  web += "</p>\r\n";
-  web += "<a href=\"/ledoff\">\r\n";
-  web += "<button>LED Off</button>\r\n";
-  web += "</a>\r\n";
-  web += "</body>\r\n";
-  web += "</html>\r\n";
-
-  web += "<html>\r\n";
-  web += "<body>\r\n";
-  web += "<h4>www.myarduino.net</h4>\r\n";
-  web += "<p>\r\n";
-  client.print(web);
+  delay(5000); // ส่งข้อมูลทุก 5 วินาที
 }
