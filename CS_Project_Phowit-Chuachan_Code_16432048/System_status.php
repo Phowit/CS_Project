@@ -10,18 +10,11 @@ require_once("connect_db.php");
             <img src="My_img/Farm.png" alt="Farm" style="width:100%; height: auto;">
         </div>
         <?php
-        $sql = "SELECT 
-                            `T_Level`,
-                            `ServoMoter`,
-                            `BallValve_Tem`,
-                            `BallValve_water`,
-                            `BallValve_SFood`,
-                            `FoodLevel`,
-                            `DT_record`
-                            FROM status
-                            ORDER BY `DT_record` DESC
-                            LIMIT 1;
-                        ";
+        $sql = "SELECT  `T_Level`, `FoodLevel`, `DT_record`
+                FROM status
+                ORDER BY `DT_record` DESC
+                LIMIT 1;
+                ";
         $result = mysqli_query($conn, $sql);
 
         if ($result->num_rows > 0) {
@@ -31,20 +24,24 @@ require_once("connect_db.php");
                 $DT_record = date_create_from_format(format: "Y-m-d H:i:s", datetime: $row["DT_record"])->format(format: "d/m/Y");
                 $T_Level = $row["T_Level"];
                 $T_Status = $row["T_Level"] > 30 ? "ร้อนเกินไป" : ($row["T_Level"] < 22 ? "เย็นเกินไป" : "อุณหภูมิเหมาะสม");
-                $ServoMoter = $row["ServoMoter"] == 0 ? "ปิด" : "เปิด";
-                $BallValve_Tem = $row["BallValve_Tem"] == 0 ? "ปิด" : "เปิด";
-                $BallValve_water = $row["BallValve_water"] == 0 ? "ปิด" : "เปิด";
-                $BallValve_SFood = $row["BallValve_SFood"] == 0 ? "ปิด" : "เปิด";
             }
         } else {
             $DT_record = "ไม่พบข้อมูล";
             $T_Level = "ไม่พบข้อมูล";
             $T_Status = "";
-            $ServoMoter = "ไม่พบข้อมูล";
-            $BallValve_Tem = "ไม่พบข้อมูล";
-            $BallValve_water = "ไม่พบข้อมูล";
-            $BallValve_SFood = "ไม่พบข้อมูล";
-            $FoodLevel = "ไม่พบข้อมูล";
+        }
+
+        $DataControl_SQL = "SELECT `DC_Motor`,`DC_BV_Tem`,`DC_BV_Water`,`DC_BV_FoodS` 
+                            FROM `datacontrol` ORDER BY `DateControl_ID` DESC LIMIT 1;
+                        ";
+        $DataControl_Result = mysqli_query($conn, $DataControl_SQL);
+
+        while ($row = $DataControl_Result->fetch_assoc()) {
+            // แปลงค่า 0 และ 1 เป็นคำว่า ปิด และ เปิด
+            $DC_Motor = $row["DC_Motor"] == 0 ? "ปิด" : "เปิด";
+            $DC_BV_Tem = $row["DC_BV_Tem"] == 0 ? "ปิด" : "เปิด";
+            $DC_BV_Water = $row["DC_BV_Water"] == 0 ? "ปิด" : "เปิด";
+            $DC_BV_FoodS = $row["DC_BV_FoodS"] == 0 ? "ปิด" : "เปิด";
         }
         ?>
 
@@ -59,7 +56,7 @@ require_once("connect_db.php");
                     </div>
                     <div class="row">
                         <a>ระบบให้อาหาร</a>
-                        <a class="text-dark">สถานะ : <?php echo $ServoMoter; ?></a>
+                        <a class="text-dark">สถานะ : <?php echo $DC_Motor; ?></a>
                     </div>
                 </div>
             </div>
@@ -73,7 +70,7 @@ require_once("connect_db.php");
                     </div>
                     <div class="row">
                         <a>ระบบน้ำดื่ม</a>
-                        <a class="text-dark">สถานะ :<?php echo $BallValve_water; ?></a>
+                        <a class="text-dark">สถานะ :<?php echo $DC_BV_Water; ?></a>
                     </div>
                 </div>
             </div>
@@ -86,8 +83,8 @@ require_once("connect_db.php");
                         </div>
                     </div>
                     <div class="row">
-                        <a>สปิงเกอร์ลดอุณหภูมิ</a>
-                        <a class="text-dark">สถานะ : <?php echo $BallValve_Tem; ?></a>
+                        <a>สปริงเกลอร์ลดอุณหภูมิ</a>
+                        <a class="text-dark">สถานะ : <?php echo $DC_BV_Tem; ?></a>
                     </div>
                 </div>
             </div>
@@ -101,7 +98,7 @@ require_once("connect_db.php");
                     </div>
                     <div class="row">
                         <a>ระบบให้อาหารเสริม</a>
-                        <a class="text-dark">สถานะ : <?php echo $BallValve_SFood; ?></a>
+                        <a class="text-dark">สถานะ : <?php echo $DC_BV_FoodS; ?></a>
                     </div>
                 </div>
             </div>
@@ -204,8 +201,7 @@ require_once("connect_db.php");
                     </div>
                     <div class="row">
                         <a>ระดับอุณหภูมิโรงเรือน</a>
-                        <a class="text-dark"><?php echo $T_Level;
-                                                echo " " . $T_Status; ?></a>
+                        <a class="text-dark"><?php echo $T_Level; echo " " . "องศาเซลเซียส"; ?></a>
                     </div>
                 </div>
             </div>

@@ -5,13 +5,13 @@
     // รับข้อมูลจากฟอร์ม
     $Temperature_range = $_POST['Temperature_range'];
 
-    $sql = "UPDATE datacontrol SET Temperature_range = '$Temperature_range'";
+    $sql = "UPDATE datacontrol SET Temperature_range = '$Temperature_range' ORDER BY `DateControl_ID` DESC LIMIT 1";
 
     // ดำเนินการคำสั่ง SQL
     if (mysqli_query($conn, $sql)) {
         //echo "Update successful!";
     } else {
-        //echo "Error updating record: " . mysqli_error($conn);
+        echo "Error updating record: " . mysqli_error($conn);
     }
 
     // ปิดการเชื่อมต่อ
