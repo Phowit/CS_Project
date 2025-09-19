@@ -6,7 +6,7 @@
         <div class="table-responsive p-1">
             <?php
             require_once("connect_db.php");
-            $sql = "SELECT * FROM `datacontrol`";
+            $sql = "SELECT * FROM `datacontrol` ORDER BY `DateControl_ID` DESC LIMIT 1";
             $result = mysqli_query($conn, $sql);
 
             $sql0 = "SELECT * FROM `timefood`";
@@ -31,7 +31,7 @@
 
                                 <!--Start add-->
                                 <div class="modal fade" id="addTimeWaterModal" tabindex="-1" aria-labelledby="addTimeWaterModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="addTimeWaterModalLabel<">เพิ่มเวลาให้น้ำไก่</h5>
@@ -73,7 +73,7 @@
 
                                 <!--Start add-->
                                 <div class="modal fade" id="addTimeFoodModal" tabindex="-1" aria-labelledby="addTimeFoodModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog modal-dialog-centered modal-lg">
+                                    <div class="modal-dialog modal-dialog-centered modal-sm">
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <h5 class="modal-title" id="addTimeFoodModalLabel<">เพิ่มเวลาให้อาหารไก่</h5>
@@ -165,7 +165,7 @@
 
                                     <!--Start Edit-->
                                     <div class="modal fade" id="EditTimeWaterModal<?= $TimeWater_ID; ?>" tabindex="-1" aria-labelledby="EditTimeWaterModal<?= $TimeWater_ID; ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="EditTimeWaterModal<?= $TimeWater_ID; ?>">แก้ไขข้อมูล</h5>
@@ -202,7 +202,7 @@
 
                                     <!--Start Waring For Delete-->
                                     <div class="modal fade" id="confirmDeleteWaterModal" tabindex="-1" aria-labelledby="confirmDeleteWaterModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
                                             <div class="modal-content">
 
                                                 <div class="modal-header">
@@ -241,7 +241,7 @@
 
                                     <!--Start Edit-->
                                     <div class="modal fade" id="EditTimeFoodModal<?= $TimeFood_ID; ?>" tabindex="-1" aria-labelledby="EditTimeFoodModalLabel<?= $TimeFood_ID; ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="EditTimeFoodModalLabel<?= $TimeFood_ID; ?>">แก้ไขข้อมูล</h5>
@@ -278,7 +278,7 @@
 
                                     <!--Start Waring For Delete-->
                                     <div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
                                             <div class="modal-content">
 
                                                 <div class="modal-header">

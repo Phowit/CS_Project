@@ -101,7 +101,7 @@
 
                                     <!--Start Edit-->
                                     <div class="modal fade" id="EditMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="EditMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="EditMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
@@ -144,7 +144,7 @@
 
                                     <!--Start Waring For Delete-->
                                     <div class="modal fade" id="DeleteMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="DeleteMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="DeleteMessageModalLabel<?= $Message_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>
@@ -157,20 +157,13 @@
                                                         <input type="hidden" name="Message_ID" class="form-control" id="Message_ID" value="<?php echo $Message_ID; ?>" readonly>
                                                         <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $_SESSION['User_ID']; ?>" readonly>
 
-                                                        <div class="row">
-                                                            <div class="col-4">
-                                                                <p>ผู้ส่ง : <?php echo $User_Name; ?> </p>
-                                                                <p>หัวข้อ : <?php echo $Message_Title; ?> </p>
-                                                            </div>
+                                                        <p>ผู้ส่ง : <?php echo $User_Name; ?> </p>
+                                                        <p>หัวข้อ : <?php echo $Message_Title; ?> </p>
 
-                                                            <div class="col-8">
-                                                                <p>วันที่ส่ง : <?php echo $Message_Record; ?> </p>
-                                                                <p>เนื้อหา : <?php echo $Message_Detail; ?> </p>
+                                                        <p>วันที่ส่ง : <?php echo $Message_Record; ?> </p>
+                                                        <p>เนื้อหา : <?php echo $Message_Detail; ?> </p>
 
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="row">
+                                                        <div class="row m-0">
                                                             <div class="col-12" style="margin-top: 20px;">
                                                                 <button type="button" class="btn btn-secondary float-end" data-bs-dismiss="modal" style="margin-top: 20px;">ยกเลิก</button>
                                                                 <button type="submit" class="btn btn-warning float-end" style="margin-top: 20px; margin-right:10px">ยืนยันการลบ</button>

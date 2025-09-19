@@ -35,7 +35,7 @@
 
                         <dl class="row mb-0">
 
-                            <dt class="col-sm-4">รหัสผู้ดูแลระบบ</dt>
+                            <dt class="col-sm-4">รหัสผู้ใช้</dt>
                             <dd class="col-sm-8"><?php echo $User_ID; ?></dd>
 
                             <dt class="col-sm-4">สถานะ</dt>
@@ -78,34 +78,52 @@
 
                                             <input type="hidden" name="User_ID" class="form-control" id="User_ID" value="<?php echo $User_ID; ?>" readonly>
 
-                                            <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="User_Name" name="User_Name" value="<?php echo $User_Name; ?>" placeholder required>
-                                                <label class="form-label">ชื่อผู้ใช้</label>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="User_Name" name="User_Name" value="<?php echo $User_Name; ?>" placeholder required>
+                                                        <label class="form-label">ชื่อผู้ใช้</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="tel" class="form-control" id="User_Tel" name="User_Tel" value="<?php echo $User_Tel; ?>" placeholder required>
+                                                        <label class="form-label">เบอร์โทรศัพท์</label>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="form-floating mb-3">
-                                                <input type="tel" class="form-control" id="User_Tel" name="User_Tel" value="<?php echo $User_Tel; ?>" placeholder required>
-                                                <label class="form-label">เบอร์โทรศัพท์</label>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="email" class="form-control" id="User_Email" name="User_Email" value="<?php echo $User_Email; ?>" placeholder required>
+                                                        <label class="form-label">อีเมล</label>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-4">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="Program" name="Program" value="<?php echo $Program; ?>" placeholder required>
+                                                        <label class="form-label">สาขา</label>
+                                                    </div>
+                                                </div>
                                             </div>
 
-                                            <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="User_Address" name="User_Address" value="<?php echo $User_Address; ?>" placeholder required>
-                                                <label class="form-label">ที่อยู่ติดต่อ</label>
-                                            </div>
+                                            <div class="row">
+                                                <div class="col-8">
+                                                    <div class="form-floating mb-3">
+                                                        <input type="text" class="form-control" id="User_Address" name="User_Address" value="<?php echo $User_Address; ?>" placeholder required>
+                                                        <label class="form-label">ที่อยู่ติดต่อ</label>
+                                                    </div>
+                                                </div>
 
-                                            <div class="form-floating mb-3">
-                                                <input type="email" class="form-control" id="User_Email" name="User_Email" value="<?php echo $User_Email; ?>" placeholder required>
-                                                <label class="form-label">อีเมล</label>
-                                            </div>
-
-                                            <div class="form-floating mb-3">
-                                                <input type="text" class="form-control" id="Program" name="Program" value="<?php echo $Program; ?>" placeholder required>
-                                                <label class="form-label">สาขา</label>
-                                            </div>
-
-                                            <label class="form-label">ภาพผู้ดูแลระบบ</label>
-                                            <div class="form-floating mb-3">
-                                                <input type="file" id="User_Image" name="User_Image" value="<?php $User_Image; ?>" placeholder>
+                                                <div class="col-4">
+                                                    <label class="form-label">ภาพผู้ใช้</label>
+                                                    <div class="form-floating mb-3">
+                                                        <input type="file" id="User_Image" name="User_Image" value="<?php $User_Image; ?>" placeholder>
+                                                    </div>
+                                                </div>
                                             </div>
 
                                             <div class="row">
@@ -168,7 +186,7 @@
 
                         <!--Start Edit-->
                         <div class="modal fade" id="EditPassModal<?= $User_ID; ?>" tabindex="-1" aria-labelledby="EditPassModal<?= $User_ID; ?>" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered modal-lg">
+                            <div class="modal-dialog modal-dialog-centered modal-sm">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="EditPassModal<?= $User_ID; ?>">เปลี่ยนรหัสผ่าน</h5>

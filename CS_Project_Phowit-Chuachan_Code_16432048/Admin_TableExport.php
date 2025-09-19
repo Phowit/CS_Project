@@ -197,7 +197,7 @@ if ($result_data_initial_load) {
 </div>
 
 <div class="modal fade" id="deleteExportModal" tabindex="-1" aria-labelledby="deleteExportModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="deleteExportModalLabel">ยืนยันการลบข้อมูลหรือไม่?</h5>

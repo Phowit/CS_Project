@@ -199,7 +199,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                             </button>
 
                                             <div class="modal fade" id="EditCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="EditCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-dialog modal-dialog-centered modal-sm">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="EditCollectModalLabel<?= $Collect_ID; ?>">แก้ไขข้อมูล</h5>
@@ -238,7 +238,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                             </button>
 
                                             <div class="modal fade" id="deleteCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="deleteCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-dialog modal-dialog-centered modal-sm">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="deleteCollectModalLabel<?= $Collect_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>

@@ -93,7 +93,7 @@
 
                                     <!--Start Edit-->
                                     <div class="modal fade" id="EditMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="EditMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered">
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="EditMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
@@ -112,7 +112,7 @@
                                                         </div>
 
                                                         <div class="form-floating mb-3">
-                                                            <input type="text" class="form-control" id="Message_Detail" name="Message_Detail" value="<?php echo $Message_Detail; ?>" placeholder required>
+                                                            <textarea type="text" class="form-control" id="Message_Detail" name="Message_Detail" style="height: 150px;"required><?php echo $Message_Detail; ?></textarea>
                                                             <label for="form-label">รายละเอียด</label>
                                                         </div>
 
@@ -136,10 +136,10 @@
 
                                     <!--Start Waring For Delete-->
                                     <div class="modal fade" id="DeleteMessageModal<?= $Message_ID; ?>" tabindex="-1" aria-labelledby="DeleteMessageModalLabel<?= $Message_ID; ?>" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered modal-lg">
+                                        <div class="modal-dialog modal-dialog-centered modal-sm">
                                             <div class="modal-content">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="DeleteMessageModalLabel<?= $Message_ID; ?>">แก้ไขข้อมูล</h5>
+                                                    <h5 class="modal-title" id="DeleteMessageModalLabel<?= $Message_ID; ?>">ยืนยันการลบข้อมูล</h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">

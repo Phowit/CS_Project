@@ -1,6 +1,6 @@
 <!--Start add-->
 <div class="modal fade" id="addRecordModal" tabindex="-1" aria-labelledby="addRecordModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addRecordModalLabel<">เพิ่มข้อมูลการเก็บไข่ไก่</h5>

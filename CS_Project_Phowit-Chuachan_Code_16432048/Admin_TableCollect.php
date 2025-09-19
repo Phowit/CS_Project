@@ -194,7 +194,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                             </button>
 
                                             <div class="modal fade" id="EditCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="EditCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-dialog modal-dialog-centered modal-sm">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="EditCollectModalLabel<?= $Collect_ID; ?>">แก้ไขข้อมูล</h5>
@@ -210,7 +210,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                                                     <label class="form-label">วันที่เก็บ</label>
                                                                 </div>
 
-                                                                <div class="form-floating mb-3">
+                                                                <div class="form-floating mb-0">
                                                                     <input type="number" class="form-control" id="EggAmount_Edit" name="EggAmount" value="<?php echo $EggAmount; ?>" min="1" required>
                                                                     <label for="form-label">จำนวน (ฟอง)</label>
                                                                 </div>
@@ -232,7 +232,7 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
                                             </button>
 
                                             <div class="modal fade" id="DeleteCollectModal<?= $Collect_ID; ?>" tabindex="-1" aria-labelledby="DeleteCollectModalLabel<?= $Collect_ID; ?>" aria-hidden="true">
-                                                <div class="modal-dialog modal-dialog-centered modal-lg">
+                                                <div class="modal-dialog modal-dialog-centered modal-sm">
                                                     <div class="modal-content">
                                                         <div class="modal-header">
                                                             <h5 class="modal-title" id="DeleteCollectModalLabel<?= $Collect_ID; ?>">ยืนยันการลบข้อมูลหรือไม่?</h5>
