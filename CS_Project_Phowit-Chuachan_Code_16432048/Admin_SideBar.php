@@ -8,7 +8,7 @@ $currentPage = basename($_SERVER['PHP_SELF']);
 <div class="sidebar pe-1 pb-1">
     <nav class="navbar bg-dark navbar-primary">
         <div class="d-flex align-items-center ms-2 mb-2">
-            <div class="position-relative">
+            <div class="position-relative"> 
                 <img class="rounded-circle" src="My_img/chicken.png" style="width: 30px; height: 30px;">
                 <div class="bg-success rounded-circle border border-2 border-white position-absolute end-0 bottom-0 p-1"></div>
             </div>
