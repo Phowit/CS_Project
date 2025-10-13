@@ -4,8 +4,8 @@
     $currentPage = basename($_SERVER['PHP_SELF']);
 ?>
 
-<div class="sidebar pe-4 pb-3">
-    <nav class="navbar bg-dark navbar-primary">
+<div class="sidebar pe-4 pb-3 mt-5 mt-md-0">
+    <nav class="navbar bg-dark navbar-primary mt-5 mt-md-0">
         <div class="d-flex align-items-center ms-4 mb-4">
             <div class="position-relative">
                 <img class="rounded-circle" src="My_img/chicken.png" alt="" style="width: 40px; height: 40px;">

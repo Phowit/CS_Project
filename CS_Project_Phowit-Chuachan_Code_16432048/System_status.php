@@ -56,7 +56,7 @@ require_once("connect_db.php");
                     </div>
                     <div class="row">
                         <a>ระบบให้อาหาร</a>
-                        <a class="text-dark">สถานะ : <?php echo $DC_Motor; ?></a>
+                        <a class="text-dark"> : <?php echo $DC_Motor; ?></a>
                     </div>
                 </div>
             </div>
