@@ -84,29 +84,42 @@ if ($result_data_initial_load) {
 <div class="container-fluid pt-4 px-4 rounded bg-primary mb-5">
     <div class="text-center h-100 bg-light rounded p-4">
         <div class="d-flex align-items-center justify-content-between mb-4">
-            <h6 class="m-0 text-dark col-4">ตารางจัดการข้อมูลการนำเข้าไก่ไข่</h6>
+            <div class="row w-100">
+                <div class="align-items-center col-12 col-md-4 p-0 p-md-2">
+                    <h6 class="m-0 text-dark">ตารางจัดการข้อมูลการนำเข้าไก่ไข่</h6>
+                </div>
 
-            <div class="d-flex align-items-center col-6">
-                <label for="breedSelectImport" class="form-label mb-0 me-2 col-4">เลือกสายพันธุ์ไก่ไข่:</label>
-                <select class="form-select" name="breedSelectImport" id="breedSelectImport" aria-label="Floating label select example" required>
-                    <option value="all" <?php echo ($selected_breed_id == 'all') ? 'selected' : ''; ?>>-- แสดงทั้งหมด --</option>
-                    <?php
-                    foreach ($breeds as $option) {
-                        $selected = ($option['Breed_ID'] == $selected_breed_id) ? 'selected' : '';
-                        echo '<option value="' . htmlspecialchars($option['Breed_ID']) . '" ' . $selected . '>';
-                        echo htmlspecialchars($option['Breed_Name']);
-                        echo '</option>';
-                    }
-                    ?>
-                </select>
-                <button type="button" class="btn btn-primary ms-2" id="searchBreedImport">ค้นหา</button>
+                <div class="align-items-center col-12 col-md-3 text-end">
+                    <label for="breedSelectImport" class="form-label mb-0 me-2">เลือกสายพันธุ์ไก่ไข่ :</label>
+                </div>
+
+                <div class="align-items-center col-12 col-md-3 mb-2">
+                    <select class="form-select" name="breedSelectImport" id="breedSelectImport" aria-label="Floating label select example" required>
+                        <option value="all" <?php echo ($selected_breed_id == 'all') ? 'selected' : ''; ?>>-- แสดงทั้งหมด --</option>
+                        <?php
+                        foreach ($breeds as $option) {
+                            $selected = ($option['Breed_ID'] == $selected_breed_id) ? 'selected' : '';
+                            echo '<option value="' . htmlspecialchars($option['Breed_ID']) . '" ' . $selected . '>';
+                            echo htmlspecialchars($option['Breed_Name']);
+                            echo '</option>';
+                        }
+                        ?>
+                    </select>
+                </div>
+
+                <div class="align-items-center col-6 col-md-1">
+                    <button type="button" class="btn btn-primary col-12 ps-1 pe-1" id="searchBreedImport">ค้นหา</button>
+                </div>
+
+                <div class="align-items-center col-6 col-md-1 p-0">
+                    <button type="button" class="btn btn-warning col-12 ps-1 pe-1" data-bs-toggle="modal"
+                        data-bs-target="#addRecordModal">เพิ่มข้อมูล
+                    </button>
+                </div>
+
+
+                <?php require_once("Admin_FormImport.php"); ?>
             </div>
-
-            <button type="button" class="btn btn-warning col-2" data-bs-toggle="modal"
-                data-bs-target="#addRecordModal" style="height: 35px; width: 95px;">เพิ่มข้อมูล
-            </button>
-
-            <?php require_once("Admin_FormImport.php"); ?>
         </div>
 
         <div class="table-responsive">
@@ -210,5 +223,5 @@ if ($result_data_initial_load) {
 <script type="text/javascript">
     // ส่งข้อมูลที่ PHP ดึงมาตอนแรกไปยัง JavaScript
     // ใช้ JSON.parse(decodeURIComponent(...)) เพื่อความปลอดภัยในการส่งข้อมูลที่มีอักขระพิเศษ
-const initialImportTableData = JSON.parse('<?php echo json_encode($initialTableData); ?>');
+    const initialImportTableData = JSON.parse('<?php echo json_encode($initialTableData); ?>');
 </script>
