@@ -78,19 +78,22 @@ if (!isset($_SESSION['User_ID'])) {
                     <div class="col-sm-12 col-xl-12">
                         <div class="bg-light text-center rounded p-1">
                             <div class="d-flex align-items-center justify-content-between mb-1">
-                                <div class="col-8">
-                                    <h6 class="mb-0 text-dark">ข้อมูลกราฟประจำวันที่: <span id="displaySelectedDate"></span></h6>
-                                    <!-- <span id="displaySelectedDate"></span> ใช้คู่กับ js เพื่ออัพเดทข้อมูลกราฟ แทนการสร้างใหม่ เพื่อเพิ่มประสิทธิภาพ-->
-                                </div>
+                                <div class="row w-100 pt-1">
+                                    <div class="col-12 col-md-7 p-2">
+                                        <h6 class="mb-0 text-dark">ข้อมูลกราฟประจำวันที่: <span id="displaySelectedDate"></span></h6>
+                                        <!-- <span id="displaySelectedDate"></span> ใช้คู่กับ js เพื่ออัพเดทข้อมูลกราฟ แทนการสร้างใหม่ เพื่อเพิ่มประสิทธิภาพ-->
+                                    </div>
 
-                                <div class="col-2">
-                                    <input type="date" class="form-control" id="chartDatePicker" value="<?php echo date('Y-m-d'); ?>">
-                                </div>
 
-                                <div class="col-2 d-flex justify-content-end">
-                                    <button type="button" class="btn btn-primary" id="searchChartData">
-                                        <i class="fa fa-search"></i> ค้นหา
-                                    </button>
+                                    <div class="col-8 col-md-3 pb-md-0 ps-4 ps-md-0">
+                                        <input type="date" class="form-control" id="chartDatePicker" value="<?php echo date('Y-m-d'); ?>">
+                                    </div>
+
+                                    <div class="col-4 col-md-2 pb-md-0 pe-1 pe-md-0 m-0">
+                                        <button type="button" class="btn btn-primary m-0" id="searchChartData">
+                                            <i class="fa fa-search"></i> ค้นหา
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>

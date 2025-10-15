@@ -48,53 +48,47 @@ $displayYearBE = $selected_year + 543; // ปีพุทธศักราช
             <div class="h-100 bg-light rounded p-4">
                 <div class="d-flex align-items-center mb-4">
 
-                    <div class="col-5">
-                        <h6 class="mb-1">ตารางข้อมูลการเก็บไข่ไก่ : <span id="displaySelectedMonthYear"><?php echo $displayMonthName . ' ' . $displayYearBE; ?></span></h6>
-                    </div>
+                    <div class="row w-100">
+                        <div class="col-12 col-md-5 mb-1 p-md-0">
+                            <h6 class="mb-1">ตารางข้อมูลการเก็บไข่ไก่ : <span id="displaySelectedMonthYear"><?php echo $displayMonthName . ' ' . $displayYearBE; ?></span></h6>
+                        </div>
 
-                    <div class="col-1 d-flex">
-                        <label for="selectMonth" class="form-label">เลือกเดือน:</label>
-                    </div>
+                        <div class="col-12 col-md-3 d-flex p-md-0 mb-1">
+                            <label for="selectMonth" class="form-label p-0 m-0 w-75">เลือกเดือน :</label>
+                            <select class="form-select me-2" id="selectMonth" name="month">
+                                <?php
+                                // สร้างตัวเลือกเดือน
+                                foreach ($thaiMonths as $num => $name) {
+                                    $selected = ($num == $selected_month) ? 'selected' : '';
+                                    echo "<option value='{$num}' {$selected}>{$name}</option>";
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-                    <div class="col-1.5 d-flex">
-                        <select class="form-select me-2" id="selectMonth" name="month">
-                            <?php
-                            // สร้างตัวเลือกเดือน
-                            foreach ($thaiMonths as $num => $name) {
-                                $selected = ($num == $selected_month) ? 'selected' : '';
-                                echo "<option value='{$num}' {$selected}>{$name}</option>";
-                            }
-                            ?>
-                        </select>
-                    </div>
+                        <div class="col-12 col-md-2 d-flex p-md-0">
+                            <label for="selectYear" class="form-label p-0 m-0 w-md-50 w-75 me-md-1">เลือกปี :</label>
+                            <select class="form-select me-0" id="selectYear" name="year">
+                                <?php
+                                // สร้างตัวเลือกปี (ย้อนหลังไป 5 ปี และไปข้างหน้า 1 ปี)
+                                for ($year = $current_year - 5; $year <= $current_year + 1; $year++) {
+                                    $selected = ($year == $selected_year) ? 'selected' : '';
+                                    echo "<option value='{$year}' {$selected}>" . ($year + 543) . "</option>"; // แสดงเป็นปีพุทธศักราช
+                                }
+                                ?>
+                            </select>
+                        </div>
 
-                    <div class="col-0.5 d-flex">
-                        <label for="selectYear" class="form-label mb-0 me-2">เลือกปี:</label>
-                    </div>
+                        <div class="col-12 col-md-2 d-flex p-0 mb-0 mt-2 ms-md-0 ms-5">
+                            <button type="button" class="btn btn-primary m-0 ms-2 ps-2 pe-2" id="searchTableData">ค้นหา</button>
+                            <button type="button" class="btn btn-warning m-0 ms-2 me-0 p-2" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
+                        </div>
 
-                    <div class="col-1.5 d-flex">
-                        <select class="form-select me-2" id="selectYear" name="year">
-                            <?php
-                            // สร้างตัวเลือกปี (ย้อนหลังไป 5 ปี และไปข้างหน้า 1 ปี)
-                            for ($year = $current_year - 5; $year <= $current_year + 1; $year++) {
-                                $selected = ($year == $selected_year) ? 'selected' : '';
-                                echo "<option value='{$year}' {$selected}>" . ($year + 543) . "</option>"; // แสดงเป็นปีพุทธศักราช
-                            }
-                            ?>
-                        </select>
+                        <?php
+                        // หาก Admin_FormCollect.php คือ Modal สำหรับเพิ่มข้อมูล ให้ require_once ที่นี่
+                        require_once("Admin_FormCollect.php");
+                        ?>
                     </div>
-
-                    <div class="col-1 d-flex">
-                        <button type="button" class="btn btn-primary" id="searchTableData">ค้นหา</button>
-                    </div>
-
-                    <div class="col-1.5 d-flex">
-                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#addRecordModal">เพิ่มข้อมูล</button>
-                    </div>
-                    <?php
-                    // หาก Admin_FormCollect.php คือ Modal สำหรับเพิ่มข้อมูล ให้ require_once ที่นี่
-                    require_once("Admin_FormCollect.php");
-                    ?>
                 </div>
 
                 <div class="table-responsive">

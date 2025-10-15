@@ -69,14 +69,14 @@ if (isset($_SESSION['User_Name'])) {
                             </div>
 
                                 <div class="row">
-                                    <div class="col-9 form-floating mb-2">
+                                    <div class="col-12 col-md-9 form-floating mb-2">
                                         <input type="text" class="form-control" name="User_Name" placeholder required>
-                                        <label for="User_Name" class="form-label">Name (ชื่อ นามสกุล หรือเพียงชื่อ)</label>
+                                        <label for="User_Name" class="form-label ps-4">Name (ชื่อ)</label>
                                     </div>
 
-                                    <div class="col-3 form-floating">
+                                    <div class="col-12 col-md-3 form-floating">
                                         <input type="password" class="form-control" name="User_Password" placeholder required>
-                                        <label for="User_Password" class="form-label">Password (รหัสผ่าน)</label>
+                                        <label for="User_Password" class="form-label ps-4">Password (รหัสผ่าน)</label>
                                     </div>
                                 </div>
 
@@ -92,14 +92,14 @@ if (isset($_SESSION['User_Name'])) {
                             </div>
 
                                 <div class="row">
-                                    <div class="col-7 form-floating">
+                                    <div class="col-12 col-md-7 form-floating">
                                         <input type="Email" class="form-control" name="User_Email" placeholder required>
-                                        <label for="User_Email" class="form-label"> Email (อีเมลติดต่อ)</label>
+                                        <label for="User_Email" class="form-label ps-4"> Email (อีเมลติดต่อ)</label>
                                     </div>
 
-                                    <div class="col-5 form-floating mb-2">
+                                    <div class="col-12 col-md-5 form-floating mb-2">
                                         <input type="text" class="form-control" name="Program"placeholder required>
-                                        <label for="Program" class="form-label">สาขา</label>
+                                        <label for="Program" class="form-label ps-4">สาขา</label>
                                     </div>
                                 </div>
 
@@ -108,8 +108,8 @@ if (isset($_SESSION['User_Name'])) {
                                     <input type="file" id="User_Image" name="User_Image">
                                 </div>
 
-                                <button type="submit" class="btn btn-primary py-1 col-1">ยืนยัน</button>
-                                <a href="User_Index.php" class="btn btn-warning py-1 col-1">ยกเลิก</a>
+                                <button type="submit" class="btn btn-primary col-5 col-md-1">ยืนยัน</button>
+                                <a href="User_Index.php" class="btn btn-warning col-5 col-md-1">ยกเลิก</a>
 
                         </form>
                     </div>
